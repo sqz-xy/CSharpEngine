@@ -75,6 +75,7 @@ namespace OpenGL_Game.Scenes
             intergalacticEntity = new Entity("Intergalactic_Raider_Starship");
             intergalacticEntity.AddComponent(new ComponentPosition(0.0f, 0.0f, 0.0f));
             intergalacticEntity.AddComponent(new ComponentGeometry("Geometry/Cat/cat.obj"));
+            intergalacticEntity.AddComponent(new ComponentVelocity(new Vector3(0.1f, 0.0f, 0.0f)));
             entityManager.AddEntity(intergalacticEntity);
 
 
@@ -87,6 +88,10 @@ namespace OpenGL_Game.Scenes
 
             newSystem = new SystemRender();
             systemManager.AddSystem(newSystem);
+
+            ISystem physicsSystem;
+            physicsSystem = new SystemPhysics();
+            systemManager.AddSystem(physicsSystem);
         }
 
         /// <summary>
