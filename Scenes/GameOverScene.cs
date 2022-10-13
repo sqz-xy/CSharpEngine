@@ -12,7 +12,7 @@ namespace OpenGL_Game.Scenes
         public GameOverScene(SceneManager sceneManager) : base(sceneManager)
         {
             // Set the title of the window
-            sceneManager.Title = "Main Menu";
+            sceneManager.Title = "Game Over";
             // Set the Render and Update delegates to the Update and Render methods of this class
             sceneManager.renderer = Render;
             sceneManager.updater = Update;
