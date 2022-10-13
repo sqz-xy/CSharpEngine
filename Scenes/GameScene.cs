@@ -151,7 +151,7 @@ namespace OpenGL_Game.Scenes
                     camera.RotateY(0.01f);
                     break;
                 case Key.M:
-                    sceneManager.ChangeScene(SceneTypes.SCENE_MAIN_MENU);
+                    sceneManager.ChangeScene(SceneTypes.SCENE_GAME_OVER);
                     break;
             }
         }
