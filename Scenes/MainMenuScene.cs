@@ -47,7 +47,7 @@ namespace OpenGL_Game.Scenes
             switch (e.Button)
             {
                 case MouseButton.Left:
-                    sceneManager.StartNewGame();
+                    sceneManager.ChangeScene(SceneTypes.SCENE_GAME);
                     break;
             }
         }

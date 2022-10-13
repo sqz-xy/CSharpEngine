@@ -119,6 +119,19 @@ namespace OpenGL_Game.Managers
             //Load the GUI
             GUI.SetUpGUI(Width, Height);
         }
+
+        public void ChangeScene(SceneTypes pSceneType)
+        {
+            switch (pSceneType)
+            {  
+                case SceneTypes.SCENE_MAIN_MENU:
+                    scene = new MainMenuScene(this);
+                    break;
+                case SceneTypes.SCENE_GAME:
+                    scene = new GameScene(this);
+                    break;
+            }
+        }
     }
 
 }
