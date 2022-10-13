@@ -75,7 +75,7 @@ namespace OpenGL_Game.Scenes
             intergalacticEntity = new Entity("Intergalactic_Raider_Starship");
             intergalacticEntity.AddComponent(new ComponentPosition(0.0f, 0.0f, 0.0f));
             intergalacticEntity.AddComponent(new ComponentGeometry("Geometry/Cat/cat.obj"));
-            intergalacticEntity.AddComponent(new ComponentVelocity(new Vector3(0.1f, 0.0f, 0.0f)));
+            intergalacticEntity.AddComponent(new ComponentVelocity(new Vector3(0.0f, 1.0f, 1.0f)));
             entityManager.AddEntity(intergalacticEntity);
 
 
@@ -106,6 +106,8 @@ namespace OpenGL_Game.Scenes
 
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();
+
+            
 
             // TODO: Add your update logic here
 
