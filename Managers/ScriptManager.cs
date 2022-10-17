@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -15,8 +13,10 @@ namespace OpenGL_Game.Managers
         public ScriptManager()
         {
             // Set the json serializer settings
-            JsonSerializerSettings jss = new JsonSerializerSettings();
-            jss.TypeNameHandling = TypeNameHandling.All;
+            JsonSerializerSettings jss = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All
+            };
         }
 
        /// <summary>
@@ -24,29 +24,37 @@ namespace OpenGL_Game.Managers
        /// </summary>
        /// <param name="pScriptName">The name of the script</param>
        /// <param name="pEntityManager">The entity manager</param>
-       public void ReadJsonScript(string pScriptName, ref EntityManager pEntityManager)
+       public void LoadEntities(string pScriptName, ref EntityManager pEntityManager)
        {
            JsonSerializer serializer = new JsonSerializer();
            JsonTextReader reader = new JsonTextReader(new StreamReader(pScriptName));
-           // Support multiple objects
-           reader.SupportMultipleContent = true;
-
+           reader.SupportMultipleContent = true;            // Support multiple objects
+           
            // For each object
            while (true)
            {
                if (!reader.Read())
-               {
                    break;
-               }
 
-               JObject obj = (Newtonsoft.Json.Linq.JObject)serializer.Deserialize(reader);
+               JObject obj;
+               try
+               {
+                   obj = (JObject) serializer.Deserialize(reader);
+               }
+               catch  (JsonSerializationException e)
+               {
+                   Console.WriteLine("File was not in correct format!");
+                   return;
+               }
                
                // Get the name of the object
                JToken token = obj.SelectToken("Name");
+               if (token == null) {continue; }
                Entity newEntity = new Entity(token.ToString());
 
                // Get the components
                token = obj.SelectToken("Components");
+               if (token == null) {continue; }
                JArray jsonComponents = JArray.Parse(token.ToString());
 
                // Compare json components with the entity components
@@ -78,12 +86,11 @@ namespace OpenGL_Game.Managers
        {
            // May need to be changed in the future depending on the values of future component types
            // For each component type, return the component object, for components requiring vectors, split and format the string
-           float[] values = new float[3];
            switch (pComponentType)
            {
                case "COMPONENT_POSITION":
-                   values = Array.ConvertAll(pComponentValue.Split(' '), float.Parse);
-                   return new ComponentPosition(new Vector3(values[0], values[1], values[2]));
+                   float[] posValues = Array.ConvertAll(pComponentValue.Split(' '), float.Parse);
+                   return new ComponentPosition(new Vector3(posValues[0], posValues[1], posValues[2]));
                break;
                case "COMPONENT_GEOMETRY":
                    return new ComponentGeometry(pComponentValue);
@@ -92,8 +99,8 @@ namespace OpenGL_Game.Managers
                    return new ComponentTexture(pComponentValue);
                break;
                case "COMPONENT_VELOCITY":
-                   values = Array.ConvertAll(pComponentValue.Split(' '), float.Parse);
-                   return new ComponentVelocity(new Vector3(values[0], values[1], values[2]));
+                   float[] velValues = Array.ConvertAll(pComponentValue.Split(' '), float.Parse);
+                   return new ComponentVelocity(new Vector3(velValues[0], velValues[1], velValues[2]));
                break;
                default:
                    return null;

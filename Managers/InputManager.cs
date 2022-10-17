@@ -8,28 +8,14 @@ using System.Threading.Tasks;
 
 namespace OpenGL_Game.Managers
 {
-    enum ActionType
-    {
-        FORWARD,
-        BACKWARD,
-        LEFT,
-        RIGHT,
-    }
-
     class InputManager
     {
         Camera _camera;
 
-        InputManager()
+        InputManager(ref Camera pCamera)
         {
-            _camera = new Camera();
+            _camera = pCamera;
         }
-
-        public void AssignAction(ActionType pAction, Key KeyType)
-        {
-            // Assign to delegate?
-        }
-
-        // public void ClearActions()
+        
     }
 }
