@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OpenGL_Game.Components;
@@ -57,6 +59,7 @@ namespace OpenGL_Game.Managers
                if (token == null) {continue; }
                JArray jsonComponents = JArray.Parse(token.ToString());
 
+               
                // Compare json components with the entity components
                foreach (var componentType in Enum.GetNames(typeof(ComponentTypes)))
                {
@@ -86,6 +89,9 @@ namespace OpenGL_Game.Managers
        {
            // May need to be changed in the future depending on the values of future component types
            // For each component type, return the component object, for components requiring vectors, split and format the string
+           // Are components part of the game or part of the engine because if they are game then I cant hard code them like this
+           // If they cant be hard coded then change the script to use the object names and then use Activator.CreateInstance (Requires empty constructor)
+           // Then modify components to accept data through a separate method, outlined in IComponent "public void AddData(String Data)"
            switch (pComponentType)
            {
                case "COMPONENT_POSITION":
