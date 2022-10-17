@@ -2,17 +2,24 @@
     "Name": "Moon",
     "Components": [
       {
-        "COMPONENT_POSITION": "2.0 0.0 0.0",
+        "COMPONENT_POSITION": "-2.0 0.0 0.0",
+      },
+      {
         "COMPONENT_GEOMETRY": "Geometry/Moon/moon.obj"
       }
     ]
   }
   {
-    "Name": "Moon2",
+    "Name": "Cat",
     "Components": [
       {
-        "COMPONENT_POSITION": "4.0 0.0 0.0",
-        "COMPONENT_GEOMETRY": "Geometry/Moon/moon.obj"
+        "COMPONENT_POSITION": "2.0 0.0 0.0",
+      },
+      {
+        "COMPONENT_GEOMETRY": "Geometry/Cat/cat.obj"
+      },
+      {
+        "COMPONENT_VELOCITY": "1.0 0.0 0.0"
       }
     ]
   }

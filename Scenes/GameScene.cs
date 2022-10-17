@@ -60,6 +60,7 @@ namespace OpenGL_Game.Scenes
         {
             scriptManager.readJSONScript("Scripts/gameSceneScript.json", entityManager);
             
+            /*
             Entity newEntity;
 
             newEntity = new Entity("Moon");
@@ -81,7 +82,7 @@ namespace OpenGL_Game.Scenes
             intergalacticEntity.AddComponent(new ComponentGeometry("Geometry/Cat/cat.obj"));
             intergalacticEntity.AddComponent(new ComponentVelocity(new Vector3(0.0f, 1.0f, 1.0f)));
             entityManager.AddEntity(intergalacticEntity);
-
+*/
 
 
         }
