@@ -16,6 +16,11 @@ namespace OpenGL_Game.Managers
         {
             _camera = pCamera;
         }
-        
+
+        public void HandleInput()
+        {
+            // Load custom control script using script manager?
+            // If not use default controls
+        }
     }
 }
