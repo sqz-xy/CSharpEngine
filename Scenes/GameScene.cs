@@ -58,7 +58,7 @@ namespace OpenGL_Game.Scenes
 
         private void CreateEntities()
         {
-            scriptManager.readJSONScript("Scripts/gameSceneScript.json", entityManager);
+            scriptManager.ReadJsonScript("Scripts/gameSceneScript.json", ref entityManager);
             
             /*
             Entity newEntity;
