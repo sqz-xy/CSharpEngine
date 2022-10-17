@@ -1,0 +1,18 @@
+  {
+    "Name": "Moon",
+    "Components": [
+      {
+        "COMPONENT_POSITION": "2.0 0.0 0.0",
+        "COMPONENT_GEOMETRY": "Geometry/Moon/moon.obj"
+      }
+    ]
+  }
+  {
+    "Name": "Moon2",
+    "Components": [
+      {
+        "COMPONENT_POSITION": "4.0 0.0 0.0",
+        "COMPONENT_GEOMETRY": "Geometry/Moon/moon.obj"
+      }
+    ]
+  }

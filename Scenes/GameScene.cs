@@ -17,6 +17,7 @@ namespace OpenGL_Game.Scenes
         public static float dt = 0;
         EntityManager entityManager;
         SystemManager systemManager;
+        private ScriptManager scriptManager;
 
         public Camera camera;
 
@@ -27,6 +28,7 @@ namespace OpenGL_Game.Scenes
             gameInstance = this;
             entityManager = new EntityManager();
             systemManager = new SystemManager();
+            scriptManager = new ScriptManager();
 
             // Set the title of the window
             sceneManager.Title = "Game";
@@ -56,6 +58,8 @@ namespace OpenGL_Game.Scenes
 
         private void CreateEntities()
         {
+            scriptManager.readJSONScript("Scripts/gameSceneScript.json", entityManager);
+            
             Entity newEntity;
 
             newEntity = new Entity("Moon");
