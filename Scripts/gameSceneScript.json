@@ -23,3 +23,14 @@
       }
     ]
   }
+  {
+    "Name" : "Wraith_Raider_Starship",
+    "Components" : [
+      {
+        "COMPONENT_POSITION" : "0.0 0.0 0.0"
+      },
+      {
+        "COMPONENT_GEOMETRY" : "Geometry/Wraith_Raider_Starship/Wraith_Raider_Starship.obj"
+      }
+    ]
+  }
