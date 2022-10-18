@@ -97,17 +97,13 @@ namespace OpenGL_Game.Managers
                case "COMPONENT_POSITION":
                    float[] posValues = Array.ConvertAll(pComponentValue.Split(' '), float.Parse);
                    return new ComponentPosition(new Vector3(posValues[0], posValues[1], posValues[2]));
-               break;
                case "COMPONENT_GEOMETRY":
                    return new ComponentGeometry(pComponentValue);
-               break;
                case "COMPONENT_TEXTURE":
                    return new ComponentTexture(pComponentValue);
-               break;
                case "COMPONENT_VELOCITY":
                    float[] velValues = Array.ConvertAll(pComponentValue.Split(' '), float.Parse);
                    return new ComponentVelocity(new Vector3(velValues[0], velValues[1], velValues[2]));
-               break;
                default:
                    return null;
            }
