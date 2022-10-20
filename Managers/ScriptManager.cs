@@ -45,7 +45,7 @@ namespace OpenGL_Game.Managers
                }
                catch  (JsonSerializationException e)
                {
-                   Console.WriteLine("File was not in correct format!");
+                   Console.WriteLine(e.Message);
                    return;
                }
                

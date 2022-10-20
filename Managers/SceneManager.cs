@@ -86,24 +86,6 @@ namespace OpenGL_Game.Managers
             SwapBuffers();
         }
 
-        public void StartNewGame()
-        {
-            if(scene != null) scene.Close();
-            scene = new GameScene(this);
-        }
-
-        public void StartMenu()
-        {
-            if (scene != null) scene.Close();
-            scene = new MainMenuScene(this);
-        }
-
-        public void GameOver()
-        {
-            if (scene != null) scene.Close();
-            scene = new GameOverScene(this);
-        }
-
         public static int WindowWidth
         {
             get { return width; }
@@ -133,24 +115,23 @@ namespace OpenGL_Game.Managers
                 switch (pSceneType)
                 {
                     case SceneTypes.SCENE_MAIN_MENU:
-                        StartMenu();
-                        // Or scene = new MainMenuScene(this);
+                        scene = new MainMenuScene(this);
                         break;
                     case SceneTypes.SCENE_GAME:
-                        StartNewGame();
+                        scene = new GameScene(this);
                         break;
                     case SceneTypes.SCENE_GAME_OVER:
-                        GameOver();
+                        scene = new GameOverScene(this);
                         break;
                     default:
-                        StartMenu();
+                        scene = new MainMenuScene(this);
                         break;
                 }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                StartMenu();
+                scene = new MainMenuScene(this);
             }
             
         }
