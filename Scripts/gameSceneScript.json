@@ -1,36 +1,52 @@
-  {
-    "Name": "Moon",
-    "Components": [
-      {
-        "COMPONENT_POSITION": "-2.0 0.0 0.0",
-      },
-      {
-        "COMPONENT_GEOMETRY": "Geometry/Moon/moon.obj"
-      }
-    ]
-  }
-  {
-    "Name": "Cat",
-    "Components": [
-      {
-        "COMPONENT_POSITION": "2.0 0.0 0.0",
-      },
-      {
-        "COMPONENT_GEOMETRY": "Geometry/Cat/cat.obj"
-      },
-      {
-        "COMPONENT_VELOCITY": "1.0 0.0 0.0"
-      }
-    ]
-  }
-  {
-    "Name" : "Wraith_Raider_Starship",
-    "Components" : [
-      {
-        "COMPONENT_POSITION" : "0.0 0.0 0.0"
-      },
-      {
-        "COMPONENT_GEOMETRY" : "Geometry/Wraith_Raider_Starship/Wraith_Raider_Starship.obj"
-      }
-    ]
-  }
+{
+  "Name": "Moon",
+  "Components": [
+    {
+      "COMPONENT_POSITION": "-2.0 0.0 0.0"
+    },
+    {
+      "COMPONENT_GEOMETRY": "Geometry/Moon/moon.obj"
+    }
+  ]
+}
+{
+  "Name": "Cat",
+  "Components": [
+    {
+      "COMPONENT_POSITION": "2.0 0.0 0.0"
+    },
+    {
+      "COMPONENT_GEOMETRY": "Geometry/Cat/cat.obj"
+    },
+    {
+      "COMPONENT_VELOCITY": "1.0 0.0 0.0"
+    }
+  ]
+}
+{
+  "Name": "Wraith_Raider_Starship",
+  "Components": [
+    {
+      "COMPONENT_POSITION": "0.0 0.0 0.0"
+    },
+    {
+      "COMPONENT_GEOMETRY": "Geometry/Wraith_Raider_Starship/Wraith_Raider_Starship.obj"
+    }
+  ]
+}
+{
+  "Name": "Wraith_Raider_Starship2",
+  "Components": [
+    {
+      "COMPONENT_POSITION": "0.0 1.0 0.0"
+    },
+    {
+      "COMPONENT_GEOMETRY": "Geometry/Wraith_Raider_Starship/Wraith_Raider_Starship.obj"
+    },
+    {
+      "COMPONENT_VELOCITY": "0.0 0.1 0.1"
+    }
+  ]
+}
+
+

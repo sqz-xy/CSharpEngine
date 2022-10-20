@@ -79,6 +79,11 @@ namespace OpenGL_Game.Managers
            }
        }
 
+       public void LoadControls(string pFilePath, ref InputManager pInputManager)
+       {
+
+       }
+
        /// <summary>
        /// Converts component strings into component objects
        /// </summary>

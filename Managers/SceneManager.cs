@@ -18,7 +18,9 @@ namespace OpenGL_Game.Managers
 
         public delegate void KeyboardDelegate(KeyboardKeyEventArgs e);
         public KeyboardDelegate keyboardDownDelegate;
+#pragma warning disable CS0649 // Field 'SceneManager.keyboardUpDelegate' is never assigned to, and will always have its default value null
         public KeyboardDelegate keyboardUpDelegate;
+#pragma warning restore CS0649 // Field 'SceneManager.keyboardUpDelegate' is never assigned to, and will always have its default value null
 
         public delegate void MouseDelegate(MouseButtonEventArgs e);
         public MouseDelegate mouseDelegate;
@@ -66,7 +68,7 @@ namespace OpenGL_Game.Managers
             //Load the GUI
             GUI.SetUpGUI(width, height);
 
-            StartMenu();
+            ChangeScene(SceneTypes.SCENE_MAIN_MENU);
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
