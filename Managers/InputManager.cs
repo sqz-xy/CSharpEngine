@@ -5,23 +5,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenGL_Game.Scenes;
 
 namespace OpenGL_Game.Managers
 {
     class InputManager
     {
-        Camera _camera;
         Dictionary<string, Key> _keyBinds;
         Dictionary<string, MouseButton> _mouseBinds;
 
         // Create enum for control names, allow it to be extended
 
-        public InputManager(ref Camera pCamera)
+        public InputManager()
         {
-            _camera = pCamera;
+            InitializeBinds();
         }
 
-        public void ReadInput()
+        public void ReadInput(SceneManager pSceneManager, Camera pCamera)
         {
             KeyboardState keyState = Keyboard.GetState();
 
@@ -29,7 +29,7 @@ namespace OpenGL_Game.Managers
             {
                if (keyState.IsKeyDown(kvp.Value))
                {
-                    HandleInput(kvp.Key);
+                    HandleInput(kvp.Key, pSceneManager, pCamera);
                }
             }
 
@@ -39,18 +39,42 @@ namespace OpenGL_Game.Managers
             {
                 if (mouseState.IsButtonDown(kvp.Value))
                 {
-                    HandleInput(kvp.Key);
+                    HandleInput(kvp.Key, pSceneManager, pCamera);
                 }
             }
         }
 
-        public void HandleInput(string pAction)
+        public virtual void HandleInput(string pAction, SceneManager pSceneManager, Camera pCamera)
         {
+            // Non camera dependant actions
             switch (pAction)
             {
                 case "START_GAME":
-                    
+                    pSceneManager.ChangeScene(SceneTypes.SCENE_GAME);
                     break;
+                case "GAME_OVER":
+                    pSceneManager.ChangeScene(SceneTypes.SCENE_GAME_OVER);
+                    break;
+            }
+            
+            if (pCamera == null)
+                return;
+
+            // camera dependant actions
+            switch (pAction)
+            {
+                case "MOVE_FORWARD":
+                    pCamera.MoveForward(0.1f);
+                    break;
+                case "MOVE_BACKWARD":
+                    pCamera.MoveForward(-0.1f);
+                    break;
+                case "MOVE_LEFT":
+                    pCamera.RotateY(-0.01f);
+                    break;
+                case "MOVE_RIGHT":
+                    pCamera.RotateY(0.01f);
+                    break;                
             }
         }
 
@@ -64,9 +88,10 @@ namespace OpenGL_Game.Managers
                 _keyBinds.Add("MOVE_BACKWARD", Key.S);
                 _keyBinds.Add("MOVE_LEFT", Key.A);
                 _keyBinds.Add("MOVE_RIGHT", Key.D);
+                _keyBinds.Add("GAME_OVER", Key.M);
             }
 
-            if (_mouseBinds != null)
+            if (_mouseBinds == null)
             {
 
                 _mouseBinds = new Dictionary<string, MouseButton>();

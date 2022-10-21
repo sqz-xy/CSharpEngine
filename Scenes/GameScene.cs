@@ -19,6 +19,7 @@ namespace OpenGL_Game.Scenes
         SystemManager systemManager;
         private ScriptManager scriptManager;
 
+        // Made static because there should only be one
         public Camera camera;
 
         public static GameScene gameInstance;
@@ -36,7 +37,7 @@ namespace OpenGL_Game.Scenes
             sceneManager.renderer = Render;
             sceneManager.updater = Update;
             // Set Keyboard events to go to a method in this class
-            sceneManager.keyboardDownDelegate += Keyboard_KeyDown;
+            //sceneManager.keyboardDownDelegate += Keyboard_KeyDown;
 
             // Enable Depth Testing
             GL.Enable(EnableCap.DepthTest);
@@ -109,6 +110,8 @@ namespace OpenGL_Game.Scenes
             dt = (float)e.Time;
             //System.Console.WriteLine("fps=" + (int)(1.0/dt));
 
+            sceneManager._inputManager.ReadInput(sceneManager, camera);
+            
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();
 
@@ -142,10 +145,11 @@ namespace OpenGL_Game.Scenes
         /// </summary>
         public override void Close()
         {
-            sceneManager.keyboardDownDelegate -= Keyboard_KeyDown;
+            //sceneManager.keyboardDownDelegate -= Keyboard_KeyDown;
             ResourceManager.RemoveAllAssets();
         }
 
+        /*
         public void Keyboard_KeyDown(KeyboardKeyEventArgs e)
         {
             switch (e.Key)
@@ -167,5 +171,6 @@ namespace OpenGL_Game.Scenes
                     break;
             }
         }
+        */
     }
 }

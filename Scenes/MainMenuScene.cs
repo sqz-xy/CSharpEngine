@@ -17,11 +17,12 @@ namespace OpenGL_Game.Scenes
             sceneManager.renderer = Render;
             sceneManager.updater = Update;
 
-            sceneManager.mouseDelegate += Mouse_BottonPressed;
+            //sceneManager.mouseDelegate += Mouse_BottonPressed;
         }
 
         public override void Update(FrameEventArgs e)
         {
+            sceneManager._inputManager.ReadInput(sceneManager, null);
         }
 
         public override void Render(FrameEventArgs e)
@@ -42,6 +43,7 @@ namespace OpenGL_Game.Scenes
             GUI.Render();
         }
 
+        /*
         public void Mouse_BottonPressed(MouseButtonEventArgs e)
         {
             switch (e.Button)
@@ -51,10 +53,12 @@ namespace OpenGL_Game.Scenes
                     break;
             }
         }
+        */
 
         public override void Close()
         {
-            sceneManager.mouseDelegate -= Mouse_BottonPressed;
+            //sceneManager.mouseDelegate -= Mouse_BottonPressed;
         }
+        
     }
 }
