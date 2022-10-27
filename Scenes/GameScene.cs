@@ -53,6 +53,8 @@ namespace OpenGL_Game.Scenes
             CreateEntities();
             CreateSystems();
 
+            sceneManager._inputManager.InitializeBinds();
+
             // TODO: Add your initialization logic here
 
         }
@@ -114,8 +116,6 @@ namespace OpenGL_Game.Scenes
             
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();
-
-            
 
             // TODO: Add your update logic here
 

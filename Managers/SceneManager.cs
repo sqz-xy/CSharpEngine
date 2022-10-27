@@ -115,6 +115,10 @@ namespace OpenGL_Game.Managers
 
         public void ChangeScene(SceneTypes pSceneType)
         {
+            // I PUT THIS HERE GUHHHH
+            if (scene != null)
+                scene.Close();
+
             try
             {
                 switch (pSceneType)

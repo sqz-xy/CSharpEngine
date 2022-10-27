@@ -62,7 +62,7 @@ namespace OpenGL_Game.Scenes
 
         public override void Close()
         {
-            //sceneManager.mouseDelegate -= Mouse_BottonPressed;
+            sceneManager._inputManager.ClearBinds();
         }
         
     }

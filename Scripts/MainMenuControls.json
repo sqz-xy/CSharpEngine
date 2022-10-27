@@ -4,7 +4,7 @@
       "START_GAME": "MouseButton.Left"
     },
     {
-      "CLOSE_GAME": "99"
+      "CLOSE_GAME": "Q"
     }
   ]
 }

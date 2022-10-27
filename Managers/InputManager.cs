@@ -28,10 +28,10 @@ namespace OpenGL_Game.Managers
 
             foreach (KeyValuePair<string, Key> kvp in _keyBinds)
             {
-               if (keyState.IsKeyDown(kvp.Value))
-               {
+                if (keyState.IsKeyDown(kvp.Value))
+                {
                     HandleInput(kvp.Key, pSceneManager, pCamera);
-               }
+                }
             }
 
             MouseState mouseState = Mouse.GetState();
@@ -60,7 +60,7 @@ namespace OpenGL_Game.Managers
                     pSceneManager.Close();
                     break;
             }
-            
+
             if (pCamera == null)
                 return;
 
@@ -78,26 +78,31 @@ namespace OpenGL_Game.Managers
                     break;
                 case "MOVE_RIGHT":
                     pCamera.RotateY(0.01f);
-                    break;                
+                    break;
             }
         }
 
         public void InitializeBinds()
         {
-            if (_keyBinds == null)
-            {              
+            if (_keyBinds.Count == 0)
+            {
                 _keyBinds.Add("MOVE_FORWARD", Key.W);
                 _keyBinds.Add("MOVE_BACKWARD", Key.S);
                 _keyBinds.Add("MOVE_LEFT", Key.A);
                 _keyBinds.Add("MOVE_RIGHT", Key.D);
                 _keyBinds.Add("GAME_OVER", Key.M);
-                _keyBinds.Add("CLOSE_GAME", Key.Q);
             }
 
-            if (_mouseBinds == null)
+            if (_mouseBinds.Count == 0)
             {
                 _mouseBinds.Add("START_GAME", MouseButton.Left);
             }
+        }
+
+        public void ClearBinds()
+        {
+            _keyBinds = new Dictionary<string, Key>();
+            _mouseBinds = new Dictionary<string, MouseButton>();
         }
     }
 }
