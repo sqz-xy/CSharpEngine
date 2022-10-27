@@ -6,19 +6,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenGL_Game.Scenes;
+using OpenTK;
 
 namespace OpenGL_Game.Managers
 {
+    // Reset binds when changing scene
     class InputManager
     {
-        Dictionary<string, Key> _keyBinds;
-        Dictionary<string, MouseButton> _mouseBinds;
-
-        // Create enum for control names, allow it to be extended
+        public Dictionary<string, Key> _keyBinds;
+        public Dictionary<string, MouseButton> _mouseBinds;
 
         public InputManager()
         {
-            InitializeBinds();
+            _keyBinds = new Dictionary<string, Key>();
+            _mouseBinds = new Dictionary<string, MouseButton>();
         }
 
         public void ReadInput(SceneManager pSceneManager, Camera pCamera)
@@ -55,6 +56,9 @@ namespace OpenGL_Game.Managers
                 case "GAME_OVER":
                     pSceneManager.ChangeScene(SceneTypes.SCENE_GAME_OVER);
                     break;
+                case "CLOSE_GAME":
+                    pSceneManager.Close();
+                    break;
             }
             
             if (pCamera == null)
@@ -81,21 +85,17 @@ namespace OpenGL_Game.Managers
         public void InitializeBinds()
         {
             if (_keyBinds == null)
-            {
-                _keyBinds = new Dictionary<string, Key>();
-
+            {              
                 _keyBinds.Add("MOVE_FORWARD", Key.W);
                 _keyBinds.Add("MOVE_BACKWARD", Key.S);
                 _keyBinds.Add("MOVE_LEFT", Key.A);
                 _keyBinds.Add("MOVE_RIGHT", Key.D);
                 _keyBinds.Add("GAME_OVER", Key.M);
+                _keyBinds.Add("CLOSE_GAME", Key.Q);
             }
 
             if (_mouseBinds == null)
             {
-
-                _mouseBinds = new Dictionary<string, MouseButton>();
-
                 _mouseBinds.Add("START_GAME", MouseButton.Left);
             }
         }

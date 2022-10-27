@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using OpenGL_Game.Components;
 using OpenGL_Game.Objects;
 using OpenTK;
+using OpenTK.Input;
 
 namespace OpenGL_Game.Managers
 {
@@ -79,39 +80,87 @@ namespace OpenGL_Game.Managers
            }
        }
 
-       public void LoadControls(string pFilePath, ref InputManager pInputManager)
-       {
+        /// <summary>
+        /// Converts component strings into component objects
+        /// </summary>
+        /// <param name="pComponentType">The type of component to create</param>
+        /// <param name="pComponentValue">The values for the component</param>
+        /// <returns>An IComponent object</returns>
+        private IComponent GetComponent(string pComponentType, string pComponentValue)
+        {
+            // May need to be changed in the future depending on the values of future component types
+            // For each component type, return the component object, for components requiring vectors, split and format the string
+            // Are components part of the game or part of the engine because if they are game then I cant hard code them like this
+            // If they cant be hard coded then change the script to use the object names and then use Activator.CreateInstance (Requires empty constructor)
+            // Then modify components to accept data through a separate method, outlined in IComponent "public void AddData(String Data)"
+            switch (pComponentType)
+            {
+                case "COMPONENT_POSITION":
+                    float[] posValues = Array.ConvertAll(pComponentValue.Split(' '), float.Parse);
+                    return new ComponentPosition(new Vector3(posValues[0], posValues[1], posValues[2]));
+                case "COMPONENT_GEOMETRY":
+                    return new ComponentGeometry(pComponentValue);
+                case "COMPONENT_TEXTURE":
+                    return new ComponentTexture(pComponentValue);
+                case "COMPONENT_VELOCITY":
+                    float[] velValues = Array.ConvertAll(pComponentValue.Split(' '), float.Parse);
+                    return new ComponentVelocity(new Vector3(velValues[0], velValues[1], velValues[2]));
+                default:
+                    return null;
+            }
+        }
 
-       }
+        public void LoadControls(string pScriptName, ref InputManager pInputManager)
+        {
+            JsonSerializer serializer = new JsonSerializer();
+            JsonTextReader reader = new JsonTextReader(new StreamReader(pScriptName));
+            reader.SupportMultipleContent = true;            // Support multiple objects
 
-       /// <summary>
-       /// Converts component strings into component objects
-       /// </summary>
-       /// <param name="pComponentType">The type of component to create</param>
-       /// <param name="pComponentValue">The values for the component</param>
-       /// <returns>An IComponent object</returns>
-       private IComponent GetComponent(string pComponentType, string pComponentValue)
-       {
-           // May need to be changed in the future depending on the values of future component types
-           // For each component type, return the component object, for components requiring vectors, split and format the string
-           // Are components part of the game or part of the engine because if they are game then I cant hard code them like this
-           // If they cant be hard coded then change the script to use the object names and then use Activator.CreateInstance (Requires empty constructor)
-           // Then modify components to accept data through a separate method, outlined in IComponent "public void AddData(String Data)"
-           switch (pComponentType)
+            // For each object
+            while (true)
+            {
+                if (!reader.Read())
+                    break;
+                
+                JObject obj;
+                try
+                {
+                    obj = (JObject)serializer.Deserialize(reader);
+                }
+                catch (JsonSerializationException e)
+                {
+                    Console.WriteLine(e.Message);
+                    return;
+                }
+                
+                // Get the name of the object
+                JToken token = obj.SelectToken("Controls");
+                if (token == null) { continue; }
+                JArray jsonControls = JArray.Parse(token.ToString());
+
+                foreach (JObject jsonControl in jsonControls)
+                {
+                    foreach (JProperty property in jsonControl.Properties())
+                    {
+                        GetControls(property.Name, (string)property.Value, ref pInputManager);
+                    }
+                }
+            }
+        }    
+        
+        private void GetControls(string pAction, string pBind, ref InputManager pInputManager)
+        {
+           // Reset binds, error checking, look for enum mapping function
+           if (!pBind.Contains("Mouse"))
            {
-               case "COMPONENT_POSITION":
-                   float[] posValues = Array.ConvertAll(pComponentValue.Split(' '), float.Parse);
-                   return new ComponentPosition(new Vector3(posValues[0], posValues[1], posValues[2]));
-               case "COMPONENT_GEOMETRY":
-                   return new ComponentGeometry(pComponentValue);
-               case "COMPONENT_TEXTURE":
-                   return new ComponentTexture(pComponentValue);
-               case "COMPONENT_VELOCITY":
-                   float[] velValues = Array.ConvertAll(pComponentValue.Split(' '), float.Parse);
-                   return new ComponentVelocity(new Vector3(velValues[0], velValues[1], velValues[2]));
-               default:
-                   return null;
+                Enum.TryParse(pBind, out Key keyBind);
+                pInputManager._keyBinds.Add(pAction, keyBind);
            }
-       }
+           else
+           {
+                Enum.TryParse(pBind, out MouseButton mouseBind);
+                pInputManager._mouseBinds.Add(pAction, mouseBind);
+           }
+        }
     }
 }
