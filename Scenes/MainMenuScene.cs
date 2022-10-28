@@ -9,7 +9,6 @@ namespace OpenGL_Game.Scenes
 {
     class MainMenuScene : Scene
     {
-        private ScriptManager scriptManager;
         public MainMenuScene(SceneManager sceneManager) : base(sceneManager)
         {
             // Set the title of the window
@@ -17,17 +16,15 @@ namespace OpenGL_Game.Scenes
             // Set the Render and Update delegates to the Update and Render methods of this class
             sceneManager.renderer = Render;
             sceneManager.updater = Update;
-
-            scriptManager = new ScriptManager();
-
+            
             //sceneManager.mouseDelegate += Mouse_BottonPressed;
-            scriptManager.LoadControls("Scripts/MainMenuControls.json", ref sceneManager._inputManager);
-            sceneManager._inputManager.InitializeBinds();
+            sceneManager.scriptManager.LoadControls("Scripts/MainMenuControls.json", ref sceneManager.inputManager);
+            sceneManager.inputManager.InitializeBinds();
         }
 
         public override void Update(FrameEventArgs e)
         {
-            sceneManager._inputManager.ReadInput(sceneManager, null);
+            sceneManager.inputManager.ReadInput(sceneManager, null);
         }
 
         public override void Render(FrameEventArgs e)
@@ -47,22 +44,10 @@ namespace OpenGL_Game.Scenes
 
             GUI.Render();
         }
-
-        /*
-        public void Mouse_BottonPressed(MouseButtonEventArgs e)
-        {
-            switch (e.Button)
-            {
-                case MouseButton.Left:
-                    sceneManager.ChangeScene(SceneTypes.SCENE_GAME);
-                    break;
-            }
-        }
-        */
-
+        
         public override void Close()
         {
-            sceneManager._inputManager.ClearBinds();
+            sceneManager.inputManager.ClearBinds();
         }
         
     }

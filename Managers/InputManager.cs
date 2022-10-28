@@ -86,6 +86,7 @@ namespace OpenGL_Game.Managers
         {
             if (_keyBinds.Count != 0 || _mouseBinds.Count != 0) return;
             
+            /* Commented out for testing, default binds
             _keyBinds.Add("MOVE_FORWARD", Key.W);
             _keyBinds.Add("MOVE_BACKWARD", Key.S);
             _keyBinds.Add("MOVE_LEFT", Key.A);
@@ -93,7 +94,7 @@ namespace OpenGL_Game.Managers
             _keyBinds.Add("GAME_OVER", Key.M);
                 
             _mouseBinds.Add("START_GAME", MouseButton.Left);
-            
+            */
         }
 
         public void ClearBinds()

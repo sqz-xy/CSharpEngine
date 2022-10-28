@@ -17,7 +17,7 @@ namespace OpenGL_Game.Scenes
         public static float dt = 0;
         EntityManager entityManager;
         SystemManager systemManager;
-        private ScriptManager scriptManager;
+        //private ScriptManager scriptManager;
 
         // Made static because there should only be one
         public Camera camera;
@@ -29,7 +29,6 @@ namespace OpenGL_Game.Scenes
             gameInstance = this;
             entityManager = new EntityManager();
             systemManager = new SystemManager();
-            scriptManager = new ScriptManager();
 
             // Set the title of the window
             sceneManager.Title = "Game";
@@ -53,8 +52,8 @@ namespace OpenGL_Game.Scenes
             CreateEntities();
             CreateSystems();
 
-            scriptManager.LoadControls("Scripts/GameControls.json", ref sceneManager._inputManager);
-            sceneManager._inputManager.InitializeBinds();
+            sceneManager.scriptManager.LoadControls("Scripts/GameControls.json", ref sceneManager.inputManager);
+            sceneManager.inputManager.InitializeBinds();
 
             // TODO: Add your initialization logic here
 
@@ -62,33 +61,7 @@ namespace OpenGL_Game.Scenes
 
         private void CreateEntities()
         {
-            scriptManager.LoadEntities("Scripts/gameSceneScript.json", ref entityManager);
-            
-            /*
-            Entity newEntity;
-
-            newEntity = new Entity("Moon");
-            newEntity.AddComponent(new ComponentPosition(-2.0f, 0.0f, 0.0f));
-            newEntity.AddComponent(new ComponentGeometry("Geometry/Moon/moon.obj"));
-            entityManager.AddEntity(newEntity);
-
-            Entity wraithEntity;
-
-            wraithEntity = new Entity("Wraith_Raider_Starship");
-            wraithEntity.AddComponent(new ComponentPosition(2.0f, 0.0f, 0.0f));
-            wraithEntity.AddComponent(new ComponentGeometry("Geometry/Wraith_Raider_Starship/Wraith_Raider_Starship.obj"));
-            entityManager.AddEntity(wraithEntity);
-
-            Entity intergalacticEntity;
-
-            intergalacticEntity = new Entity("Intergalactic_Raider_Starship");
-            intergalacticEntity.AddComponent(new ComponentPosition(0.0f, 0.0f, 0.0f));
-            intergalacticEntity.AddComponent(new ComponentGeometry("Geometry/Cat/cat.obj"));
-            intergalacticEntity.AddComponent(new ComponentVelocity(new Vector3(0.0f, 1.0f, 1.0f)));
-            entityManager.AddEntity(intergalacticEntity);
-*/
-
-
+            sceneManager.scriptManager.LoadEntities("Scripts/gameSceneScript.json", ref entityManager);
         }
 
         private void CreateSystems()
@@ -113,7 +86,7 @@ namespace OpenGL_Game.Scenes
             dt = (float)e.Time;
             //System.Console.WriteLine("fps=" + (int)(1.0/dt));
 
-            sceneManager._inputManager.ReadInput(sceneManager, camera);
+            sceneManager.inputManager.ReadInput(sceneManager, camera);
             
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();

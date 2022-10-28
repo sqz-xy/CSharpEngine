@@ -151,7 +151,7 @@ namespace OpenGL_Game.Managers
         private void GetControls(string pAction, string pBind, ref InputManager pInputManager)
         {
            // Reset binds, error checking, look for enum mapping function
-           if (!(pBind.Split('.')[0] == "MouseButton"))
+           if (pBind.Split('.')[0] != "MouseButton")
            {
                 Enum.TryParse(pBind, out Key keyBind);
                 pInputManager._keyBinds.Add(pAction, keyBind);
