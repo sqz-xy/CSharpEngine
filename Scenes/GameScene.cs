@@ -53,6 +53,7 @@ namespace OpenGL_Game.Scenes
             CreateEntities();
             CreateSystems();
 
+            scriptManager.LoadControls("Scripts/GameControls.json", ref sceneManager._inputManager);
             sceneManager._inputManager.InitializeBinds();
 
             // TODO: Add your initialization logic here
@@ -148,29 +149,5 @@ namespace OpenGL_Game.Scenes
             //sceneManager.keyboardDownDelegate -= Keyboard_KeyDown;
             ResourceManager.RemoveAllAssets();
         }
-
-        /*
-        public void Keyboard_KeyDown(KeyboardKeyEventArgs e)
-        {
-            switch (e.Key)
-            {
-                case Key.Up:
-                    camera.MoveForward(0.1f);
-                    break;
-                case Key.Down:
-                    camera.MoveForward(-0.1f);
-                    break;
-                case Key.Left:
-                    camera.RotateY(-0.01f);
-                    break;
-                case Key.Right:
-                    camera.RotateY(0.01f);
-                    break;
-                case Key.M:
-                    sceneManager.ChangeScene(SceneTypes.SCENE_GAME_OVER);
-                    break;
-            }
-        }
-        */
     }
 }

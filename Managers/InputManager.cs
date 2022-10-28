@@ -84,19 +84,16 @@ namespace OpenGL_Game.Managers
 
         public void InitializeBinds()
         {
-            if (_keyBinds.Count == 0)
-            {
-                _keyBinds.Add("MOVE_FORWARD", Key.W);
-                _keyBinds.Add("MOVE_BACKWARD", Key.S);
-                _keyBinds.Add("MOVE_LEFT", Key.A);
-                _keyBinds.Add("MOVE_RIGHT", Key.D);
-                _keyBinds.Add("GAME_OVER", Key.M);
-            }
-
-            if (_mouseBinds.Count == 0)
-            {
-                _mouseBinds.Add("START_GAME", MouseButton.Left);
-            }
+            if (_keyBinds.Count != 0 || _mouseBinds.Count != 0) return;
+            
+            _keyBinds.Add("MOVE_FORWARD", Key.W);
+            _keyBinds.Add("MOVE_BACKWARD", Key.S);
+            _keyBinds.Add("MOVE_LEFT", Key.A);
+            _keyBinds.Add("MOVE_RIGHT", Key.D);
+            _keyBinds.Add("GAME_OVER", Key.M);
+                
+            _mouseBinds.Add("START_GAME", MouseButton.Left);
+            
         }
 
         public void ClearBinds()

@@ -1,0 +1,22 @@
+{
+  "Controls": [
+    {
+      "GAME_OVER": "M"
+    },
+    {
+      "CLOSE_GAME": "Q"
+    },
+    {
+      "MOVE_FORWARD": "W"
+    },
+    {
+      "MOVE_BACKWARD": "S"
+    },
+    {
+      "MOVE_LEFT": "A"
+    },
+    {
+    "MOVE_RIGHT": "D"
+    }
+  ]
+}
