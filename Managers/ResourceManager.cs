@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using OpenTK.Graphics.OpenGL;
 using OpenGL_Game.OBJLoader;
 
@@ -11,19 +12,27 @@ namespace OpenGL_Game.Managers
     {
         static Dictionary<string, Geometry> geometryDictionary = new Dictionary<string, Geometry>();
         static Dictionary<string, int> textureDictionary = new Dictionary<string, int>();
+        private static Dictionary<string, int> shaderDictionary = new Dictionary<string, int>();
 
         public static void RemoveAllAssets()
         {
-            foreach(var geometry in geometryDictionary)
+            foreach (var geometry in geometryDictionary)
             {
                 geometry.Value.RemoveGeometry();
             }
             geometryDictionary.Clear();
-            foreach(var texture in textureDictionary)
+            
+            foreach (var texture in textureDictionary)
             {
                 GL.DeleteTexture(texture.Value);
             }
             textureDictionary.Clear();
+            
+            foreach (var shader in shaderDictionary)
+            {
+                GL.DeleteShader(shader.Value);
+            }
+            shaderDictionary.Clear();
         }
 
         public static Geometry LoadGeometry(string filename)
@@ -39,7 +48,26 @@ namespace OpenGL_Game.Managers
 
             return geometry;
         }
-      
+
+        public static int LoadShader(string pFileName, ShaderType pType)
+        {
+            int shader;
+            shaderDictionary.TryGetValue(pFileName, out shader);
+
+            if (shader == 0)
+            {
+                shader = GL.CreateShader(pType);
+                using (StreamReader sr = new StreamReader(pFileName))
+                {
+                    GL.ShaderSource(shader, sr.ReadToEnd());
+                }
+                GL.CompileShader(shader);
+                Console.WriteLine(GL.GetProgramInfoLog(shader));
+                shaderDictionary.Add(pFileName, shader);
+            }
+
+            return shader;
+        }
 
         public static int LoadTexture(string filename)
         {

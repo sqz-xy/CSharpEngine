@@ -12,19 +12,19 @@ namespace OpenGL_Game.Systems
 {
     class SystemRender : ISystem
     {
-        const ComponentTypes MASK = (ComponentTypes.COMPONENT_POSITION | ComponentTypes.COMPONENT_GEOMETRY);
+        const ComponentTypes MASK = (ComponentTypes.COMPONENT_POSITION | ComponentTypes.COMPONENT_GEOMETRY | ComponentTypes.COMPONENT_SHADER);
 
-        protected int pgmID;
+        /*protected int pgmID;
         protected int vsID;
         protected int fsID;
         protected int uniform_stex;
         protected int uniform_mmodelviewproj;
         protected int uniform_mmodel;
-        protected int uniform_diffuse;  // OBJ NEW
+        protected int uniform_diffuse;  // OBJ NEW*/
 
         public SystemRender()
         {
-            pgmID = GL.CreateProgram();
+            /*pgmID = GL.CreateProgram();
             LoadShader("Shaders/vs.glsl", ShaderType.VertexShader, pgmID, out vsID);
             LoadShader("Shaders/fs.glsl", ShaderType.FragmentShader, pgmID, out fsID);
             GL.LinkProgram(pgmID);
@@ -33,10 +33,10 @@ namespace OpenGL_Game.Systems
             uniform_stex = GL.GetUniformLocation(pgmID, "s_texture");
             uniform_mmodelviewproj = GL.GetUniformLocation(pgmID, "ModelViewProjMat");
             uniform_mmodel = GL.GetUniformLocation(pgmID, "ModelMat");
-            uniform_diffuse = GL.GetUniformLocation(pgmID, "v_diffuse");     // OBJ NEW
+            uniform_diffuse = GL.GetUniformLocation(pgmID, "v_diffuse");     // OBJ NEW*/
         }
 
-        void LoadShader(String filename, ShaderType type, int program, out int address)
+        /*void LoadShader(String filename, ShaderType type, int program, out int address)
         {
             address = GL.CreateShader(type);
             using (StreamReader sr = new StreamReader(filename))
@@ -46,7 +46,7 @@ namespace OpenGL_Game.Systems
             GL.CompileShader(address);
             GL.AttachShader(program, address);
             Console.WriteLine(GL.GetShaderInfoLog(address));
-        }
+        }*/
 
         public string Name
         {
@@ -69,16 +69,23 @@ namespace OpenGL_Game.Systems
                 {
                     return component.ComponentType == ComponentTypes.COMPONENT_POSITION;
                 });
-                Vector3 position = ((ComponentPosition)positionComponent).Position;
+                Vector3 position = ((ComponentPosition) positionComponent).Position;
                 Matrix4 model = Matrix4.CreateTranslation(position);
 
-                Draw(model, geometry);
+                IComponent shaderComponent = components.Find(delegate(IComponent component)
+                {
+                    return component.ComponentType == ComponentTypes.COMPONENT_SHADER;
+                });
+                ComponentShader shader = (ComponentShader) shaderComponent;
+                
+                Draw(model, geometry, shader);
             }
         }
 
-        public void Draw(Matrix4 model, Geometry geometry)
+        public void Draw(Matrix4 model, Geometry geometry, ComponentShader pShader)
         {
-            GL.UseProgram(pgmID);
+            pShader.ApplyShader(model, geometry);
+            /*GL.UseProgram(pgmID);
 
             GL.Uniform1(uniform_stex, 0);
             GL.ActiveTexture(TextureUnit.Texture0);
@@ -89,7 +96,7 @@ namespace OpenGL_Game.Systems
 
             geometry.Render(uniform_diffuse);   // OBJ CHANGED
 
-            GL.UseProgram(0);
+            GL.UseProgram(0);*/
         }
     }
 }

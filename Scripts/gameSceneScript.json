@@ -6,6 +6,9 @@
     },
     {
       "COMPONENT_GEOMETRY": "Geometry/Moon/moon.obj"
+    },
+    {
+      "COMPONENT_SHADER" : "NoLights Shaders/vs.glsl Shaders/fs_nolights.glsl"
     }
   ]
 }
@@ -20,6 +23,9 @@
     },
     {
       "COMPONENT_VELOCITY": "1.0 0.0 0.0"
+    },
+    {
+      "COMPONENT_SHADER" : "Default"
     }
   ]
 }
@@ -31,6 +37,9 @@
     },
     {
       "COMPONENT_GEOMETRY": "Geometry/Wraith_Raider_Starship/Wraith_Raider_Starship.obj"
+    },
+    {
+      "COMPONENT_SHADER" : "Default"
     }
   ]
 }
@@ -45,6 +54,9 @@
     },
     {
       "COMPONENT_VELOCITY": "0.0 0.1 0.1"
+    },
+    {
+      "COMPONENT_SHADER" : "Default"
     }
   ]
 }
