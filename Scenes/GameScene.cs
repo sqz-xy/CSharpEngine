@@ -52,8 +52,8 @@ namespace OpenGL_Game.Scenes
             CreateEntities();
             CreateSystems();
 
-            sceneManager.scriptManager.LoadControls("Scripts/GameControls.json", ref sceneManager.inputManager);
-            sceneManager.inputManager.InitializeBinds();
+            ScriptManager.LoadControls("Scripts/GameControls.json", ref sceneManager.MnKInputManager);
+            sceneManager.MnKInputManager.InitializeBinds();
 
             // TODO: Add your initialization logic here
 
@@ -61,7 +61,7 @@ namespace OpenGL_Game.Scenes
 
         private void CreateEntities()
         {
-            sceneManager.scriptManager.LoadEntities("Scripts/gameSceneScript.json", ref entityManager);
+            ScriptManager.LoadEntities("Scripts/gameSceneScript.json", ref entityManager);
         }
 
         private void CreateSystems()
@@ -86,7 +86,7 @@ namespace OpenGL_Game.Scenes
             dt = (float)e.Time;
             //System.Console.WriteLine("fps=" + (int)(1.0/dt));
 
-            sceneManager.inputManager.ReadInput(sceneManager, camera);
+            sceneManager.MnKInputManager.ReadInput(sceneManager, camera);
             
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();

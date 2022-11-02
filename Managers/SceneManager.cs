@@ -12,9 +12,8 @@ namespace OpenGL_Game.Managers
         public static int width = 1200, height = 800;
         public static int windowXPos = 200, windowYPos = 80;
 
-        public InputManager inputManager;
-        public ScriptManager scriptManager;
-        
+        public MnKInputManager MnKInputManager;
+
         public delegate void SceneDelegate(FrameEventArgs e);
         public SceneDelegate renderer;
         public SceneDelegate updater;
@@ -33,8 +32,7 @@ namespace OpenGL_Game.Managers
         {
             this.X = windowXPos;
             this.Y = windowYPos;
-            inputManager = new InputManager();
-            scriptManager = new ScriptManager();
+            MnKInputManager = new MnKInputManager();
         }
 
         protected override void OnKeyDown(KeyboardKeyEventArgs e)

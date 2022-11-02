@@ -7,7 +7,7 @@
     {
       "COMPONENT_GEOMETRY": "Geometry/Moon/moon.obj"
     },
-    {
+    { 
       "COMPONENT_SHADER" : "NoLights Shaders/vs.glsl Shaders/fs_nolights.glsl"
     }
   ]

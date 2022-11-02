@@ -11,9 +11,9 @@ using OpenTK.Input;
 
 namespace OpenGL_Game.Managers
 {
-    class ScriptManager
+    static class ScriptManager
     {
-        public ScriptManager()
+        static ScriptManager()
         {
             // Set the json serializer settings
             JsonSerializerSettings jss = new JsonSerializerSettings
@@ -27,7 +27,7 @@ namespace OpenGL_Game.Managers
        /// </summary>
        /// <param name="pScriptName">The name of the script</param>
        /// <param name="pEntityManager">The entity manager</param>
-       public void LoadEntities(string pScriptName, ref EntityManager pEntityManager)
+       public static void LoadEntities(string pScriptName, ref EntityManager pEntityManager)
        {
            JsonSerializer serializer = new JsonSerializer();
            JsonTextReader reader = new JsonTextReader(new StreamReader(pScriptName));
@@ -86,7 +86,7 @@ namespace OpenGL_Game.Managers
         /// <param name="pComponentType">The type of component to create</param>
         /// <param name="pComponentValue">The values for the component</param>
         /// <returns>An IComponent object</returns>
-        private IComponent GetComponent(string pComponentType, string pComponentValue)
+        private static IComponent GetComponent(string pComponentType, string pComponentValue)
         {
             // May need to be changed in the future depending on the values of future component types
             // For each component type, return the component object, for components requiring vectors, split and format the string
@@ -121,7 +121,7 @@ namespace OpenGL_Game.Managers
             }
         }
 
-        public void LoadControls(string pScriptName, ref InputManager pInputManager)
+        public static void LoadControls(string pScriptName, ref MnKInputManager pMnKInputManager)
         {
             JsonSerializer serializer = new JsonSerializer();
             JsonTextReader reader = new JsonTextReader(new StreamReader(pScriptName));
@@ -153,24 +153,24 @@ namespace OpenGL_Game.Managers
                 {
                     foreach (JProperty property in jsonControl.Properties())
                     {
-                        GetControls(property.Name, (string)property.Value, ref pInputManager);
+                        GetControls(property.Name, (string)property.Value, ref pMnKInputManager);
                     }
                 }
             }
         }    
         
-        private void GetControls(string pAction, string pBind, ref InputManager pInputManager)
+        private static void GetControls(string pAction, string pBind, ref MnKInputManager pMnKInputManager)
         {
            // Reset binds, error checking, look for enum mapping function
            if (pBind.Split('.')[0] != "MouseButton")
            {
                 Enum.TryParse(pBind, out Key keyBind);
-                pInputManager._keyBinds.Add(pAction, keyBind);
+                pMnKInputManager._keyBinds.Add(pAction, keyBind);
            }
            else
            {
                 Enum.TryParse(pBind, out MouseButton mouseBind);
-                pInputManager._mouseBinds.Add(pAction, mouseBind);
+                pMnKInputManager._mouseBinds.Add(pAction, mouseBind);
            }
         }
     }
