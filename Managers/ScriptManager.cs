@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -6,6 +7,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OpenGL_Game.Components;
 using OpenGL_Game.Objects;
+using OpenGL_Game.OBJLoader;
+
 using OpenTK;
 using OpenTK.Input;
 
@@ -55,10 +58,15 @@ namespace OpenGL_Game.Managers
                if (token == null) {continue; }
                Entity newEntity = new Entity(token.ToString());
 
-               // Get the components
-               token = obj.SelectToken("Components");
-               if (token == null) {continue; }
-               JArray jsonComponents = JArray.Parse(token.ToString());
+                // isRenderable?
+                token = obj.SelectToken("IsRenderable");
+                if (token == null) { continue; }
+                bool isRenderable = bool.Parse(token.ToString());
+
+                // Get the components
+                token = obj.SelectToken("Components");
+                if (token == null) {continue; }
+                JArray jsonComponents = JArray.Parse(token.ToString());
 
                
                // Compare json components with the entity components
@@ -76,7 +84,8 @@ namespace OpenGL_Game.Managers
                        }
                    }
                }
-               pEntityManager.AddEntity(newEntity);
+
+                pEntityManager.AddEntity(newEntity, isRenderable);
            }
        }
 
@@ -100,6 +109,8 @@ namespace OpenGL_Game.Managers
                     return new ComponentPosition(new Vector3(posValues[0], posValues[1], posValues[2]));
                 case "COMPONENT_GEOMETRY":
                     return new ComponentGeometry(pComponentValue);
+                case "COMPONENT_RENDERABLE":
+                    return new ComponentRenderable(bool.Parse(pComponentValue));
                 case "COMPONENT_TEXTURE":
                     return new ComponentTexture(pComponentValue);
                 case "COMPONENT_VELOCITY":

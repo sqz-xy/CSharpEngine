@@ -1,5 +1,6 @@
 {
   "Name": "Moon",
+  "IsRenderable" : "True",
   "Components": [
     {
       "COMPONENT_POSITION": "-2.0 0.0 0.0"
@@ -7,13 +8,17 @@
     {
       "COMPONENT_GEOMETRY": "Geometry/Moon/moon.obj"
     },
-    { 
-      "COMPONENT_SHADER" : "NoLights Shaders/vs.glsl Shaders/fs_nolights.glsl"
+    {
+      "COMPONENT_SHADER": "NoLights Shaders/vs.glsl Shaders/fs_nolights.glsl"
+    },
+    {
+      "COMPONENT_RENDERABLE" :  "True"
     }
   ]
 }
 {
   "Name": "Cat",
+  "IsRenderable": "True",
   "Components": [
     {
       "COMPONENT_POSITION": "2.0 0.0 0.0"
@@ -25,12 +30,16 @@
       "COMPONENT_VELOCITY": "1.0 0.0 0.0"
     },
     {
-      "COMPONENT_SHADER" : "Default"
+      "COMPONENT_SHADER": "Default"
+    },
+    {
+      "COMPONENT_RENDERABLE": "False"
     }
   ]
 }
 {
   "Name": "Wraith_Raider_Starship",
+  "IsRenderable": "True",
   "Components": [
     {
       "COMPONENT_POSITION": "0.0 0.0 0.0"
@@ -39,12 +48,16 @@
       "COMPONENT_GEOMETRY": "Geometry/Wraith_Raider_Starship/Wraith_Raider_Starship.obj"
     },
     {
-      "COMPONENT_SHADER" : "Default"
+      "COMPONENT_SHADER": "Default"
+    },
+    {
+      "COMPONENT_RENDERABLE": "True"
     }
   ]
 }
 {
   "Name": "Wraith_Raider_Starship2",
+  "IsRenderable": "True",
   "Components": [
     {
       "COMPONENT_POSITION": "0.0 1.0 0.0"
@@ -56,7 +69,10 @@
       "COMPONENT_VELOCITY": "0.0 0.1 0.1"
     },
     {
-      "COMPONENT_SHADER" : "Default"
+      "COMPONENT_SHADER": "Default"
+    },
+    {
+      "COMPONENT_RENDERABLE": "True"
     }
   ]
 }

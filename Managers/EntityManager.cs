@@ -6,32 +6,57 @@ namespace OpenGL_Game.Managers
 {
     class EntityManager
     {
-        List<Entity> entityList;
+        List<Entity> renderableEntityList;
+        List<Entity> NonRenderableEntityList;
 
         public EntityManager()
         {
-            entityList = new List<Entity>();
+            renderableEntityList = new List<Entity>();
+            NonRenderableEntityList = new List<Entity>();
         }
 
-        public void AddEntity(Entity entity)
+        public void AddEntity(Entity entity, bool pIsRenderable)
         {
-            Entity result = FindEntity(entity.Name);
+            Entity result;
+            if (pIsRenderable)
+            {
+                result = FindRenderableEntity(entity.Name);
+                Debug.Assert(result == null, "Entity '" + entity.Name + "' already exists");
+                renderableEntityList.Add(entity);
+                return;
+            }
+            result = FindNonRenderableEntity(entity.Name);
             Debug.Assert(result == null, "Entity '" + entity.Name + "' already exists");
-            entityList.Add(entity);
+            NonRenderableEntityList.Add(entity);
+
         }
 
-        private Entity FindEntity(string name)
+        private Entity FindRenderableEntity(string name)
         {
-            return entityList.Find(delegate(Entity e)
+            return renderableEntityList.Find(delegate(Entity e)
             {
                 return e.Name == name;
             }
             );
         }
 
-        public List<Entity> Entities()
+        private Entity FindNonRenderableEntity(string name)
         {
-            return entityList;
+            return NonRenderableEntityList.Find(delegate (Entity e)
+            {
+                return e.Name == name;
+            }
+            );
+        }
+
+        public List<Entity> RenderableEntities()
+        {
+            return renderableEntityList;
+        }
+
+        public List<Entity> NonRenderableEntities()
+        {
+            return NonRenderableEntityList;
         }
     }
 }
