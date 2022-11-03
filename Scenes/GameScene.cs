@@ -17,7 +17,7 @@ namespace OpenGL_Game.Scenes
         public static float dt = 0;
         EntityManager entityManager;
         SystemManager systemManager;
-        //private ScriptManager scriptManager;
+        ScriptManager scriptManager;
 
         // Made static because there should only be one
         public Camera camera;
@@ -51,9 +51,9 @@ namespace OpenGL_Game.Scenes
 
             CreateEntities();
             CreateSystems();
-
-            ScriptManager.LoadControls("Scripts/GameControls.json", ref sceneManager.MnKInputManager);
-            sceneManager.MnKInputManager.InitializeBinds();
+            
+            sceneManager.scriptManager.LoadControls("Scripts/GameControls.json", ref sceneManager.inputManager);
+            sceneManager.inputManager.InitializeBinds();
 
             // TODO: Add your initialization logic here
 
@@ -61,7 +61,7 @@ namespace OpenGL_Game.Scenes
 
         private void CreateEntities()
         {
-            ScriptManager.LoadEntities("Scripts/gameSceneScript.json", ref entityManager);
+            sceneManager.scriptManager.LoadEntities("Scripts/gameSceneScript.json", ref entityManager);
         }
 
         private void CreateSystems()
@@ -90,7 +90,7 @@ namespace OpenGL_Game.Scenes
             // Action ALL Non renderable systems
             systemManager.ActionNonRenderableSystems(entityManager);
 
-            sceneManager.MnKInputManager.ReadInput(sceneManager, camera);
+            sceneManager.inputManager.ReadInput(sceneManager, camera);
             
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();

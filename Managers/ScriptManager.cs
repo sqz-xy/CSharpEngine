@@ -1,93 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using OpenGL_Game.Components;
-using OpenGL_Game.Objects;
-using OpenGL_Game.OBJLoader;
-
-using OpenTK;
-using OpenTK.Input;
+﻿using OpenGL_Game.Components;
 
 namespace OpenGL_Game.Managers
 {
-    static class ScriptManager
+    abstract class ScriptManager
     {
-        static ScriptManager()
-        {
-            // Set the json serializer settings
-            JsonSerializerSettings jss = new JsonSerializerSettings
-            {
-                TypeNameHandling = TypeNameHandling.All
-            };
-        }
-
-       /// <summary>
-       /// Reads a json script to create entities and their components
-       /// </summary>
-       /// <param name="pScriptName">The name of the script</param>
-       /// <param name="pEntityManager">The entity manager</param>
-       public static void LoadEntities(string pScriptName, ref EntityManager pEntityManager)
-       {
-           JsonSerializer serializer = new JsonSerializer();
-           JsonTextReader reader = new JsonTextReader(new StreamReader(pScriptName));
-           reader.SupportMultipleContent = true;            // Support multiple objects
-           
-           // For each object
-           while (true)
-           {
-               if (!reader.Read())
-                   break;
-
-               JObject obj;
-               try
-               {
-                   obj = (JObject) serializer.Deserialize(reader);
-               }
-               catch  (JsonSerializationException e)
-               {
-                   Console.WriteLine(e.Message);
-                   return;
-               }
-               
-               // Get the name of the object
-               JToken token = obj.SelectToken("Name");
-               if (token == null) {continue; }
-               Entity newEntity = new Entity(token.ToString());
-
-                // isRenderable?
-                token = obj.SelectToken("IsRenderable");
-                if (token == null) { continue; }
-                bool isRenderable = bool.Parse(token.ToString());
-
-                // Get the components
-                token = obj.SelectToken("Components");
-                if (token == null) {continue; }
-                JArray jsonComponents = JArray.Parse(token.ToString());
-
-               
-               // Compare json components with the entity components
-               foreach (var componentType in Enum.GetNames(typeof(ComponentTypes)))
-               {
-                   foreach (JObject jsonComponent in jsonComponents)
-                   {
-                       foreach (JProperty property in jsonComponent.Properties())
-                       {
-                           if (property.Name != componentType)
-                               continue;
-
-                           // If the entity component matches the json component, convert it from json to an entity component
-                           newEntity.AddComponent(GetComponent(componentType, (string) property.Value)); 
-                       }
-                   }
-               }
-
-                pEntityManager.AddEntity(newEntity, isRenderable);
-           }
-       }
+        /// <summary>
+        /// Reads a script to create entities and their components
+        /// </summary>
+        /// <param name="pScriptName">The name of the script</param>
+        /// <param name="pEntityManager">The entity manager</param>
+        public abstract void LoadEntities(string pScriptName, ref EntityManager pEntityManager);
 
         /// <summary>
         /// Converts component strings into component objects
@@ -95,94 +17,21 @@ namespace OpenGL_Game.Managers
         /// <param name="pComponentType">The type of component to create</param>
         /// <param name="pComponentValue">The values for the component</param>
         /// <returns>An IComponent object</returns>
-        private static IComponent GetComponent(string pComponentType, string pComponentValue)
-        {
-            // May need to be changed in the future depending on the values of future component types
-            // For each component type, return the component object, for components requiring vectors, split and format the string
-            // Are components part of the game or part of the engine because if they are game then I cant hard code them like this
-            // If they cant be hard coded then change the script to use the object names and then use Activator.CreateInstance (Requires empty constructor)
-            // Then modify components to accept data through a separate method, outlined in IComponent "public void AddData(String Data)"
-            switch (pComponentType)
-            {
-                case "COMPONENT_POSITION":
-                    float[] posValues = Array.ConvertAll(pComponentValue.Split(' '), float.Parse);
-                    return new ComponentPosition(new Vector3(posValues[0], posValues[1], posValues[2]));
-                case "COMPONENT_GEOMETRY":
-                    return new ComponentGeometry(pComponentValue);
-                case "COMPONENT_RENDERABLE":
-                    return new ComponentRenderable(bool.Parse(pComponentValue));
-                case "COMPONENT_TEXTURE":
-                    return new ComponentTexture(pComponentValue);
-                case "COMPONENT_VELOCITY":
-                    float[] velValues = Array.ConvertAll(pComponentValue.Split(' '), float.Parse);
-                    return new ComponentVelocity(new Vector3(velValues[0], velValues[1], velValues[2]));
-                case "COMPONENT_SHADER":
-                    string[] shaderValues = pComponentValue.Split(' ');
-                    switch (shaderValues[0])
-                    {
-                        case "Default":
-                            return new ComponentShaderDefault();
-                        case "NoLights":
-                            return new ComponentShaderNoLights(shaderValues[1], shaderValues[2]);
-                        default: 
-                            return new ComponentShaderDefault();
-                    }
-                default:
-                    return null;
-            }
-        }
+        public abstract IComponent GetComponent(string pComponentType, string pComponentValue);
 
-        public static void LoadControls(string pScriptName, ref GameInputManager pMnKInputManager)
-        {
-            JsonSerializer serializer = new JsonSerializer();
-            JsonTextReader reader = new JsonTextReader(new StreamReader(pScriptName));
-            reader.SupportMultipleContent = true;            // Support multiple objects
+        /// <summary>
+        /// Reads a script to load controls for a scene
+        /// </summary>
+        /// <param name="pScriptName">Name of the controls script</param>
+        /// <param name="pInputManager">The game input manager</param>
+        public abstract void LoadControls(string pScriptName, ref GameInputManager pInputManager);
 
-            // For each object
-            while (true)
-            {
-                if (!reader.Read())
-                    break;
-                
-                JObject obj;
-                try
-                {
-                    obj = (JObject)serializer.Deserialize(reader);
-                }
-                catch (JsonSerializationException e)
-                {
-                    Console.WriteLine(e.Message);
-                    return;
-                }
-                
-                // Get the name of the object
-                JToken token = obj.SelectToken("Controls");
-                if (token == null) { continue; }
-                JArray jsonControls = JArray.Parse(token.ToString());
-
-                foreach (JObject jsonControl in jsonControls)
-                {
-                    foreach (JProperty property in jsonControl.Properties())
-                    {
-                        GetControls(property.Name, (string)property.Value, ref pMnKInputManager);
-                    }
-                }
-            }
-        }    
-        
-        private static void GetControls(string pAction, string pBind, ref GameInputManager pMnKInputManager)
-        {
-           // Reset binds, error checking, look for enum mapping function
-           if (pBind.Split('.')[0] != "MouseButton")
-           {
-                Enum.TryParse(pBind, out Key keyBind);
-                pMnKInputManager._keyBinds.Add(pAction, keyBind);
-           }
-           else
-           {
-                Enum.TryParse(pBind, out MouseButton mouseBind);
-                pMnKInputManager._mouseBinds.Add(pAction, mouseBind);
-           }
-        }
+        /// <summary>
+        /// Adds the controls to the binding dictionary
+        /// </summary>
+        /// <param name="pAction">The action</param>
+        /// <param name="pBind">The input to bind to</param>
+        /// <param name="pInputManager">The game input manager</param>
+        public abstract void GetControls(string pAction, string pBind, ref GameInputManager pInputManager);
     }
 }

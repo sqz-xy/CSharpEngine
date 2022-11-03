@@ -17,13 +17,13 @@ namespace OpenGL_Game.Scenes
             sceneManager.renderer = Render;
             sceneManager.updater = Update;
             
-            ScriptManager.LoadControls("Scripts/MainMenuControls.json", ref sceneManager.MnKInputManager);
-            sceneManager.MnKInputManager.InitializeBinds();
+            sceneManager.scriptManager.LoadControls("Scripts/MainMenuControls.json", ref sceneManager.inputManager);
+            sceneManager.inputManager.InitializeBinds();
         }
 
         public override void Update(FrameEventArgs e)
         {
-            sceneManager.MnKInputManager.ReadInput(sceneManager, null);
+            sceneManager.inputManager.ReadInput(sceneManager, null);
         }
 
         public override void Render(FrameEventArgs e)
@@ -46,7 +46,7 @@ namespace OpenGL_Game.Scenes
         
         public override void Close()
         {
-            sceneManager.MnKInputManager.ClearBinds();
+            sceneManager.inputManager.ClearBinds();
         }
         
     }
