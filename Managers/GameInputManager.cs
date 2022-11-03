@@ -11,18 +11,18 @@ using OpenTK;
 namespace OpenGL_Game.Managers
 {
     // Reset binds when changing scene
-    class MnKInputManager
+    class GameInputManager : InputManager
     {
         public Dictionary<string, Key> _keyBinds;
         public Dictionary<string, MouseButton> _mouseBinds;
 
-        public MnKInputManager()
+        public GameInputManager()
         {
             _keyBinds = new Dictionary<string, Key>();
             _mouseBinds = new Dictionary<string, MouseButton>();
         }
 
-        public void ReadInput(SceneManager pSceneManager, Camera pCamera)
+        public override void ReadInput(SceneManager pSceneManager, Camera pCamera)
         {
             KeyboardState keyState = Keyboard.GetState();
 
@@ -45,7 +45,7 @@ namespace OpenGL_Game.Managers
             }
         }
 
-        public virtual void HandleInput(string pAction, SceneManager pSceneManager, Camera pCamera)
+        public override void HandleInput(string pAction, SceneManager pSceneManager, Camera pCamera)
         {
             // Non camera dependant actions
             switch (pAction)
@@ -82,7 +82,7 @@ namespace OpenGL_Game.Managers
             }
         }
 
-        public void InitializeBinds()
+        public override void InitializeBinds()
         {
             if (_keyBinds.Count != 0 || _mouseBinds.Count != 0) return;
             
@@ -97,7 +97,7 @@ namespace OpenGL_Game.Managers
             */
         }
 
-        public void ClearBinds()
+        public override void ClearBinds()
         {
             _keyBinds = new Dictionary<string, Key>();
             _mouseBinds = new Dictionary<string, MouseButton>();

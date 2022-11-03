@@ -121,7 +121,7 @@ namespace OpenGL_Game.Managers
             }
         }
 
-        public static void LoadControls(string pScriptName, ref MnKInputManager pMnKInputManager)
+        public static void LoadControls(string pScriptName, ref GameInputManager pMnKInputManager)
         {
             JsonSerializer serializer = new JsonSerializer();
             JsonTextReader reader = new JsonTextReader(new StreamReader(pScriptName));
@@ -159,7 +159,7 @@ namespace OpenGL_Game.Managers
             }
         }    
         
-        private static void GetControls(string pAction, string pBind, ref MnKInputManager pMnKInputManager)
+        private static void GetControls(string pAction, string pBind, ref GameInputManager pMnKInputManager)
         {
            // Reset binds, error checking, look for enum mapping function
            if (pBind.Split('.')[0] != "MouseButton")
