@@ -69,11 +69,11 @@ namespace OpenGL_Game.Scenes
             ISystem newSystem;
 
             newSystem = new SystemRender();
-            systemManager.AddSystem(newSystem);
+            systemManager.AddSystem(newSystem, true);
 
             ISystem physicsSystem;
             physicsSystem = new SystemPhysics();
-            systemManager.AddSystem(physicsSystem);
+            systemManager.AddSystem(physicsSystem, false);
         }
 
         /// <summary>
@@ -85,6 +85,10 @@ namespace OpenGL_Game.Scenes
         {
             dt = (float)e.Time;
             //System.Console.WriteLine("fps=" + (int)(1.0/dt));
+
+
+            // Action ALL Non renderable systems
+            systemManager.ActionNonRenderableSystems(entityManager);
 
             sceneManager.MnKInputManager.ReadInput(sceneManager, camera);
             
@@ -104,8 +108,8 @@ namespace OpenGL_Game.Scenes
             GL.Viewport(0, 0, sceneManager.Width, sceneManager.Height);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            // Action ALL systems
-            systemManager.ActionSystems(entityManager);
+            // Action ALL renderable systems
+            systemManager.ActionRenderableSystems(entityManager);
 
             // Render score
             float width = sceneManager.Width, height = sceneManager.Height, fontSize = Math.Min(width, height) / 10f;

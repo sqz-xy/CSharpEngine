@@ -6,16 +6,16 @@ namespace OpenGL_Game.Managers
 {
     class SystemManager
     {
-        List<ISystem> systemList = new List<ISystem>();
-
+        List<ISystem> renderableSystemList = new List<ISystem>();
+        List<ISystem> nonRenderableSystemList = new List<ISystem>();
         public SystemManager()
         {
         }
 
-        public void ActionSystems(EntityManager entityManager)
+        public void ActionRenderableSystems(EntityManager entityManager)
         {
             List<Entity> entityList = entityManager.Entities();
-            foreach(ISystem system in systemList)
+            foreach(ISystem system in renderableSystemList)
             {
                 foreach(Entity entity in entityList)
                 {
@@ -24,18 +24,43 @@ namespace OpenGL_Game.Managers
             }
         }
 
-        public void AddSystem(ISystem system)
+        public void ActionNonRenderableSystems(EntityManager entityManager)
         {
-            ISystem result = FindSystem(system.Name);
-            //Debug.Assert(result != null, "System '" + system.Name + "' already exists");
-            systemList.Add(system);
+            List<Entity> entityList = entityManager.Entities();
+            foreach (ISystem system in nonRenderableSystemList)
+            {
+                foreach (Entity entity in entityList)
+                {
+                    system.OnAction(entity);
+                }
+            }
         }
 
-        private ISystem FindSystem(string name)
+        public void AddSystem(ISystem system, bool pIsRenderable)
         {
-            return systemList.Find(delegate(ISystem system)
+            //ISystem result = FindSystem(system.Name);
+            //Debug.Assert(result != null, "System '" + system.Name + "' already exists");
+
+            if (pIsRenderable)
+                renderableSystemList.Add(system);
+         
+            nonRenderableSystemList.Add(system);
+        }
+
+        private ISystem FindRenderableSystem(string name)
+        {
+            return renderableSystemList.Find(delegate(ISystem system)
             {
                 return system.Name == name;
+            }
+            );
+        }
+
+        private ISystem FindNonRenderableSystem(string pName)
+        {
+            return nonRenderableSystemList.Find(delegate (ISystem system)
+            {
+                return system.Name == pName;
             }
             );
         }
