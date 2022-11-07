@@ -52,6 +52,18 @@ namespace OpenGL_Game.Managers
             nonRenderableSystemList.Add(system);
         }
 
+        public void CleanupSystems(EntityManager entityManager)
+        {
+            foreach (var system in nonRenderableSystemList.Concat(renderableSystemList).ToList())
+            {
+                List<Entity> entityList = (List<Entity>)entityManager.NonRenderableEntities().Concat(entityManager.RenderableEntities()).ToList();
+                foreach (Entity entity in entityList)
+                {
+                    system.Cleanup(entity);
+                }
+            }
+        }
+
         private ISystem FindRenderableSystem(string name)
         {
             return renderableSystemList.Find(delegate(ISystem system)

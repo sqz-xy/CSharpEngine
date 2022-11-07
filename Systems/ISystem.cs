@@ -6,6 +6,8 @@ namespace OpenGL_Game.Systems
     {
         void OnAction(Entity entity);
 
+        void Cleanup(Entity pEntity);
+
         // Property signatures: 
         string Name
         {

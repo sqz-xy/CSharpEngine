@@ -116,6 +116,8 @@ namespace OpenGL_Game.Managers
                 case "COMPONENT_VELOCITY":
                     float[] velValues = Array.ConvertAll(pComponentValue.Split(' '), float.Parse);
                     return new ComponentVelocity(new Vector3(velValues[0], velValues[1], velValues[2]));
+                case "COMPONENT_AUDIO":
+                    return new ComponentAudio(pComponentValue);
                 case "COMPONENT_SHADER":
                     string[] shaderValues = pComponentValue.Split(' ');
                     switch (shaderValues[0])

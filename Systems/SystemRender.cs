@@ -48,6 +48,11 @@ namespace OpenGL_Game.Systems
             Console.WriteLine(GL.GetShaderInfoLog(address));
         }*/
 
+        public void Cleanup(Entity pEntity)
+        {
+            
+        }
+
         public string Name
         {
             get { return "SystemRender"; }

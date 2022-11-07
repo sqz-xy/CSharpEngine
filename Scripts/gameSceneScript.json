@@ -34,6 +34,9 @@
     },
     {
       "COMPONENT_RENDERABLE": "False"
+    },
+    {
+      "COMPONENT_AUDIO" : "Audio/buzz.wav"
     }
   ]
 }

@@ -31,7 +31,7 @@ namespace OpenGL_Game.Managers
 
         }
 
-        private Entity FindRenderableEntity(string name)
+        public Entity FindRenderableEntity(string name)
         {
             return renderableEntityList.Find(delegate(Entity e)
             {

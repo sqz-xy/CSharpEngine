@@ -7,6 +7,8 @@ using OpenGL_Game.Managers;
 using OpenGL_Game.Objects;
 using System.Drawing;
 using System;
+using OpenTK.Audio.OpenAL;
+
 namespace OpenGL_Game.Scenes
 {
 /// <summary>
@@ -62,9 +64,19 @@ namespace OpenGL_Game.Scenes
         private void CreateEntities()
         {
             sceneManager.scriptManager.LoadEntities("Scripts/gameSceneScript.json", ref entityManager);
+
+            Entity newEntity;
+
+            newEntity = new Entity("Moon2");
+            newEntity.AddComponent(new ComponentPosition(0.0f, 0.0f, 0.0f));
+            newEntity.AddComponent(new ComponentGeometry("Geometry/Moon/moon.obj"));
+            newEntity.AddComponent(new ComponentAudio("Audio/buzz.wav"));
+            newEntity.AddComponent(new ComponentShaderDefault());
+            newEntity.AddComponent(new ComponentVelocity(0.3f, 0f, 0.5f));
+            //entityManager.AddEntity(newEntity, true);
         }
 
-        private void CreateSystems()
+        private void CreateSystems() 
         {
             ISystem newSystem;
 
@@ -74,6 +86,10 @@ namespace OpenGL_Game.Scenes
             ISystem physicsSystem;
             physicsSystem = new SystemPhysics();
             systemManager.AddSystem(physicsSystem, false);
+
+            ISystem audioSystem;
+            audioSystem = new SystemAudio();
+            systemManager.AddSystem(audioSystem, false);
         }
 
         /// <summary>
@@ -86,6 +102,11 @@ namespace OpenGL_Game.Scenes
             dt = (float)e.Time;
             //System.Console.WriteLine("fps=" + (int)(1.0/dt));
 
+                        
+            // NEW for Audio
+            // Update OpenAL Listener Position and Orientation based on the camera
+            AL.Listener(ALListener3f.Position, ref camera.cameraPosition);
+            AL.Listener(ALListenerfv.Orientation, ref camera.cameraDirection, ref camera.cameraUp);
 
             // Action ALL Non renderable systems
             systemManager.ActionNonRenderableSystems(entityManager);
@@ -96,7 +117,9 @@ namespace OpenGL_Game.Scenes
                 sceneManager.Exit();
 
             // TODO: Add your update logic here
+            
 
+            
         }
 
         /// <summary>
@@ -123,8 +146,9 @@ namespace OpenGL_Game.Scenes
         /// </summary>
         public override void Close()
         {
+            systemManager.CleanupSystems(entityManager);
             //sceneManager.keyboardDownDelegate -= Keyboard_KeyDown;
-            ResourceManager.RemoveAllAssets();
+            //ResourceManager.RemoveAllAssets();
         }
     }
 }

@@ -19,6 +19,11 @@ namespace OpenGL_Game.Systems
 
         }
 
+        public void Cleanup(Entity pEntity)
+        {
+            
+        }
+
         public string Name
         {
             get { return "SystemPhysics"; }
