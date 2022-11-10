@@ -39,9 +39,12 @@ namespace OpenGL_Game.Systems
             StopAudio(pEntity);
         }
 
+        // May have issues with multiple sources
         private void PlayAudio(int pAudioSource, Vector3 pPosition)
         {
             AL.Source(pAudioSource, ALSource3f.Position, ref pPosition);
+
+            // This will need to be moved
             if (!playingAudio)
             {
                 AL.SourcePlay(pAudioSource); // play the audio source 
@@ -61,8 +64,8 @@ namespace OpenGL_Game.Systems
                 });
                 int audioSource = ((ComponentAudio) audioComponent).AudioSource;
                 
-                AL.SourceStop(audioSource);     // NEW for Audio
-                AL.DeleteSource(audioSource);   // NEW for Audio
+                AL.SourceStop(audioSource); 
+                AL.DeleteSource(audioSource);   
             }
         }
 

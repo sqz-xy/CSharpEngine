@@ -14,6 +14,8 @@ namespace OpenGL_Game.Components
             audioSource = ResourceManager.GenerateAudioSource(audio);
         }
 
+        // Set Position, Play Source, Stop Source
+
         public int Audio
         {
             get { return audio; }
