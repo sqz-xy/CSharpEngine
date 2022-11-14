@@ -18,7 +18,7 @@ namespace OpenGL_Game.Managers
         static Dictionary<string, int> audioDictionary = new Dictionary<string, int>();
         
         // I added this
-        static List<int> audioSources = new List<int>();
+        //static List<int> audioSources = new List<int>();
 
         public static void RemoveAllAssets()
         {
@@ -140,16 +140,6 @@ namespace OpenGL_Game.Managers
             return audioBuffer;
         }
 
-        // I added this
-        public static int GenerateAudioSource(int pAudioBuffer)
-        {
-            int audioSource = AL.GenSource();
-            AL.Source(audioSource, ALSourcei.Buffer, pAudioBuffer); // attach the buffer to a source
-            AL.Source(audioSource, ALSourceb.Looping, true); // source loops infinitely
-            audioSources.Add(audioSource);
-            return audioSource;
-        }
-        
         /// <summary>
         /// Load a WAV file.
         /// </summary>

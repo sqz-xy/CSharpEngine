@@ -5,27 +5,30 @@ namespace OpenGL_Game.Components
 {
     public class ComponentAudio : IComponent
     {
-        int audio;
         int audioSource;
 
         public ComponentAudio(string pAudioName)
         {
-            audio = ResourceManager.LoadAudio(pAudioName);
-            audioSource = ResourceManager.GenerateAudioSource(audio);
+            audioSource = AL.GenSource();
+            AL.Source(audioSource, ALSourcei.Buffer, ResourceManager.LoadAudio(pAudioName)); // attach the buffer to a source
+            AL.Source(audioSource, ALSourceb.Looping, true); // source loops infinitely
         }
 
-        // Set Position, Play Source, Stop Source
-
-        public int Audio
-        {
-            get { return audio; }
-        }
-        
         public int AudioSource
         {
             get { return audioSource; }
         }
+        
+        public void PlayAudio()
+        {
+            // Play
+        }
 
+        public void StopAudio()
+        {
+            // Stop
+        }
+        
         public ComponentTypes ComponentType
         {
             get { return ComponentTypes.COMPONENT_AUDIO; }
