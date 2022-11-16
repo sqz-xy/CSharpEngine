@@ -63,17 +63,26 @@ namespace OpenGL_Game.Scenes
 
         private void CreateEntities()
         {
-            sceneManager.scriptManager.LoadEntities("Scripts/gameSceneScript.json", ref entityManager);
+            //sceneManager.scriptManager.LoadEntities("Scripts/gameSceneScript.json", ref entityManager);
 
             Entity newEntity;
 
             newEntity = new Entity("Moon2");
-            newEntity.AddComponent(new ComponentPosition(0.0f, 0.0f, 0.0f));
+            newEntity.AddComponent(new ComponentPosition(-5.0f, 0.0f, 0.0f));
             newEntity.AddComponent(new ComponentGeometry("Geometry/Moon/moon.obj"));
-            newEntity.AddComponent(new ComponentAudio("Audio/buzz.wav"));
             newEntity.AddComponent(new ComponentShaderDefault());
-            newEntity.AddComponent(new ComponentVelocity(0.3f, 0f, 0.5f));
-            //entityManager.AddEntity(newEntity, true);
+            newEntity.AddComponent(new ComponentVelocity(0.5f, 0f, 0.0f));
+            newEntity.AddComponent(new ComponentCollisionSphere(1.5f));
+            entityManager.AddEntity(newEntity, true);
+            
+            
+            newEntity = new Entity("Moon3");
+            newEntity.AddComponent(new ComponentPosition(5.0f, 0.0f, 0.0f));
+            newEntity.AddComponent(new ComponentGeometry("Geometry/Moon/moon.obj"));
+            newEntity.AddComponent(new ComponentShaderDefault());
+            newEntity.AddComponent(new ComponentVelocity(-0.5f, 0f, 0.0f));
+            newEntity.AddComponent(new ComponentCollisionSphere(1.5f));
+            entityManager.AddEntity(newEntity, true);
         }
 
         private void CreateSystems() 
