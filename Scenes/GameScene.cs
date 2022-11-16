@@ -82,6 +82,7 @@ namespace OpenGL_Game.Scenes
             newEntity.AddComponent(new ComponentShaderDefault());
             newEntity.AddComponent(new ComponentVelocity(-0.5f, 0f, 0.0f));
             newEntity.AddComponent(new ComponentCollisionSphere(1.5f));
+            newEntity.AddComponent(new ComponentAudio("Audio/buzz.wav"));
             entityManager.AddEntity(newEntity, true);
         }
 
@@ -99,6 +100,10 @@ namespace OpenGL_Game.Scenes
             ISystem audioSystem;
             audioSystem = new SystemAudio();
             systemManager.AddSystem(audioSystem, false);
+
+            ISystem collisionCameraSphereSystem;
+            collisionCameraSphereSystem = new SystemCollisionCameraSphere(sceneManager.collisionManager, camera);
+            systemManager.AddSystem(collisionCameraSphereSystem, false);
         }
 
         /// <summary>

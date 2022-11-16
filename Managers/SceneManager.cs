@@ -17,6 +17,7 @@ namespace OpenGL_Game.Managers
 
         public GameInputManager inputManager;
         public GameScriptManager scriptManager;
+        public CollisionManager collisionManager;
 
         public delegate void SceneDelegate(FrameEventArgs e);
         public SceneDelegate renderer;
@@ -40,6 +41,7 @@ namespace OpenGL_Game.Managers
             this.Y = windowYPos;
             inputManager = new GameInputManager();
             scriptManager = new GameScriptManager();
+            collisionManager = new GameCollisionManager();
             
             audioContext = new AudioContext();
         }
@@ -86,6 +88,8 @@ namespace OpenGL_Game.Managers
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
+            
+            collisionManager.ProcessCollisions();
             
             updater(e);
         }

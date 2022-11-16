@@ -28,47 +28,22 @@ namespace OpenGL_Game.Systems
                 {
                     return component.ComponentType == ComponentTypes.COMPONENT_AUDIO;
                 });
-                int audioSource = ((ComponentAudio) audioComponent).AudioSource;
+                ComponentAudio audio = ((ComponentAudio) audioComponent);
 
-                PlayAudio(audioSource, position);
+                UpdateSourcePosition(audio, position);
             }
         }
 
         public void Cleanup(Entity pEntity)
         {
-            StopAudio(pEntity);
+            
         }
-
-        // May have issues with multiple sources
-        private void PlayAudio(int pAudioSource, Vector3 pPosition)
+        
+        private void UpdateSourcePosition(ComponentAudio pComponentAudio, Vector3 pPosition)
         {
-            AL.Source(pAudioSource, ALSource3f.Position, ref pPosition);
-
-            // This will need to be moved
-            if (!playingAudio)
-            {
-                AL.SourcePlay(pAudioSource); // play the audio source 
-                playingAudio = true;
-            }
+            pComponentAudio.UpdateAudioPosition(pPosition);
         }
-
-        public void StopAudio(Entity pEntity)
-        {
-            if ((pEntity.Mask & MASK) == MASK)
-            {
-                List<IComponent> components = pEntity.Components;
-                
-                IComponent audioComponent = components.Find(delegate(IComponent component)
-                {
-                    return component.ComponentType == ComponentTypes.COMPONENT_AUDIO;
-                });
-                int audioSource = ((ComponentAudio) audioComponent).AudioSource;
-                
-                AL.SourceStop(audioSource); 
-                AL.DeleteSource(audioSource);   
-            }
-        }
-
+        
         public string Name { get; }
     }
 }

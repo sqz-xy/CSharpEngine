@@ -88,6 +88,8 @@
     <Compile Include="Components\ComponentShaderDefault.cs" />
     <Compile Include="Components\ComponentShaderNoLights.cs" />
     <Compile Include="Components\ComponentVelocity.cs" />
+    <Compile Include="Managers\CollisionManager.cs" />
+    <Compile Include="Managers\GameCollisionManager.cs" />
     <Compile Include="Managers\InputManager.cs" />
     <Compile Include="Managers\GameInputManager.cs" />
     <Compile Include="Managers\GameScriptManager.cs" />
@@ -156,6 +158,8 @@
     <Compile Include="Systems\ISystem.cs" />
     <Compile Include="Managers\SystemManager.cs" />
     <Compile Include="Systems\SystemAudio.cs" />
+    <Compile Include="Systems\SystemCollisionCameraSphere.cs" />
+    <Compile Include="Systems\SystemCollisionSphere.cs" />
     <Compile Include="Systems\SystemPhysics.cs" />
     <Compile Include="Systems\SystemRender.cs" />
     <Compile Include="Utility\Keybind.cs" />

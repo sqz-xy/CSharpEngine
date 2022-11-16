@@ -16,7 +16,7 @@ namespace OpenGL_Game.Managers
 {
     class GameScriptManager : ScriptManager
     {
-        static GameScriptManager()
+        public GameScriptManager()
         {
             // Set the json serializer settings
             JsonSerializerSettings jss = new JsonSerializerSettings

@@ -1,13 +1,15 @@
-﻿using OpenTK;
+﻿using System.Diagnostics.Contracts;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL_Game
 {
-    class Camera
+    public class Camera
     {
         public Matrix4 view, projection;
         public Vector3 cameraPosition, cameraDirection, cameraUp;
         private Vector3 targetPosition;
+        public float Radius = 1.5f;
 
         public Camera()
         {
