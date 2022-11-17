@@ -7,10 +7,7 @@ namespace OpenGL_Game.Managers
 {
     public class GameCollisionManager : CollisionManager
     {
-        /*  Removed camera collision
-         *  Add sphere to camera 
-         *  https://developer.mozilla.org/en-US/docs/Games/Techniques/3D_collision_detection
-         */
+        //TODO: Add a sphere to the player, systemPlayer to update the position, remove camerasphere, add sphere-box collision
 
         public override void ProcessCollisions()
         {
