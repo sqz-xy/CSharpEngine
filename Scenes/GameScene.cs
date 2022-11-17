@@ -63,7 +63,7 @@ namespace OpenGL_Game.Scenes
 
         private void CreateEntities()
         {
-            sceneManager.scriptManager.LoadEntities("Scripts/gameSceneScript.json", ref entityManager);
+            //sceneManager.scriptManager.LoadEntities("Scripts/gameSceneScript.json", ref entityManager);
 
             Entity newEntity;
 
@@ -73,7 +73,7 @@ namespace OpenGL_Game.Scenes
             newEntity.AddComponent(new ComponentShaderDefault());
             newEntity.AddComponent(new ComponentVelocity(0.5f, 0f, 0.0f));
             newEntity.AddComponent(new ComponentCollisionSphere(1.5f));
-            //entityManager.AddEntity(newEntity, true);
+            entityManager.AddEntity(newEntity, true);
             
             
             newEntity = new Entity("Moon3");
@@ -83,7 +83,7 @@ namespace OpenGL_Game.Scenes
             newEntity.AddComponent(new ComponentVelocity(-0.5f, 0f, 0.0f));
             newEntity.AddComponent(new ComponentCollisionSphere(1.5f));
             newEntity.AddComponent(new ComponentOpenALAudio("Audio/buzz.wav"));
-            //entityManager.AddEntity(newEntity, true);
+            entityManager.AddEntity(newEntity, true);
         }
 
         private void CreateSystems() 
@@ -104,6 +104,10 @@ namespace OpenGL_Game.Scenes
             ISystem collisionCameraSphereSystem;
             collisionCameraSphereSystem = new SystemCollisionCameraSphere(sceneManager.collisionManager, camera);
             systemManager.AddSystem(collisionCameraSphereSystem, false);
+
+            ISystem collisionSphereSystem;
+            collisionSphereSystem = new SystemCollisionSphere(sceneManager.collisionManager);
+            systemManager.AddSystem(collisionSphereSystem, false);
         }
 
         /// <summary>

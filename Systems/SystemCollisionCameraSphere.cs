@@ -53,8 +53,7 @@ namespace OpenGL_Game.Systems
         // Pass by ref so the values within the entity change
         private void CheckCollision(Entity pEntity, ComponentPosition pComponentPosition, ComponentCollisionSphere pComponentCollisionSphere)
         {
-            if ((pComponentPosition.Position - _camera.cameraPosition).Length <
-                pComponentCollisionSphere.CollisionField + _camera.Radius)
+            if ((pComponentPosition.Position - _camera.cameraPosition).Length < pComponentCollisionSphere.CollisionField + _camera.Radius)
             {
                 _collisionManager.CollisionBetweenCamera(pEntity, COLLISIONTYPE.SPHERE_SPHERE);
             }

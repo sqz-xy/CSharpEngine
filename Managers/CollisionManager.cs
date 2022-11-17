@@ -36,6 +36,20 @@ namespace OpenGL_Game.Managers
             _collisionManifold.Add(collision);
         }
 
+        public void CollisionBetweenSpheres(Entity pEntity, COLLISIONTYPE pCollisionType)
+        {
+            foreach (var coll in _collisionManifold)
+                if (coll.entity == pEntity)
+                    return;
+
+            Console.WriteLine("Collision");
+
+            Collision collision;
+            collision.entity = pEntity;
+            collision.collisionType = pCollisionType;
+            _collisionManifold.Add(collision);
+        }
+
         public abstract void ProcessCollisions();
 
     }
