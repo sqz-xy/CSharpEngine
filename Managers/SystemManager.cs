@@ -18,24 +18,14 @@ namespace OpenGL_Game.Managers
         {
             List<Entity> entityList = entityManager.RenderableEntities();
             foreach (ISystem system in renderableSystemList)
-            {
-                foreach(Entity entity in entityList)
-                {
-                    system.OnAction(entity);
-                }
-            }
+                system.OnAction(entityList);
         }
 
         public void ActionNonRenderableSystems(EntityManager entityManager)
         {
             List<Entity> entityList = (List<Entity>)entityManager.NonRenderableEntities().Concat(entityManager.RenderableEntities()).ToList();
             foreach (ISystem system in nonRenderableSystemList)
-            {
-                foreach (Entity entity in entityList)
-                {
-                    system.OnAction(entity);
-                }
-            }
+                system.OnAction(entityList);
         }
 
         public void AddSystem(ISystem system, bool pIsRenderable)

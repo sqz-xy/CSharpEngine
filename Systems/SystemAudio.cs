@@ -12,26 +12,27 @@ namespace OpenGL_Game.Systems
         
         const ComponentTypes MASK = (ComponentTypes.COMPONENT_POSITION | ComponentTypes.COMPONENT_AUDIO);
         private bool playingAudio = false;
-        public void OnAction(Entity entity)
+        public void OnAction(List<Entity> pEntity)
         {
-            if ((entity.Mask & MASK) == MASK)
-            {
-                List<IComponent> components = entity.Components;
-
-                IComponent positionComponent = components.Find(delegate(IComponent component)
+            foreach (var entity in pEntity)
+                if ((entity.Mask & MASK) == MASK)
                 {
-                    return component.ComponentType == ComponentTypes.COMPONENT_POSITION;
-                });
-                Vector3 position = ((ComponentPosition)positionComponent).Position;
+                    List<IComponent> components = entity.Components;
 
-                IComponent audioComponent = components.Find(delegate(IComponent component)
-                {
-                    return component.ComponentType == ComponentTypes.COMPONENT_AUDIO;
-                });
-                ComponentAudio audio = ((ComponentAudio) audioComponent);
+                    IComponent positionComponent = components.Find(delegate (IComponent component)
+                    {
+                        return component.ComponentType == ComponentTypes.COMPONENT_POSITION;
+                    });
+                    Vector3 position = ((ComponentPosition)positionComponent).Position;
 
-                UpdateSourcePosition(audio, position);
-            }
+                    IComponent audioComponent = components.Find(delegate (IComponent component)
+                    {
+                        return component.ComponentType == ComponentTypes.COMPONENT_AUDIO;
+                    });
+                    ComponentAudio audio = ((ComponentAudio)audioComponent);
+
+                    UpdateSourcePosition(audio, position);
+                }
         }
 
         public void Cleanup(Entity pEntity)

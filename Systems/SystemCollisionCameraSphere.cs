@@ -27,26 +27,27 @@ namespace OpenGL_Game.Systems
             get { return "SystemCollisionSphere"; }
         }
 
-        public void OnAction(Entity entity)
+        public void OnAction(List<Entity> pEntity)
         {
-            if ((entity.Mask & MASK) == MASK)
-            {
-                List<IComponent> components = entity.Components;
-
-                IComponent positionComponent = components.Find(delegate(IComponent component)
+            foreach (var entity in pEntity)
+                if ((entity.Mask & MASK) == MASK)
                 {
-                    return component.ComponentType == ComponentTypes.COMPONENT_POSITION;
-                });
-                ComponentPosition position = (ComponentPosition)positionComponent;
+                    List<IComponent> components = entity.Components;
 
-                IComponent collisionComponent = components.Find(delegate(IComponent component)
-                {
-                    return component.ComponentType == ComponentTypes.COMPONENT_COLLISION_SPHERE;
-                });
-                ComponentCollisionSphere collision = (ComponentCollisionSphere)collisionComponent;
+                    IComponent positionComponent = components.Find(delegate(IComponent component)
+                    {
+                        return component.ComponentType == ComponentTypes.COMPONENT_POSITION;
+                    });
+                    ComponentPosition position = (ComponentPosition)positionComponent;
+
+                    IComponent collisionComponent = components.Find(delegate(IComponent component)
+                    {
+                        return component.ComponentType == ComponentTypes.COMPONENT_COLLISION_SPHERE;
+                    });
+                    ComponentCollisionSphere collision = (ComponentCollisionSphere)collisionComponent;
                 
-                CheckCollision(entity, position, collision );
-            }
+                    CheckCollision(entity, position, collision );
+                }
         }
 
         // Pass by ref so the values within the entity change

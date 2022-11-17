@@ -29,26 +29,27 @@ namespace OpenGL_Game.Systems
             get { return "SystemPhysics"; }
         }
 
-        public void OnAction(Entity entity)
+        public void OnAction(List<Entity> pEntity)
         {
-            if ((entity.Mask & MASK) == MASK)
-            {
-                List<IComponent> components = entity.Components;
-
-                IComponent positionComponent = components.Find(delegate(IComponent component)
+            foreach (var entity in pEntity)
+                if ((entity.Mask & MASK) == MASK)
                 {
-                    return component.ComponentType == ComponentTypes.COMPONENT_POSITION;
-                });
-                ComponentPosition position = (ComponentPosition)positionComponent;
+                    List<IComponent> components = entity.Components;
 
-                IComponent velocityComponent = components.Find(delegate(IComponent component)
-                {
-                    return component.ComponentType == ComponentTypes.COMPONENT_VELOCITY;
-                });
-                ComponentVelocity velocity = (ComponentVelocity)velocityComponent;
+                    IComponent positionComponent = components.Find(delegate(IComponent component)
+                    {
+                        return component.ComponentType == ComponentTypes.COMPONENT_POSITION;
+                    });
+                    ComponentPosition position = (ComponentPosition)positionComponent;
 
-                Motion(ref position, ref velocity);
-            }
+                    IComponent velocityComponent = components.Find(delegate(IComponent component)
+                    {
+                        return component.ComponentType == ComponentTypes.COMPONENT_VELOCITY;
+                    });
+                    ComponentVelocity velocity = (ComponentVelocity)velocityComponent;
+
+                    Motion(ref position, ref velocity);
+                }
         }
 
         // Pass by ref so the values within the entity change
