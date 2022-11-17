@@ -36,14 +36,14 @@ namespace OpenGL_Game.Systems
                 {
                     foreach (var secondEntity in pEntity)
                     {
-                        if ((firstEntity.Mask & MASK) == MASK)
+                        if ((secondEntity.Mask & MASK) == MASK)
                         {
+                            // Check if an inverse collision is also added
                             CheckCollision(firstEntity, secondEntity);
                         }
                     }
                 }
             }
-
         }
 
         private void ExtractComponents(Entity pEntity, out ComponentPosition pComponentPosition, out ComponentCollisionSphere pComponentCollision)
