@@ -10,6 +10,7 @@ using OpenGL_Game.Objects;
 using OpenGL_Game.OBJLoader;
 
 using OpenTK;
+using OpenTK.Audio.OpenAL;
 using OpenTK.Input;
 
 namespace OpenGL_Game.Managers
@@ -117,7 +118,8 @@ namespace OpenGL_Game.Managers
                     float[] velValues = Array.ConvertAll(pComponentValue.Split(' '), float.Parse);
                     return new ComponentVelocity(new Vector3(velValues[0], velValues[1], velValues[2]));
                 case "COMPONENT_AUDIO":
-                    return new ComponentOpenALAudio(pComponentValue);
+                    string[] audioValues = pComponentValue.Split(' ');
+                    return new ComponentOpenALAudio(audioValues[0], bool.Parse(audioValues[1]));
                 case "COMPONENT_COLLISION_SPHERE":
                     return new ComponentCollisionSphere(float.Parse(pComponentValue));
                 case "COMPONENT_SHADER":

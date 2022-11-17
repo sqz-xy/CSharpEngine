@@ -43,6 +43,7 @@ namespace OpenGL_Game.Systems
         private void UpdateSourcePosition(ComponentAudio pComponentAudio, Vector3 pPosition)
         {
             pComponentAudio.UpdateAudioPosition(pPosition);
+            //pComponentAudio.PlayAudio();
         }
         
         public string Name { get; }

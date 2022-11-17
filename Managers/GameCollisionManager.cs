@@ -27,7 +27,7 @@ namespace OpenGL_Game.Managers
                 ComponentAudio audio2 = (ComponentAudio)entity1Audioomponent;
 
                 audio1.PlayAudio();
-                //audio2.PlayAudio();
+                audio2.PlayAudio();
 
             }
             

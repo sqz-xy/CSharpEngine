@@ -18,7 +18,7 @@
       "COMPONENT_COLLISION_SPHERE" :  "1.5"
     },
     {
-      "COMPONENT_AUDIO" : "Audio/buzz.wav"
+      "COMPONENT_AUDIO" : "Audio/buzz.wav True"
     }
   ]
 }
@@ -42,7 +42,7 @@
       "COMPONENT_RENDERABLE": "False"
     },
     {
-      "COMPONENT_AUDIO" : "Audio/buzz.wav"
+      "COMPONENT_AUDIO" : "Audio/buzz.wav True"
     }
   ]
 }

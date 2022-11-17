@@ -1,4 +1,5 @@
-﻿using OpenGL_Game.Managers;
+﻿using System;
+using OpenGL_Game.Managers;
 using OpenTK;
 using OpenTK.Audio.OpenAL;
 
@@ -9,11 +10,11 @@ namespace OpenGL_Game.Components
         int _audioSource;
         private bool playingAudio = false;
 
-        public ComponentOpenALAudio(string pAudioName)
+        public ComponentOpenALAudio(string pAudioName, bool pIsLooping)
         {
             _audioSource = AL.GenSource();
             AL.Source(_audioSource, ALSourcei.Buffer, ResourceManager.LoadAudio(pAudioName)); // attach the buffer to a source
-            AL.Source(_audioSource, ALSourceb.Looping, true); // source loops infinitely
+            AL.Source(_audioSource, ALSourceb.Looping, pIsLooping); // source loops infinitely
         }
 
         public int AudioSource
