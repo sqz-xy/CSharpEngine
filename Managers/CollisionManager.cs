@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
+
 using OpenGL_Game.Objects;
 
 namespace OpenGL_Game.Managers
@@ -12,10 +14,11 @@ namespace OpenGL_Game.Managers
     // Add second entity later
     public struct Collision
     {
-        public Entity entity;
+        public Entity entity1;
+        public Entity entity2;
         public COLLISIONTYPE collisionType;
     }
-    
+
     public abstract class CollisionManager
     {
         protected List<Collision> _collisionManifold = new List<Collision>();
@@ -23,7 +26,7 @@ namespace OpenGL_Game.Managers
         public void ClearManifold() {_collisionManifold.Clear();}
 
         public void CollisionBetweenCamera(Entity pEntity, COLLISIONTYPE pCollisionType)
-        {
+        {/*
             foreach (var coll in _collisionManifold)
                 if (coll.entity == pEntity) 
                     return;
@@ -33,19 +36,20 @@ namespace OpenGL_Game.Managers
             Collision collision;
             collision.entity = pEntity;
             collision.collisionType = pCollisionType;
-            _collisionManifold.Add(collision);
+            _collisionManifold.Add(collision); */
         }
 
-        public void CollisionBetweenSpheres(Entity pEntity, COLLISIONTYPE pCollisionType)
+        public void CollisionBetweenSpheres(Entity pEntity1, Entity pEntity2, COLLISIONTYPE pCollisionType)
         {
             foreach (var coll in _collisionManifold)
-                if (coll.entity == pEntity)
+                if (coll.entity1 == pEntity1 && coll.entity2 == pEntity2)
                     return;
 
             Console.WriteLine("Collision");
 
             Collision collision;
-            collision.entity = pEntity;
+            collision.entity1 = pEntity1;
+            collision.entity2 = pEntity2;
             collision.collisionType = pCollisionType;
             _collisionManifold.Add(collision);
         }

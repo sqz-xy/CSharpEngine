@@ -81,7 +81,7 @@ namespace OpenGL_Game.Systems
        
             if ((entity1Pos.Position - entity2Pos.Position).Length < entity1Coll.CollisionField + entity2Coll.CollisionField)
             {
-                _collisionManager.CollisionBetweenSpheres(pEntity1, COLLISIONTYPE.SPHERE_SPHERE);
+                _collisionManager.CollisionBetweenSpheres(pEntity1, pEntity2, COLLISIONTYPE.SPHERE_SPHERE);
             }
         }
     }
