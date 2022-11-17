@@ -82,7 +82,7 @@ namespace OpenGL_Game.Scenes
             newEntity.AddComponent(new ComponentShaderDefault());
             newEntity.AddComponent(new ComponentVelocity(-0.5f, 0f, 0.0f));
             newEntity.AddComponent(new ComponentCollisionSphere(1.5f));
-            newEntity.AddComponent(new ComponentAudio("Audio/buzz.wav"));
+            newEntity.AddComponent(new ComponentOpenALAudio("Audio/buzz.wav"));
             //entityManager.AddEntity(newEntity, true);
         }
 
