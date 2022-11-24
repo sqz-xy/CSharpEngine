@@ -49,6 +49,7 @@ namespace OpenGL_Game.Systems
                 }
         }
 
+        // Camera at player pos
         public void MovePlayer(ref ComponentPosition pPos)
         {
             pPos.Position = _camera.cameraPosition;
