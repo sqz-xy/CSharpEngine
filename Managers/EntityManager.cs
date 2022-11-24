@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace OpenGL_Game.Managers
 {
-    class EntityManager
+    public class EntityManager
     {
         List<Entity> renderableEntityList;
         List<Entity> NonRenderableEntityList;

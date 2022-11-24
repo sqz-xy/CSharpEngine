@@ -1,24 +1,15 @@
 {
-  "Name": "Moon",
+  "Name": "Player",
   "IsRenderable" : "True",
   "Components": [
     {
-      "COMPONENT_POSITION": "-2.0 0.0 0.0"
+      "COMPONENT_POSITION": "100.0 100.0 100.0"
+    },  
+    {
+      "COMPONENT_COLLISION_SPHERE" :  "0.5"
     },
     {
-      "COMPONENT_GEOMETRY": "Geometry/Moon/moon.obj"
-    },
-    {
-      "COMPONENT_SHADER": "NoLights Shaders/vs.glsl Shaders/fs_nolights.glsl"
-    },
-    {
-      "COMPONENT_RENDERABLE" :  "True"
-    },
-    {
-      "COMPONENT_COLLISION_SPHERE" :  "1.5"
-    },
-    {
-      "COMPONENT_AUDIO" : "Audio/buzz.wav True"
+      "COMPONENT_AUDIO": "Audio/buzz.wav False"
     }
   ]
 }
@@ -42,48 +33,64 @@
       "COMPONENT_RENDERABLE": "False"
     },
     {
-      "COMPONENT_AUDIO" : "Audio/buzz.wav True"
+      "COMPONENT_AUDIO": "Audio/buzz.wav False"
     }
   ]
 }
 {
-  "Name": "Wraith_Raider_Starship",
+  "Name": "Moon1",
   "IsRenderable": "True",
   "Components": [
     {
-      "COMPONENT_POSITION": "0.0 0.0 0.0"
+      "COMPONENT_POSITION": "-5.0 0.0 0.0"
     },
     {
-      "COMPONENT_GEOMETRY": "Geometry/Wraith_Raider_Starship/Wraith_Raider_Starship.obj"
+      "COMPONENT_GEOMETRY": "Geometry/Moon/moon.obj"
+    },
+    {
+      "COMPONENT_VELOCITY": "0.5 0.0 0.0"
     },
     {
       "COMPONENT_SHADER": "Default"
     },
     {
-      "COMPONENT_RENDERABLE": "True"
+      "COMPONENT_RENDERABLE": "False"
+    },
+    {
+      "COMPONENT_AUDIO": "Audio/buzz.wav False"
+    },
+    {
+      "COMPONENT_COLLISION_SPHERE": "1.5"
     }
   ]
 }
 {
-  "Name": "Wraith_Raider_Starship2",
+  "Name": "Moon2",
   "IsRenderable": "True",
   "Components": [
     {
-      "COMPONENT_POSITION": "0.0 1.0 0.0"
+      "COMPONENT_POSITION": "5.0 0.0 0.0"
     },
     {
-      "COMPONENT_GEOMETRY": "Geometry/Wraith_Raider_Starship/Wraith_Raider_Starship.obj"
+      "COMPONENT_GEOMETRY": "Geometry/Moon/moon.obj"
     },
     {
-      "COMPONENT_VELOCITY": "0.0 0.1 0.1"
+      "COMPONENT_VELOCITY": "-0.5 0.0 0.0"
     },
     {
       "COMPONENT_SHADER": "Default"
     },
     {
-      "COMPONENT_RENDERABLE": "True"
+      "COMPONENT_RENDERABLE": "False"
+    },
+    {
+      "COMPONENT_AUDIO": "Audio/buzz.wav False"
+    },
+    {
+      "COMPONENT_COLLISION_SPHERE": "1.5"
     }
   ]
 }
+
 
 

@@ -8,7 +8,7 @@ using OpenTK.Audio;
 
 namespace OpenGL_Game.Managers
 {
-    class SceneManager : GameWindow
+    public class SceneManager : GameWindow
     {
         Scene scene;
         
@@ -157,7 +157,28 @@ namespace OpenGL_Game.Managers
             }
             
         }
-    }
 
+        public static void ChangeScene(SceneTypes pSceneType, SceneManager pSceneManager)
+        {
+            if (pSceneManager.scene != null)
+                pSceneManager.scene.Close();
+
+            switch (pSceneType)
+            {
+                case SceneTypes.SCENE_MAIN_MENU:
+                    pSceneManager.scene = new MainMenuScene(pSceneManager);
+                    break;
+                case SceneTypes.SCENE_GAME:
+                    pSceneManager.scene = new GameScene(pSceneManager);
+                    break;
+                case SceneTypes.SCENE_GAME_OVER:
+                    pSceneManager.scene = new GameOverScene(pSceneManager);
+                    break;
+                default:
+                    pSceneManager.scene = new MainMenuScene(pSceneManager);
+                    break;
+            }
+        }
+    }
 }
 

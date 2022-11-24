@@ -11,7 +11,7 @@ using OpenTK;
 namespace OpenGL_Game.Managers
 {
     // Reset binds when changing scene
-    class GameInputManager : InputManager
+    public class GameInputManager : InputManager
     {
         public Dictionary<string, Key> _keyBinds;
         public Dictionary<string, MouseButton> _mouseBinds;

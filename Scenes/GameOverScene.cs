@@ -17,7 +17,7 @@ namespace OpenGL_Game.Scenes
             sceneManager.renderer = Render;
             sceneManager.updater = Update;
 
-            sceneManager.keyboardDownDelegate += OnKeyPress;
+            //sceneManager.keyboardDownDelegate += OnKeyPress;
         }
 
         public override void Update(FrameEventArgs e)

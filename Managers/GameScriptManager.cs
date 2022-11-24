@@ -15,7 +15,7 @@ using OpenTK.Input;
 
 namespace OpenGL_Game.Managers
 {
-    class GameScriptManager : ScriptManager
+    public class GameScriptManager : ScriptManager
     {
         public GameScriptManager()
         {

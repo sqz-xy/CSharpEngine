@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace OpenGL_Game.Managers
 {
-    class SystemManager
+    public class SystemManager
     {
         // Presrcibe entities to systems specifically 
         List<ISystem> renderableSystemList = new List<ISystem>();

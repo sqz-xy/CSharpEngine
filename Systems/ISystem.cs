@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace OpenGL_Game.Systems
 {
-    interface ISystem
+    public interface ISystem
     {
         void OnAction(List<Entity> pEntity);
 

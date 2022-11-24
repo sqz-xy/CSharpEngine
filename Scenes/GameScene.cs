@@ -19,7 +19,6 @@ namespace OpenGL_Game.Scenes
         public static float dt = 0;
         EntityManager entityManager;
         SystemManager systemManager;
-        ScriptManager scriptManager;
 
         // Made static because there should only be one
         public Camera camera;
@@ -102,14 +101,13 @@ namespace OpenGL_Game.Scenes
             audioSystem = new SystemAudio();
             systemManager.AddSystem(audioSystem, false);
 
-            // Deprecated
-            ISystem collisionCameraSphereSystem;
-            collisionCameraSphereSystem = new SystemCollisionCameraSphere(sceneManager.collisionManager, camera);
-            //systemManager.AddSystem(collisionCameraSphereSystem, false);
-
             ISystem collisionSphereSystem;
             collisionSphereSystem = new SystemCollisionSphere(sceneManager.collisionManager);
             systemManager.AddSystem(collisionSphereSystem, false);
+
+            ISystem playerSystem;
+            playerSystem = new SystemPlayer(camera);
+            systemManager.AddSystem(playerSystem, false);
         }
 
         /// <summary>
@@ -167,6 +165,7 @@ namespace OpenGL_Game.Scenes
         public override void Close()
         {
             systemManager.CleanupSystems(entityManager);
+            sceneManager.inputManager.ClearBinds();
             //sceneManager.keyboardDownDelegate -= Keyboard_KeyDown;
             //ResourceManager.RemoveAllAssets();
         }

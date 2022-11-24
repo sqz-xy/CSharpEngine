@@ -1,6 +1,6 @@
 ﻿namespace OpenGL_Game.Managers
 {
-    abstract class InputManager
+    public abstract class InputManager
     {
         /// <summary>
         /// Reads input from the user and handles response if the response is bound, should be called during an update loop

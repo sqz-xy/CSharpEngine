@@ -9,7 +9,7 @@ using OpenTK.Audio.OpenAL;
 
 namespace OpenGL_Game.Managers
 {
-    static class ResourceManager
+    public static class ResourceManager
     {
         static Dictionary<string, Geometry> geometryDictionary = new Dictionary<string, Geometry>();
         static Dictionary<string, int> textureDictionary = new Dictionary<string, int>();

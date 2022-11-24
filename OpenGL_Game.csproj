@@ -159,9 +159,9 @@
     <Compile Include="Systems\ISystem.cs" />
     <Compile Include="Managers\SystemManager.cs" />
     <Compile Include="Systems\SystemAudio.cs" />
-    <Compile Include="Systems\SystemCollisionCameraSphere.cs" />
     <Compile Include="Systems\SystemCollisionSphere.cs" />
     <Compile Include="Systems\SystemPhysics.cs" />
+    <Compile Include="Systems\SystemPlayer.cs" />
     <Compile Include="Systems\SystemRender.cs" />
     <Compile Include="Utility\Keybind.cs" />
   </ItemGroup>
@@ -337,8 +337,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Engine" />
-    <Folder Include="Game" />
+    <Folder Include="Engine\" />
+    <Folder Include="Game\" />
   </ItemGroup>
   <!-- Specify the search path explicitly so the ResolveAssemblyReferences task picks the right ones -->
   <Target Name="BeforeResolveReferences">

@@ -2,7 +2,7 @@
 
 namespace OpenGL_Game.Scenes
 {
-    enum SceneTypes
+    public enum SceneTypes
     {
         SCENE_NONE,
         SCENE_MAIN_MENU,

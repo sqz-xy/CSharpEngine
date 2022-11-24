@@ -2,7 +2,7 @@
 
 namespace OpenGL_Game.Managers
 {
-    abstract class ScriptManager
+    public abstract class ScriptManager
     {
         /// <summary>
         /// Reads a script to create entities and their components
