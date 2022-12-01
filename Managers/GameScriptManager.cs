@@ -120,6 +120,8 @@ namespace OpenGL_Game.Managers
                 case "COMPONENT_AUDIO":
                     string[] audioValues = pComponentValue.Split(' ');
                     return new ComponentOpenALAudio(audioValues[0], bool.Parse(audioValues[1]));
+                case "COMPONENT_POWER_UP":
+                    return new ComponentPowerUp(pComponentValue);
                 case "COMPONENT_COLLISION_SPHERE":
                     return new ComponentCollisionSphere(float.Parse(pComponentValue));
                 case "COMPONENT_SHADER":
