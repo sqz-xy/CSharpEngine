@@ -19,11 +19,12 @@ namespace OpenGL_Game.Scenes
             
             sceneManager.scriptManager.LoadControls("Scripts/MainMenuControls.json", ref sceneManager.inputManager);
             sceneManager.inputManager.InitializeBinds();
+            entityManager = new EntityManager();
         }
 
         public override void Update(FrameEventArgs e)
         {
-            sceneManager.inputManager.ReadInput(sceneManager, null);
+            sceneManager.inputManager.ReadInput(sceneManager, null, entityManager);
         }
 
         public override void Render(FrameEventArgs e)

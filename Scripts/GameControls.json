@@ -16,7 +16,10 @@
       "MOVE_LEFT": "A"
     },
     {
-    "MOVE_RIGHT": "D"
+      "MOVE_RIGHT": "D"
+    },
+    {
+      "SHOOT": "MouseButton.Left"
     }
   ]
 }

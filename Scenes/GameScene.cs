@@ -17,7 +17,7 @@ namespace OpenGL_Game.Scenes
     class GameScene : Scene
     {
         public static float dt = 0;
-        EntityManager entityManager;
+        //EntityManager entityManager;
         SystemManager systemManager;
 
         // Made static because there should only be one
@@ -129,7 +129,7 @@ namespace OpenGL_Game.Scenes
             // Action ALL Non renderable systems
             systemManager.ActionNonRenderableSystems(entityManager);
 
-            sceneManager.inputManager.ReadInput(sceneManager, camera);
+            sceneManager.inputManager.ReadInput(sceneManager, camera, entityManager);
             
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();

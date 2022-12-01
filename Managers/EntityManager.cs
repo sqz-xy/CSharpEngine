@@ -1,18 +1,19 @@
 ﻿using System.Collections.Generic;
 using OpenGL_Game.Objects;
 using System.Diagnostics;
+using System.Linq;
 
 namespace OpenGL_Game.Managers
 {
     public class EntityManager
     {
         List<Entity> renderableEntityList;
-        List<Entity> NonRenderableEntityList;
+        List<Entity> nonRenderableEntityList;
 
         public EntityManager()
         {
             renderableEntityList = new List<Entity>();
-            NonRenderableEntityList = new List<Entity>();
+            nonRenderableEntityList = new List<Entity>();
         }
 
         public void AddEntity(Entity entity, bool pIsRenderable)
@@ -27,7 +28,7 @@ namespace OpenGL_Game.Managers
             }
             result = FindNonRenderableEntity(entity.Name);
             Debug.Assert(result == null, "Entity '" + entity.Name + "' already exists");
-            NonRenderableEntityList.Add(entity);
+            nonRenderableEntityList.Add(entity);
 
         }
 
@@ -40,13 +41,25 @@ namespace OpenGL_Game.Managers
             );
         }
 
-        private Entity FindNonRenderableEntity(string name)
+        public Entity FindNonRenderableEntity(string name)
         {
-            return NonRenderableEntityList.Find(delegate (Entity e)
+            return nonRenderableEntityList.Find(delegate (Entity e)
             {
                 return e.Name == name;
             }
             );
+        }
+
+        public void DeleteRenderableEntity(string name)
+        {
+            Entity entityToDelete = renderableEntityList.Where(i => i.Name == name).FirstOrDefault();
+            renderableEntityList.Remove(entityToDelete);
+        }
+
+        public void DeleteNonRenderableEntity(string name)
+        {
+            Entity entityToDelete = nonRenderableEntityList.Where(i => i.Name == name).FirstOrDefault();
+            renderableEntityList.Remove(entityToDelete);
         }
 
         public List<Entity> RenderableEntities()
@@ -56,7 +69,7 @@ namespace OpenGL_Game.Managers
 
         public List<Entity> NonRenderableEntities()
         {
-            return NonRenderableEntityList;
+            return nonRenderableEntityList;
         }
     }
 }

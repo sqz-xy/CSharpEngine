@@ -7,7 +7,7 @@
         /// </summary>
         /// <param name="pSceneManager">The scene manager</param>
         /// <param name="pCamera">The camera</param>
-        public abstract void ReadInput(SceneManager pSceneManager, Camera pCamera);
+        public abstract void ReadInput(SceneManager pSceneManager, Camera pCamera, EntityManager pEntityManager);
 
         /// <summary>
         /// Handles user input by checking the bound action
@@ -15,7 +15,7 @@
         /// <param name="pAction">The action of the keybind</param>
         /// <param name="pSceneManager">the scene manager</param>
         /// <param name="pCamera">the camera</param>
-        public abstract void HandleInput(string pAction, SceneManager pSceneManager, Camera pCamera);
+        public abstract void HandleInput(string pAction, SceneManager pSceneManager, Camera pCamera, EntityManager pEntityManager);
 
         /// <summary>
         /// Should be called on scene initialization, initialization logic for binds, i.e. assigning default binds

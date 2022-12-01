@@ -7,12 +7,17 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenGL_Game.Scenes;
 using OpenTK;
+using OpenGL_Game.Objects;
+using OpenGL_Game.Components;
 
 namespace OpenGL_Game.Managers
 {
     // Reset binds when changing scene
     public class GameInputManager : InputManager
     {
+        public static string bulletName = "Bullet";
+        private int bulletIndex = 0;
+
         public Dictionary<string, Key> _keyBinds;
         public Dictionary<string, MouseButton> _mouseBinds;
 
@@ -22,7 +27,7 @@ namespace OpenGL_Game.Managers
             _mouseBinds = new Dictionary<string, MouseButton>();
         }
 
-        public override void ReadInput(SceneManager pSceneManager, Camera pCamera)
+        public override void ReadInput(SceneManager pSceneManager, Camera pCamera, EntityManager pEntityManager)
         {
             KeyboardState keyState = Keyboard.GetState();
 
@@ -30,7 +35,7 @@ namespace OpenGL_Game.Managers
             {
                 if (keyState.IsKeyDown(kvp.Value))
                 {
-                    HandleInput(kvp.Key, pSceneManager, pCamera);
+                    HandleInput(kvp.Key, pSceneManager, pCamera, pEntityManager);
                 }
             }
 
@@ -40,13 +45,14 @@ namespace OpenGL_Game.Managers
             {
                 if (mouseState.IsButtonDown(kvp.Value))
                 {
-                    HandleInput(kvp.Key, pSceneManager, pCamera);
+                    HandleInput(kvp.Key, pSceneManager, pCamera, pEntityManager);
                 }
             }
         }
 
-        public override void HandleInput(string pAction, SceneManager pSceneManager, Camera pCamera)
+        public override void HandleInput(string pAction, SceneManager pSceneManager, Camera pCamera, EntityManager pEntityManager)
         {
+           
             // Non camera dependant actions
             switch (pAction)
             {
@@ -79,7 +85,26 @@ namespace OpenGL_Game.Managers
                 case "MOVE_RIGHT":
                     pCamera.RotateY(0.01f);
                     break;
+                case "SHOOT":
+                    Shoot(pEntityManager, pCamera, 6.0f);
+                    break;
             }
+        }
+
+        public void Shoot(EntityManager pEntityManager, Camera pCamera, float pSpeed)
+        {
+            // Make a copy of the saved bullet
+            Entity storedBullet = pEntityManager.FindRenderableEntity(bulletName);
+            Entity newBullet = new Entity($"{bulletName}{bulletIndex}");
+
+            foreach (var c in storedBullet.Components)        
+                newBullet.AddComponent(c);
+            
+            newBullet.AddComponent(new ComponentPosition(pCamera.cameraPosition));
+            newBullet.AddComponent(new ComponentVelocity(pCamera.cameraDirection * pSpeed));
+            
+            pEntityManager.AddEntity(newBullet, true);
+            bulletIndex++;
         }
 
         public override void InitializeBinds()

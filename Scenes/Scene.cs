@@ -3,9 +3,10 @@ using OpenGL_Game.Managers;
 
 namespace OpenGL_Game.Scenes
 {
-    abstract class Scene : IScene
+    public abstract class Scene : IScene
     {
         protected SceneManager sceneManager;
+        protected EntityManager entityManager;
 
         public Scene(SceneManager sceneManager)
         {

@@ -10,7 +10,7 @@ namespace OpenGL_Game.Managers
 {
     public class SceneManager : GameWindow
     {
-        Scene scene;
+        public Scene scene;
         
         public static int width = 1200, height = 800;
         public static int windowXPos = 200, windowYPos = 80;

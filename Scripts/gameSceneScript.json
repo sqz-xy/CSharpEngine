@@ -1,15 +1,30 @@
 {
   "Name": "Player",
-  "IsRenderable" : "True",
+  "IsRenderable": "True",
   "Components": [
     {
       "COMPONENT_POSITION": "100.0 100.0 100.0"
-    },  
+    },
     {
-      "COMPONENT_COLLISION_SPHERE" :  "0.5"
+      "COMPONENT_COLLISION_SPHERE": "0.5"
     },
     {
       "COMPONENT_AUDIO": "Audio/buzz.wav False"
+    }
+  ]
+}
+{
+  "Name": "Bullet",
+  "IsRenderable": "True",
+  "Components": [
+    {
+      "COMPONENT_COLLISION_SPHERE": "0.5"
+    },
+    {
+      "COMPONENT_GEOMETRY": "Geometry/Cat/cat.obj"
+    },
+    {
+      "COMPONENT_SHADER": "Default"
     }
   ]
 }

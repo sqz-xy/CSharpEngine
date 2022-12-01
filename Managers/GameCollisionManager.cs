@@ -34,7 +34,7 @@ namespace OpenGL_Game.Managers
                     audio1.PlayAudio();
                     audio2.PlayAudio();
 
-                    SceneManager.ChangeScene(Scenes.SceneTypes.SCENE_GAME_OVER, MainEntry.game);
+                    //SceneManager.ChangeScene(Scenes.SceneTypes.SCENE_GAME_OVER, MainEntry.game);
                 }
             }        
             ClearManifold();
