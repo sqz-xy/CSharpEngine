@@ -76,6 +76,9 @@
     },
     {
       "COMPONENT_COLLISION_SPHERE": "1.5"
+    },
+    {
+      "COMPONENT_POWER_UP":  "health"
     }
   ]
 }
