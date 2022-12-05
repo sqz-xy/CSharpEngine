@@ -35,36 +35,44 @@ namespace OpenGL_Game.Managers
                 //PlayerEnemyCollision(collision);
                 //BulletEnemyCollision(collision);
 
-                DamageCollision(collision, "Player", "Moon2", _healthCooldown, 10);
-                DamageCollision(collision, "Moon2", "Bullet", _enemyHealthCooldown, 10);
+                if (collision.collisionType == COLLISIONTYPE.SPHERE_SPHERE)
+                {
+                    DamageCollision(collision.entity1, collision.entity2, "Player", "Moon2", _healthCooldown, 10);
+                    DamageCollision(collision.entity1, collision.entity2, "Moon2", "Bullet", _enemyHealthCooldown, 10);
                 
-                PowerUpHealth(collision, "Player", "Cat", _powerUpCooldown, 1, 10);
+                    PowerUpHealth(collision.entity2, collision.entity1, "Cat", "Player", _powerUpCooldown, 1, 10);
+                }
             }        
             ClearManifold();
         }
 
-        private void PowerUpHealth(Collision collision, string pEntity1Name, string pEntity2Name, Stopwatch pStopwatch, int pDamage, int pHealth)
+        private void PowerUpHealth(Entity pEntityToAct, Entity pEntityToHit, string pEntity1Name, string pEntity2Name, Stopwatch pStopwatch, int pDamage, int pHealth)
         {
             // Doesnt work because of the order of precedence for the collided entities
             
-            if (DamageCollision(collision, pEntity1Name, pEntity2Name, pStopwatch, pDamage))
+            if (DamageCollision(pEntityToAct, pEntityToHit, pEntity1Name, pEntity2Name, pStopwatch, pDamage))
             {
-                IComponent healthComponent = collision.entity1.Components.Find(delegate(IComponent component)
+                IComponent healthComponent = pEntityToHit.Components.Find(delegate(IComponent component)
                 {
                     return component.ComponentType == ComponentTypes.COMPONENT_HEALTH;
                 });
+                
                 ComponentHealth health = (ComponentHealth) healthComponent;
+                
+                // Collects twice
                 health.Health += pHealth;
+                pStopwatch.Start();
+                
             }
         }
         
-        private bool DamageCollision(Collision collision, string pEntity1Name, string pEntity2Name, Stopwatch pStopwatch, int pDamage)
+        private bool DamageCollision(Entity pEntityToAct, Entity pEntityToHit, string pEntity1Name, string pEntity2Name, Stopwatch pStopwatch, int pDamage)
         {
-            if (collision.entity1.Name == pEntity1Name && collision.collisionType == COLLISIONTYPE.SPHERE_SPHERE)
+            if (pEntityToAct.Name == pEntity1Name)
             {
-                if (collision.entity2.Name.Contains(pEntity2Name))
+                if (pEntityToHit.Name.Contains(pEntity2Name))
                 {
-                    IComponent healthComponent = collision.entity1.Components.Find(delegate(IComponent component)
+                    IComponent healthComponent = pEntityToAct.Components.Find(delegate(IComponent component)
                     {
                         return component.ComponentType == ComponentTypes.COMPONENT_HEALTH;
                     });
