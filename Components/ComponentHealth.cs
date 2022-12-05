@@ -1,4 +1,5 @@
-﻿using OpenGL_Game.Managers;
+﻿using System.Windows.Forms;
+using OpenGL_Game.Managers;
 using OpenGL_Game.OBJLoader;
 
 namespace OpenGL_Game.Components
@@ -17,9 +18,10 @@ namespace OpenGL_Game.Components
             get { return ComponentTypes.COMPONENT_HEALTH; }
         }
 
-        public int Health()
+        public int Health
         {
-            return health;
+            get { return health; }
+            set { health = value; }
         }
     }
 }

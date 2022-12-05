@@ -50,16 +50,27 @@ namespace OpenGL_Game.Managers
             );
         }
 
-        public void DeleteRenderableEntity(string name)
+        public bool DeleteRenderableEntity(string name)
         {
-            Entity entityToDelete = renderableEntityList.Where(i => i.Name == name).FirstOrDefault();
+            Entity entityToDelete = renderableEntityList.FirstOrDefault(i => i.Name == name);
             renderableEntityList.Remove(entityToDelete);
+            
+            if (entityToDelete == null)
+                return false;
+            
+            renderableEntityList.Remove(entityToDelete);
+            return true;
         }
 
-        public void DeleteNonRenderableEntity(string name)
+        public bool DeleteNonRenderableEntity(string name)
         {
-            Entity entityToDelete = nonRenderableEntityList.Where(i => i.Name == name).FirstOrDefault();
+            Entity entityToDelete = nonRenderableEntityList.FirstOrDefault(i => i.Name == name);
+
+            if (entityToDelete == null)
+                return false;
+            
             renderableEntityList.Remove(entityToDelete);
+            return true;
         }
 
         public List<Entity> RenderableEntities()

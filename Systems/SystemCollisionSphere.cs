@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using OpenGL_Game.Components;
 using OpenGL_Game.Managers;
@@ -70,15 +71,14 @@ namespace OpenGL_Game.Systems
         {
             if (pEntity1 == pEntity2)
                 return;
-
-
+            
             ComponentPosition entity1Pos, entity2Pos;
             ComponentCollisionSphere entity1Coll, entity2Coll;
 
             ExtractComponents(pEntity1, out entity1Pos, out entity1Coll);
             ExtractComponents(pEntity2, out entity2Pos, out entity2Coll);
 
-       
+            
             if ((entity1Pos.Position - entity2Pos.Position).Length < entity1Coll.CollisionField + entity2Coll.CollisionField)
             {
                 _collisionManager.CollisionBetweenSpheres(pEntity1, pEntity2, COLLISIONTYPE.SPHERE_SPHERE);

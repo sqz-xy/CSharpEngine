@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,8 @@ namespace OpenGL_Game.Managers
         public static string bulletName = "Bullet";
         private int bulletIndex = 0;
 
+        private Stopwatch _shootCooldown;
+        
         public Dictionary<string, Key> _keyBinds;
         public Dictionary<string, MouseButton> _mouseBinds;
 
@@ -25,6 +28,8 @@ namespace OpenGL_Game.Managers
         {
             _keyBinds = new Dictionary<string, Key>();
             _mouseBinds = new Dictionary<string, MouseButton>();
+
+            _shootCooldown = new Stopwatch();
         }
 
         public override void ReadInput(SceneManager pSceneManager, Camera pCamera, EntityManager pEntityManager)
@@ -52,6 +57,7 @@ namespace OpenGL_Game.Managers
 
         public override void HandleInput(string pAction, SceneManager pSceneManager, Camera pCamera, EntityManager pEntityManager)
         {
+            ResetCooldowns();
            
             // Non camera dependant actions
             switch (pAction)
@@ -86,26 +92,30 @@ namespace OpenGL_Game.Managers
                     pCamera.RotateY(0.01f);
                     break;
                 case "SHOOT":
-                    Shoot(pEntityManager, pCamera, 20.0f);
+                    Shoot(pEntityManager, pCamera, 40.0f);
                     break;
             }
         }
 
         public void Shoot(EntityManager pEntityManager, Camera pCamera, float pSpeed)
         {
-            // Make a copy of the saved bullet
-            Entity storedBullet = pEntityManager.FindRenderableEntity(bulletName);
-            Entity newBullet = new Entity($"{bulletName}{bulletIndex}");
+            if (_shootCooldown.ElapsedMilliseconds == 0)
+            {
+                // Make a copy of the saved bullet
+                Entity storedBullet = pEntityManager.FindRenderableEntity(bulletName);
+                Entity newBullet = new Entity($"{bulletName}{bulletIndex}");
 
-            foreach (var c in storedBullet.Components)        
-                newBullet.AddComponent(c);
+                foreach (var c in storedBullet.Components)        
+                    newBullet.AddComponent(c);
             
-            // Spawn bullet in front of player with camera direction as velocity
-            newBullet.AddComponent(new ComponentPosition(pCamera.cameraPosition + pCamera.cameraDirection * 2));
-            newBullet.AddComponent(new ComponentVelocity(pCamera.cameraDirection * pSpeed));
+                // Spawn bullet in front of player with camera direction as velocity
+                newBullet.AddComponent(new ComponentPosition(pCamera.cameraPosition + pCamera.cameraDirection * 6));
+                newBullet.AddComponent(new ComponentVelocity(pCamera.cameraDirection * pSpeed));
             
-            pEntityManager.AddEntity(newBullet, true);
-            bulletIndex++;
+                pEntityManager.AddEntity(newBullet, true);
+                bulletIndex++;
+                _shootCooldown.Start();
+            }
         }
 
         public override void InitializeBinds()
@@ -127,6 +137,12 @@ namespace OpenGL_Game.Managers
         {
             _keyBinds = new Dictionary<string, Key>();
             _mouseBinds = new Dictionary<string, MouseButton>();
+        }
+        
+        public void ResetCooldowns()
+        {
+            if (_shootCooldown.ElapsedMilliseconds >= 1000)
+                _shootCooldown.Reset();
         }
     }
 }

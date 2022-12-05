@@ -21,10 +21,10 @@
   "IsRenderable": "True",
   "Components": [
     {
-      "COMPONENT_COLLISION_SPHERE": "0.5"
+      "COMPONENT_COLLISION_SPHERE": "1.5"
     },
     {
-      "COMPONENT_GEOMETRY": "Geometry/Cat/cat.obj"
+      "COMPONENT_GEOMETRY": "Geometry/Moon/moon.obj"
     },
     {
       "COMPONENT_SHADER": "Default"
@@ -36,13 +36,13 @@
   "IsRenderable": "True",
   "Components": [
     {
-      "COMPONENT_POSITION": "2.0 0.0 0.0"
+      "COMPONENT_POSITION": "4.0 0.0 4.0"
     },
     {
       "COMPONENT_GEOMETRY": "Geometry/Cat/cat.obj"
     },
     {
-      "COMPONENT_VELOCITY": "1.0 0.0 0.0"
+      "COMPONENT_VELOCITY": "0.0 0.0 1.0"
     },
     {
       "COMPONENT_SHADER": "Default"

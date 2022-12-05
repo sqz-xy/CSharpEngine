@@ -17,6 +17,8 @@ namespace OpenGL_Game.Scenes
     class GameScene : Scene
     {
         public static float dt = 0;
+        public static int playerHealth = 30;
+        
         //EntityManager entityManager;
         SystemManager systemManager;
 
@@ -57,7 +59,6 @@ namespace OpenGL_Game.Scenes
             sceneManager.inputManager.InitializeBinds();
 
             // TODO: Add your initialization logic here
-
         }
 
         private void CreateEntities()
@@ -108,6 +109,10 @@ namespace OpenGL_Game.Scenes
             ISystem playerSystem;
             playerSystem = new SystemPlayer(camera);
             systemManager.AddSystem(playerSystem, false);
+            
+            ISystem healthSystem;
+            healthSystem = new SystemHealth(entityManager, sceneManager);
+            systemManager.AddSystem(healthSystem, false);
         }
 
         /// <summary>
@@ -155,7 +160,7 @@ namespace OpenGL_Game.Scenes
             // Render score
             float width = sceneManager.Width, height = sceneManager.Height, fontSize = Math.Min(width, height) / 10f;
             GUI.clearColour = Color.Transparent;
-            GUI.Label(new Rectangle(0, 0, (int)width, (int)(fontSize * 2f)), "Score: 000", 18, StringAlignment.Near, Color.White);
+            GUI.Label(new Rectangle(0, 0, (int)width, (int)(fontSize * 2f)), $"Health: {playerHealth}", 18, StringAlignment.Near, Color.White);
             GUI.Render();
         }
 
