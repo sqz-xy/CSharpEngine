@@ -124,6 +124,8 @@ namespace OpenGL_Game.Managers
                     return new ComponentPowerUp(pComponentValue);
                 case "COMPONENT_COLLISION_SPHERE":
                     return new ComponentCollisionSphere(float.Parse(pComponentValue));
+                case "COMPONENT_HEALTH":
+                    return new ComponentHealth(int.Parse(pComponentValue));
                 case "COMPONENT_SHADER":
                     string[] shaderValues = pComponentValue.Split(' ');
                     switch (shaderValues[0])

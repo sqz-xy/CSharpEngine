@@ -86,7 +86,7 @@ namespace OpenGL_Game.Managers
                     pCamera.RotateY(0.01f);
                     break;
                 case "SHOOT":
-                    Shoot(pEntityManager, pCamera, 6.0f);
+                    Shoot(pEntityManager, pCamera, 20.0f);
                     break;
             }
         }
@@ -100,7 +100,8 @@ namespace OpenGL_Game.Managers
             foreach (var c in storedBullet.Components)        
                 newBullet.AddComponent(c);
             
-            newBullet.AddComponent(new ComponentPosition(pCamera.cameraPosition));
+            // Spawn bullet in front of player with camera direction as velocity
+            newBullet.AddComponent(new ComponentPosition(pCamera.cameraPosition + pCamera.cameraDirection * 2));
             newBullet.AddComponent(new ComponentVelocity(pCamera.cameraDirection * pSpeed));
             
             pEntityManager.AddEntity(newBullet, true);

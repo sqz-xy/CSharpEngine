@@ -10,6 +10,9 @@
     },
     {
       "COMPONENT_AUDIO": "Audio/buzz.wav False"
+    },
+    {
+      "COMPONENT_HEALTH": "30"
     }
   ]
 }
@@ -106,6 +109,9 @@
     },
     {
       "COMPONENT_COLLISION_SPHERE": "1.5"
+    },
+    {
+      "COMPONENT_HEALTH": "30"
     }
   ]
 }

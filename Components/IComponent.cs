@@ -13,7 +13,8 @@ namespace OpenGL_Game.Components
         COMPONENT_AUDIO = 1 << 5,
         COMPONENT_COLLISION_SPHERE = 1 << 6,
         COMPONENT_POWER_UP = 1 << 7,
-        COMPONENT_RENDERABLE = 1 << 8
+        COMPONENT_HEALTH = 1 << 8,
+        COMPONENT_RENDERABLE = 1 << 9
 
     }
 
