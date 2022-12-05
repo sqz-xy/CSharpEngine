@@ -20,6 +20,9 @@ namespace OpenGL_Game.Managers
             _enemyHealthCooldown = new Stopwatch();
         }
         
+        //TODO: Powerups and death conditions
+        
+        
         public override void ProcessCollisions()
         {
             ResetCooldowns();
@@ -38,17 +41,24 @@ namespace OpenGL_Game.Managers
             {
                 if (collision.entity2.Name == "Moon2")
                 {
-                    IComponent enemyHealthComponent = collision.entity1.Components.Find(delegate(IComponent component)
+                    IComponent playerHealthComponent = collision.entity1.Components.Find(delegate(IComponent component)
                     {
                         return component.ComponentType == ComponentTypes.COMPONENT_HEALTH;
                     });
-                    ComponentHealth enemyHealth = (ComponentHealth) enemyHealthComponent;
+                    ComponentHealth playerHealth = (ComponentHealth) playerHealthComponent;
                     
-                    if (_enemyHealthCooldown.ElapsedMilliseconds == 0)
+                    if (playerHealth.Health <= 0)
                     {
-                        enemyHealth.Health -= 10;
-                        _enemyHealthCooldown.Start();
+                        Console.WriteLine("Player Dead!");
                     }
+                    
+                    if (_healthCooldown.ElapsedMilliseconds == 0)
+                    {
+                        playerHealth.Health -= 10;
+                        _healthCooldown.Start();
+                    }
+                    
+                    
                 }
             }
         }
@@ -70,10 +80,10 @@ namespace OpenGL_Game.Managers
                         Console.WriteLine("Enemy Dead!");
                     }
                     
-                    if (_healthCooldown.ElapsedMilliseconds == 0)
+                    if (_enemyHealthCooldown.ElapsedMilliseconds == 0)
                     {
                         enemyHealth.Health -= 10;
-                        _healthCooldown.Start();
+                        _enemyHealthCooldown.Start();
                     }
 
                 }
