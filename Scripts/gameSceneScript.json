@@ -42,9 +42,6 @@
       "COMPONENT_GEOMETRY": "Geometry/Cat/cat.obj"
     },
     {
-      "COMPONENT_VELOCITY": "0.0 0.0 1.0"
-    },
-    {
       "COMPONENT_SHADER": "Default"
     },
     {
@@ -52,6 +49,12 @@
     },
     {
       "COMPONENT_AUDIO": "Audio/buzz.wav False"
+    },
+    {
+      "COMPONENT_HEALTH": "1"
+    }, 
+    {
+      "COMPONENT_COLLISION_SPHERE": "1.5"
     }
   ]
 }

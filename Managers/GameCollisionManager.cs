@@ -6,6 +6,7 @@ using OpenGL_Game.Components;
 using OpenGL_Game.Objects;
 
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL_Game.Managers
 {
@@ -13,11 +14,13 @@ namespace OpenGL_Game.Managers
     {
         private Stopwatch _healthCooldown;
         private Stopwatch _enemyHealthCooldown;
+        private Stopwatch _powerUpCooldown;
 
         public GameCollisionManager()
         {
             _healthCooldown = new Stopwatch();
             _enemyHealthCooldown = new Stopwatch();
+            _powerUpCooldown = new Stopwatch();
         }
         
         //TODO: Powerups and death conditions
@@ -29,13 +32,75 @@ namespace OpenGL_Game.Managers
             
             foreach (var collision in _collisionManifold)
             {
-                PlayerEnemyCollision(collision);
-                BulletEnemyCollision(collision);
+                //PlayerEnemyCollision(collision);
+                //BulletEnemyCollision(collision);
+
+                DamageCollision(collision, "Player", "Moon2", _healthCooldown, 10);
+                DamageCollision(collision, "Moon2", "Bullet", _enemyHealthCooldown, 10);
+                
+                PowerUpHealth(collision, "Player", "Cat", _powerUpCooldown, 1, 10);
             }        
             ClearManifold();
         }
 
-        private void PlayerEnemyCollision(Collision collision)
+        private void PowerUpHealth(Collision collision, string pEntity1Name, string pEntity2Name, Stopwatch pStopwatch, int pDamage, int pHealth)
+        {
+            // Doesnt work because of the order of precedence for the collided entities
+            
+            if (DamageCollision(collision, pEntity1Name, pEntity2Name, pStopwatch, pDamage))
+            {
+                IComponent healthComponent = collision.entity1.Components.Find(delegate(IComponent component)
+                {
+                    return component.ComponentType == ComponentTypes.COMPONENT_HEALTH;
+                });
+                ComponentHealth health = (ComponentHealth) healthComponent;
+                health.Health += pHealth;
+            }
+        }
+        
+        private bool DamageCollision(Collision collision, string pEntity1Name, string pEntity2Name, Stopwatch pStopwatch, int pDamage)
+        {
+            if (collision.entity1.Name == pEntity1Name && collision.collisionType == COLLISIONTYPE.SPHERE_SPHERE)
+            {
+                if (collision.entity2.Name.Contains(pEntity2Name))
+                {
+                    IComponent healthComponent = collision.entity1.Components.Find(delegate(IComponent component)
+                    {
+                        return component.ComponentType == ComponentTypes.COMPONENT_HEALTH;
+                    });
+                    ComponentHealth health = (ComponentHealth) healthComponent;
+
+                    if (health.Health <= 0)
+                    {
+                        Console.WriteLine("Enemy Dead!");
+                    }
+                    
+                    if (pStopwatch.ElapsedMilliseconds == 0)
+                    {
+                        health.Health -= pDamage;
+                        pStopwatch.Start();
+                    }
+
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private void ResetCooldowns()
+        {
+            if (_healthCooldown.ElapsedMilliseconds >= 3000)
+                _healthCooldown.Reset();
+            
+            if (_enemyHealthCooldown.ElapsedMilliseconds >= 1000)
+                _enemyHealthCooldown.Reset();
+            
+            if (_powerUpCooldown.ElapsedMilliseconds >= 1000)
+                _powerUpCooldown.Reset();
+        }
+        
+        
+        /*private void PlayerEnemyCollision(Collision collision)
         {
             if (collision.entity1.Name == "Player" && collision.collisionType == COLLISIONTYPE.SPHERE_SPHERE)
             {
@@ -50,15 +115,13 @@ namespace OpenGL_Game.Managers
                     if (playerHealth.Health <= 0)
                     {
                         Console.WriteLine("Player Dead!");
-                    }
+                    }                 
                     
                     if (_healthCooldown.ElapsedMilliseconds == 0)
                     {
                         playerHealth.Health -= 10;
                         _healthCooldown.Start();
                     }
-                    
-                    
                 }
             }
         }
@@ -88,33 +151,6 @@ namespace OpenGL_Game.Managers
 
                 }
             }
-        }
-
-        public void ResetCooldowns()
-        {
-            if (_healthCooldown.ElapsedMilliseconds >= 3000)
-                _healthCooldown.Reset();
-            
-            if (_enemyHealthCooldown.ElapsedMilliseconds >= 1000)
-                _enemyHealthCooldown.Reset();
-        }
+        }*/
     }
 }
-
-/*IComponent entity1AudioComponent = collision.entity1.Components.Find(delegate (IComponent component)
-{
-    return component.ComponentType == ComponentTypes.COMPONENT_AUDIO;
-});
-ComponentAudio audio1 = (ComponentAudio)entity1AudioComponent;
-
-
-IComponent entity2AudioComponent = collision.entity2.Components.Find(delegate (IComponent component)
-{
-    return component.ComponentType == ComponentTypes.COMPONENT_AUDIO;
-});
-ComponentAudio audio2 = (ComponentAudio)entity1AudioComponent;
-
-audio1.PlayAudio();
-audio2.PlayAudio();*/
-
-//SceneManager.ChangeScene(Scenes.SceneTypes.SCENE_GAME_OVER, MainEntry.game);
