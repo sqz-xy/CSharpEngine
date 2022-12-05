@@ -39,22 +39,32 @@ namespace OpenGL_Game.Systems
             foreach (var entity in pEntity)
                 if (((entity.Mask & MASK) == MASK))
                 {
+                    IComponent healthComponent = entity.Components.Find(delegate (IComponent component)
+                    {
+                        return component.ComponentType == ComponentTypes.COMPONENT_HEALTH;
+                    });
+                    ComponentHealth health = (ComponentHealth)healthComponent;
+                    
                     if (entity.Name == "Player")
                     {
-                        IComponent playerHealthComponent = entity.Components.Find(delegate (IComponent component)
-                        {
-                            return component.ComponentType == ComponentTypes.COMPONENT_HEALTH;
-                        });
-                        ComponentHealth playerHealth = (ComponentHealth)playerHealthComponent;
-                        
-                        if (playerHealth.Health == 0)
+                        if (health.Health <= 0)
                             SceneManager.ChangeScene(SceneTypes.SCENE_GAME_OVER, _sceneManager);
                         else
-                            GameScene.playerHealth = playerHealth.Health;
-                        return;
+                            GameScene.playerHealth = health.Health;
+                        continue;
                     }
                     
+                    if (health.Health <= 0) 
+                            KillEntity(entity);
                 }
+        }
+
+        private void KillEntity(Entity pEntity)
+        {
+            if (_entityManager.DeleteRenderableEntity(pEntity.Name))
+                return;
+
+            _entityManager.DeleteNonRenderableEntity(pEntity.Name);
         }
     }
 }
