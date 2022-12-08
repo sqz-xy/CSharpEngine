@@ -136,6 +136,21 @@
     }
   ]
 }
+{
+  "Name": "PlayerDummy",
+  "IsRenderable": "True",
+  "Components": [
+    {
+      "COMPONENT_GEOMETRY": "Geometry/Moon/moon.obj"
+    },
+    {
+      "COMPONENT_SHADER": "Default"
+    },
+    {
+      "COMPONENT_RENDERABLE": "False"
+    }
+  ]
+}
 
 
 

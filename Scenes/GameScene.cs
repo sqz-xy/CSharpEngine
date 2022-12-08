@@ -24,6 +24,7 @@ namespace OpenGL_Game.Scenes
 
         // Made static because there should only be one
         public Camera camera;
+        public Camera specCamera;
 
         public static GameScene gameInstance;
 
@@ -50,7 +51,7 @@ namespace OpenGL_Game.Scenes
             GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
             // Set Camera
-            camera = new Camera(new Vector3(0, 4, 7), new Vector3(0, 0, 0), (float)(sceneManager.Width) / (float)(sceneManager.Height), 0.1f, 100f);
+            camera = new Camera(new Vector3(7.0f, 0.0f, -10.0f), new Vector3(0, 0, 0), (float)(sceneManager.Width) / (float)(sceneManager.Height), 0.1f, 100f);        
 
             CreateEntities();
             CreateSystems();
@@ -135,14 +136,13 @@ namespace OpenGL_Game.Scenes
             systemManager.ActionNonRenderableSystems(entityManager);
 
             sceneManager.inputManager.ReadInput(sceneManager, camera, entityManager);
+
             
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();
 
             // TODO: Add your update logic here
-            
-
-            
+                   
         }
 
         /// <summary>
