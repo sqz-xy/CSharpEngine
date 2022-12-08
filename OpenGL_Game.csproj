@@ -217,6 +217,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="Blender\maze1.blend" />
     <None Include="Geometry\Cat\cat.mtl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
