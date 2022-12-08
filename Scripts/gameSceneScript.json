@@ -118,6 +118,24 @@
     }
   ]
 }
+{
+  "Name": "Maze",
+  "IsRenderable": "True",
+  "Components": [
+    {
+      "COMPONENT_POSITION": "0.0 0.0 0.0"
+    },
+    {
+      "COMPONENT_GEOMETRY": "Geometry/Maze/maze.obj"
+    },
+    {
+      "COMPONENT_SHADER": "Default"
+    },
+    {
+      "COMPONENT_RENDERABLE": "False"
+    }
+  ]
+}
 
 
 
