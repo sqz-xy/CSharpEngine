@@ -218,6 +218,13 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Blender\maze1.blend" />
+    <None Include="Blender\maze1.blend1" />
+    <None Include="Blender\maze1.mtl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Blender\maze1.obj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Geometry\Cat\cat.mtl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -230,10 +237,10 @@
     <None Include="Geometry\Intergalactic_Spaceship\Intergalactic_Spaceship.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Geometry\Maze\maze.mtl">
+    <None Include="Geometry\Maze\maze1.mtl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Geometry\Maze\maze.obj">
+    <None Include="Geometry\Maze\maze1.obj">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Geometry\Moon\moon.mtl">
@@ -310,6 +317,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Geometry\Maze\catTex.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Geometry\Maze\grassTex.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Geometry\Moon\moon_diffuse.png">

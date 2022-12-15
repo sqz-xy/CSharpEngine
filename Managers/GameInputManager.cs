@@ -10,6 +10,7 @@ using OpenGL_Game.Scenes;
 using OpenTK;
 using OpenGL_Game.Objects;
 using OpenGL_Game.Components;
+using System.Security.AccessControl;
 
 namespace OpenGL_Game.Managers
 {
@@ -23,6 +24,11 @@ namespace OpenGL_Game.Managers
         
         public Dictionary<string, Key> _keyBinds;
         public Dictionary<string, MouseButton> _mouseBinds;
+
+        private bool _spectating = false;
+
+        private Vector3 _playerCameraPos;
+        private Vector3 _playerCameraTarget;
 
         public GameInputManager()
         {
@@ -86,16 +92,48 @@ namespace OpenGL_Game.Managers
                     pCamera.MoveForward(-0.1f);
                     break;
                 case "MOVE_LEFT":
-                    pCamera.RotateY(-0.01f);
+                    pCamera.RotateY(-0.03f);
                     break;
                 case "MOVE_RIGHT":
-                    pCamera.RotateY(0.01f);
+                    pCamera.RotateY(0.03f);
+                    break;
+                case "SPECTATE":
+                    Spectate(pCamera);
+                    pCamera.UpdateView();
+                    break;
+                case "LEAVE_SPECTATE":
+                    LeaveSpectate(pCamera);
+                    pCamera.UpdateView();
                     break;
                 case "SHOOT":
-                    Shoot(pEntityManager, pCamera, 40.0f);
+                    if (!_spectating)
+                        Shoot(pEntityManager, pCamera, 40.0f);
                     break;
             }
         }
+
+        private void LeaveSpectate(Camera pCamera)
+        {
+            if (_spectating)
+            {
+                pCamera.cameraPosition = _playerCameraPos;
+                pCamera.targetPosition = _playerCameraTarget;
+                _spectating = false;
+            }
+        }
+
+        private void Spectate(Camera pCamera)
+        {
+            if (!_spectating)
+            {
+                _playerCameraPos = pCamera.cameraPosition;
+                _playerCameraTarget = pCamera.targetPosition;
+                pCamera.cameraPosition = new Vector3(0, 4, 7);
+                pCamera.targetPosition = new Vector3(0, 0, 0);
+                _spectating = true;
+            }
+        }
+       
 
         public void Shoot(EntityManager pEntityManager, Camera pCamera, float pSpeed)
         {

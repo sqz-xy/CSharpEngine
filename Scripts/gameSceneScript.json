@@ -126,7 +126,7 @@
       "COMPONENT_POSITION": "0.0 0.0 0.0"
     },
     {
-      "COMPONENT_GEOMETRY": "Geometry/Maze/maze.obj"
+      "COMPONENT_GEOMETRY": "Geometry/Maze/maze1.obj"
     },
     {
       "COMPONENT_SHADER": "Default"
@@ -148,6 +148,9 @@
     },
     {
       "COMPONENT_RENDERABLE": "False"
+    },
+    {
+      "COMPONENT_POSITION": "100.0 100.0 100.0"
     }
   ]
 }
