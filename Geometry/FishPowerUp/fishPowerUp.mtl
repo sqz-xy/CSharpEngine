@@ -1,0 +1,13 @@
+# Blender MTL File: 'maze1.blend'
+# Material Count: 1
+
+newmtl 01___12265_Fish
+Ns 20.000006
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 1.000000 1.000000
+Ks 0.270000 0.270000 0.270000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd \\\\adir.hull.ac.uk\\home\\632\\632115\\Downloads\\Fish_v1_L2.123ce045555c-e177-486e-8ce8-dad39381ed15\\Fish_v1_L2.123ce045555c-e177-486e-8ce8-dad39381ed15\\fish.jpg

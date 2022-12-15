@@ -78,7 +78,7 @@ namespace OpenGL_Game.Systems
             ExtractComponents(pEntity1, out entity1Pos, out entity1Coll);
             ExtractComponents(pEntity2, out entity2Pos, out entity2Coll);
 
-            
+          
             if ((entity1Pos.Position - entity2Pos.Position).Length < entity1Coll.CollisionField + entity2Coll.CollisionField)
             {
                 _collisionManager.CollisionBetweenSpheres(pEntity1, pEntity2, COLLISIONTYPE.SPHERE_SPHERE);
