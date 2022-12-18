@@ -23,7 +23,7 @@ namespace OpenGL_Game.Managers
             _powerUpCooldown = new Stopwatch();
         }
         
-        //TODO: Powerups and death conditions
+        //TODO: BULLET DAMAGE POWER UP, DISABLE DRONES POWER UP
         
         
         public override void ProcessCollisions()
@@ -77,6 +77,24 @@ namespace OpenGL_Game.Managers
                         return component.ComponentType == ComponentTypes.COMPONENT_HEALTH;
                     });
                     ComponentHealth health = (ComponentHealth) healthComponent;
+                    
+                    IComponent damageComponent = pEntityToHit.Components.Find(delegate(IComponent component)
+                    {
+                        return component.ComponentType == ComponentTypes.COMPONENT_DAMAGE;
+                    });
+                    ComponentDamage damage = (ComponentDamage) damageComponent;
+                    
+                    IComponent audioComponent = pEntityToHit.Components.Find(delegate(IComponent component)
+                    {
+                        return component.ComponentType == ComponentTypes.COMPONENT_AUDIO;
+                    });
+                    ComponentAudio audio = (ComponentAudio) audioComponent;
+                    
+                    int damageValue;
+                    if (damage == null)
+                        damageValue = pDamage;
+                    else
+                        damageValue = damage.Damage;
 
                     if (health.Health <= 0)
                     {
@@ -85,10 +103,10 @@ namespace OpenGL_Game.Managers
                     
                     if (pStopwatch.ElapsedMilliseconds == 0)
                     {
-                        health.Health -= pDamage;
+                        audio.PlayAudio();
+                        health.Health -= damageValue;
                         pStopwatch.Start();
                     }
-
                     return true;
                 }
             }

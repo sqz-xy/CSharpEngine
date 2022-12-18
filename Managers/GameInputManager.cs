@@ -149,7 +149,14 @@ namespace OpenGL_Game.Managers
                 // Spawn bullet in front of player with camera direction as velocity
                 newBullet.AddComponent(new ComponentPosition(pCamera.cameraPosition + pCamera.cameraDirection * 3));
                 newBullet.AddComponent(new ComponentVelocity(pCamera.cameraDirection * pSpeed));
-            
+                
+                IComponent audioComponent = newBullet.Components.Find(delegate(IComponent component)
+                {
+                    return component.ComponentType == ComponentTypes.COMPONENT_AUDIO;
+                });
+                ComponentAudio audio = (ComponentAudio) audioComponent;
+                audio.PlayAudio();
+
                 pEntityManager.AddEntity(newBullet, true);
                 bulletIndex++;
                 _shootCooldown.Start();
