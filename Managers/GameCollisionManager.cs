@@ -37,8 +37,8 @@ namespace OpenGL_Game.Managers
 
                 if (collision.collisionType == COLLISIONTYPE.SPHERE_SPHERE)
                 {
-                    DamageCollision(collision.entity1, collision.entity2, "Player", "EnemyCat1", _healthCooldown, 10);
-                    DamageCollision(collision.entity1, collision.entity2, "EnemyCat1", "Bullet", _enemyHealthCooldown, 10);
+                    DamageCollision(collision.entity1, collision.entity2, "Player", "EnemyCat", _healthCooldown, 10);
+                    DamageCollision(collision.entity1, collision.entity2, "EnemyCat", "Bullet", _enemyHealthCooldown, 10);
                 
                     PowerUpHealth(collision.entity2, collision.entity1, "FishPowerUpHealth", "Player", _powerUpCooldown, 1, 10);
                 }
@@ -68,7 +68,7 @@ namespace OpenGL_Game.Managers
         
         private bool DamageCollision(Entity pEntityToAct, Entity pEntityToHit, string pEntity1Name, string pEntity2Name, Stopwatch pStopwatch, int pDamage)
         {
-            if (pEntityToAct.Name == pEntity1Name)
+            if (pEntityToAct.Name.Contains(pEntity1Name))
             {
                 if (pEntityToHit.Name.Contains(pEntity2Name))
                 {

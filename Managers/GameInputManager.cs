@@ -147,7 +147,7 @@ namespace OpenGL_Game.Managers
                     newBullet.AddComponent(c);
             
                 // Spawn bullet in front of player with camera direction as velocity
-                newBullet.AddComponent(new ComponentPosition(pCamera.cameraPosition + pCamera.cameraDirection * 6));
+                newBullet.AddComponent(new ComponentPosition(pCamera.cameraPosition + pCamera.cameraDirection * 3));
                 newBullet.AddComponent(new ComponentVelocity(pCamera.cameraDirection * pSpeed));
             
                 pEntityManager.AddEntity(newBullet, true);
