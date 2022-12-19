@@ -16,6 +16,12 @@
     },
     {
       "COMPONENT_AUDIO": "Audio/buzz.wav false"
+    },
+    {
+      "COMPONENT_GEOMETRY": "Geometry/Skybox/skyBox.obj"
+    },
+    {
+      "COMPONENT_SHADER": "NoLights Shaders/vs.glsl Shaders/fs_nolights.glsl" 
     }
   ]
 }

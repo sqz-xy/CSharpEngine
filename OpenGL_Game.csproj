@@ -350,6 +350,15 @@
     <Content Include="Geometry\Moon\moon_diffuse.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Geometry\Skybox\skyBox.mtl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Geometry\Skybox\skyBox.obj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Geometry\Skybox\skyTex.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Geometry\Wraith_Raider_Starship\bmq1.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
