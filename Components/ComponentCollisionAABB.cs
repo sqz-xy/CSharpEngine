@@ -1,6 +1,6 @@
 ﻿namespace OpenGL_Game.Components
 {
-    public class ComponentCollisionAABB
+    public class ComponentCollisionAABB : IComponent
     {
         private float _width;
         private float _height;

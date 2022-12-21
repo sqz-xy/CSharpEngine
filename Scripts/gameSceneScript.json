@@ -105,7 +105,7 @@
   "IsRenderable": "True",
   "Components": [
     {
-      "COMPONENT_POSITION": "-5.0 5.0 0.0"
+      "COMPONENT_POSITION": "-5.0 1.0 3.0"
     },
     {
       "COMPONENT_GEOMETRY": "Geometry/Moon/moon.obj"
@@ -123,7 +123,7 @@
       "COMPONENT_AUDIO": "Audio/buzz.wav False"
     },
     {
-      "COMPONENT_COLLISION_SPHERE": "1.5"
+      "COMPONENT_COLLISION_AABB": "1 1 1"
     }
   ]
 }

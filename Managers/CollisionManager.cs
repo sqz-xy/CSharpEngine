@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-
+using OpenGL_Game.Components;
 using OpenGL_Game.Objects;
 
 namespace OpenGL_Game.Managers
@@ -24,22 +24,8 @@ namespace OpenGL_Game.Managers
         protected List<Collision> _collisionManifold = new List<Collision>();
         
         public void ClearManifold() {_collisionManifold.Clear();}
-
-        public void CollisionBetweenCamera(Entity pEntity, COLLISIONTYPE pCollisionType)
-        {/*
-            foreach (var coll in _collisionManifold)
-                if (coll.entity == pEntity) 
-                    return;
-
-            Console.WriteLine("Collision");
-            
-            Collision collision;
-            collision.entity = pEntity;
-            collision.collisionType = pCollisionType;
-            _collisionManifold.Add(collision); */
-        }
-
-        public void CollisionBetweenSpheres(Entity pEntity1, Entity pEntity2, COLLISIONTYPE pCollisionType)
+        
+        public void RegisterCollision(Entity pEntity1, Entity pEntity2, COLLISIONTYPE pCollisionType)
         {
             foreach (var coll in _collisionManifold)
                 if (coll.entity1 == pEntity1 && coll.entity2 == pEntity2)
@@ -53,8 +39,7 @@ namespace OpenGL_Game.Managers
             collision.collisionType = pCollisionType;
             _collisionManifold.Add(collision);
         }
-
+        
         public abstract void ProcessCollisions();
-
     }
 }

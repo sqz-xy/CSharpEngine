@@ -124,6 +124,9 @@ namespace OpenGL_Game.Managers
                     return new ComponentCollisionSphere(float.Parse(pComponentValue));
                 case "COMPONENT_HEALTH":
                     return new ComponentHealth(int.Parse(pComponentValue));
+                case "COMPONENT_COLLISION_AABB":
+                    string[] AABValues = pComponentValue.Split(' ');
+                    return new ComponentCollisionAABB(int.Parse(AABValues[0]), int.Parse(AABValues[1]), int.Parse(AABValues[2]));
                 case "COMPONENT_DAMAGE":
                     return new ComponentDamage(int.Parse(pComponentValue));
                 case "COMPONENT_SHADER":

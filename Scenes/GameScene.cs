@@ -106,7 +106,7 @@ namespace OpenGL_Game.Scenes
             systemManager.AddSystem(audioSystem, false);
 
             ISystem collisionSphereSystem;
-            collisionSphereSystem = new SystemCollisionSphere(sceneManager.collisionManager);
+            collisionSphereSystem = new SystemCollisionSphereSphere(sceneManager.collisionManager);
             systemManager.AddSystem(collisionSphereSystem, false);
 
             ISystem playerSystem;
@@ -116,6 +116,11 @@ namespace OpenGL_Game.Scenes
             ISystem healthSystem;
             healthSystem = new SystemHealth(entityManager, sceneManager);
             systemManager.AddSystem(healthSystem, false);
+
+            ISystem collisionAABBSystem;
+            collisionAABBSystem = new SystemCollisionSphereAABB(sceneManager.collisionManager);
+            systemManager.AddSystem(collisionAABBSystem, false);
+            
         }
 
         /// <summary>
