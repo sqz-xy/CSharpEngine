@@ -1,20 +1,33 @@
 ﻿namespace OpenGL_Game.Components
 {
+    public enum AICostTypes
+    {
+        G_X,
+        H_X
+    }
     public class ComponentAI : IComponent
     {
         public ComponentTypes ComponentType { get; }
 
-        public float _gCost;
+        public float _cost;
 
-        public ComponentAI()
+        public AICostTypes _costType;
+
+        public ComponentAI(AICostTypes pCostType)
         {
-            _gCost = 0;
+            _costType = 0;
+            _costType = pCostType;
         }
 
-        public float gCost
+        public float Cost
         {
-            get { return _gCost; }
-            set { _gCost = value; }
+            get { return _cost; }
+            set { _cost = value; }
+        }
+
+        public AICostTypes CostType
+        {
+            get { return _costType; }
         }
     }
 }

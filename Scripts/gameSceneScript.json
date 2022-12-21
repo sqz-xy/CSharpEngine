@@ -159,7 +159,7 @@
       "COMPONENT_AUDIO": "Audio/buzz.wav false"
     },
     {
-      "COMPONENT_AI" : ""
+      "COMPONENT_AI" : "G_X"
     }
   ]
 }
