@@ -157,6 +157,9 @@
     },
     {
       "COMPONENT_AUDIO": "Audio/buzz.wav false"
+    },
+    {
+      "COMPONENT_AI" : ""
     }
   ]
 }

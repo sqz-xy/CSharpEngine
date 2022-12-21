@@ -26,7 +26,7 @@ namespace OpenGL_Game.Systems
 
         public string Name
         {
-            get { return "SystemCollisionSphere"; }
+            get { return "SystemCollisionSphereAABB"; }
         }
 
         public void OnAction(List<Entity> pEntity)

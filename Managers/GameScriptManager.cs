@@ -129,6 +129,8 @@ namespace OpenGL_Game.Managers
                     return new ComponentCollisionAABB(float.Parse(AABValues[0]), float.Parse(AABValues[1]), float.Parse(AABValues[2]));
                 case "COMPONENT_DAMAGE":
                     return new ComponentDamage(int.Parse(pComponentValue));
+                case "COMPONENT_AI":
+                    return new ComponentAI();
                 case "COMPONENT_SHADER":
                     string[] shaderValues = pComponentValue.Split(' ');
                     switch (shaderValues[0])
