@@ -8,7 +8,8 @@ namespace OpenGL_Game.Managers
 {
     public enum COLLISIONTYPE
     {
-        SPHERE_SPHERE
+        SPHERE_SPHERE,
+        SPHERE_AABB
     }
 
     // Add second entity later
@@ -22,7 +23,7 @@ namespace OpenGL_Game.Managers
     public abstract class CollisionManager
     {
         protected List<Collision> _collisionManifold = new List<Collision>();
-        
+
         public void ClearManifold() {_collisionManifold.Clear();}
         
         public void RegisterCollision(Entity pEntity1, Entity pEntity2, COLLISIONTYPE pCollisionType)
@@ -40,6 +41,6 @@ namespace OpenGL_Game.Managers
             _collisionManifold.Add(collision);
         }
         
-        public abstract void ProcessCollisions();
+        public abstract void ProcessCollisions(Camera pCamera);
     }
 }

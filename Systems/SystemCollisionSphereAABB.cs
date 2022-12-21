@@ -47,6 +47,7 @@ namespace OpenGL_Game.Systems
             }
         }
         
+
         // Pass by ref so the values within the entity change
         private void CheckCollision(Entity pEntity1, Entity pEntity2)
         {
@@ -58,9 +59,24 @@ namespace OpenGL_Game.Systems
             ComponentCollisionAABB AABBCol;
             
             ExtractComponents(pEntity1, out spherePos, out sphereCol);
-            ExtractComponents(pEntity2,out AABBPos, out AABBCol);
+            ExtractComponents(pEntity2, out AABBPos, out AABBCol);
+
+            var xDistance = Math.Abs(spherePos.Position.X - AABBPos.Position.X);
+            var yDistance = Math.Abs(spherePos.Position.Y - AABBPos.Position.Y);
+            var zDistance = Math.Abs(spherePos.Position.Z - AABBPos.Position.Z);
             
+            if (xDistance >= (AABBCol.Width + sphereCol.CollisionField) || yDistance >= (AABBCol.Height + sphereCol.CollisionField) || zDistance >= (AABBCol.Depth + sphereCol.CollisionField))
+                return;
+                
+            if ((xDistance < AABBCol.Width) || (yDistance < AABBCol.Height) || (zDistance < AABBCol.Depth))
+                _collisionManager.RegisterCollision(pEntity1, pEntity2, COLLISIONTYPE.SPHERE_AABB);
+
+            float cornerDistance = ((xDistance - AABBCol.Width) * (xDistance - AABBCol.Width)) +
+                                   ((yDistance - AABBCol.Height) * (yDistance - AABBCol.Height)) +
+                                   ((yDistance - AABBCol.Depth) * (yDistance - AABBCol.Depth));
             
+            if (cornerDistance < (sphereCol.CollisionField * sphereCol.CollisionField))
+                _collisionManager.RegisterCollision(pEntity1, pEntity2, COLLISIONTYPE.SPHERE_AABB);
         }
         
         private void ExtractComponents(Entity pEntity, out ComponentPosition pComponentPosition, out ComponentCollisionSphere pComponentCollision)
@@ -93,7 +109,7 @@ namespace OpenGL_Game.Systems
 
             IComponent collisionComponent = components.Find(delegate (IComponent component)
             {
-                return component.ComponentType == ComponentTypes.COMPONENT_COLLISION_SPHERE;
+                return component.ComponentType == ComponentTypes.COMPONENT_COLLISION_AABB;
             });
             pComponentCollision = (ComponentCollisionAABB)collisionComponent;
         }

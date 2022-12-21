@@ -86,9 +86,11 @@ namespace OpenGL_Game.Managers
             switch (pAction)
             {
                 case "MOVE_FORWARD":
+                    pCamera.previousPos = pCamera.cameraPosition;
                     pCamera.MoveForward(0.1f);
                     break;
                 case "MOVE_BACKWARD":
+                    pCamera.previousPos = pCamera.cameraPosition;
                     pCamera.MoveForward(-0.1f);
                     break;
                 case "MOVE_LEFT":

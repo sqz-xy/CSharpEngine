@@ -7,7 +7,7 @@ namespace OpenGL_Game
     public class Camera
     {
         public Matrix4 view, projection;
-        public Vector3 cameraPosition, cameraDirection, cameraUp;
+        public Vector3 cameraPosition, cameraDirection, cameraUp, previousPos;
         public Vector3 targetPosition;
         public float Radius = 1.5f;
 

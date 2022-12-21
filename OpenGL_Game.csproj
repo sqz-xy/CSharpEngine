@@ -361,6 +361,15 @@
     <Content Include="Geometry\Skybox\skyTex.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Geometry\TestBrick\brick.mtl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Geometry\TestBrick\brick.obj">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Geometry\TestBrick\brickTex.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Geometry\Wraith_Raider_Starship\bmq1.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -89,7 +89,7 @@ namespace OpenGL_Game.Managers
         {
             base.OnUpdateFrame(e);
             
-            collisionManager.ProcessCollisions();
+            //collisionManager.ProcessCollisions();
             
             updater(e);
         }

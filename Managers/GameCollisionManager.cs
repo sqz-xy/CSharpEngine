@@ -26,7 +26,7 @@ namespace OpenGL_Game.Managers
         //TODO: BULLET DAMAGE POWER UP, DISABLE DRONES POWER UP
         
         
-        public override void ProcessCollisions()
+        public override void ProcessCollisions(Camera pCamera)
         {
             ResetCooldowns();
             
@@ -41,6 +41,11 @@ namespace OpenGL_Game.Managers
                     DamageCollision(collision.entity1, collision.entity2, "EnemyCat", "Bullet", _enemyHealthCooldown, 10);
                 
                     PowerUpHealth(collision.entity2, collision.entity1, "FishPowerUpHealth", "Player", _powerUpCooldown, 1, 10);
+                }
+
+                if (collision.collisionType == COLLISIONTYPE.SPHERE_AABB)
+                {
+                    pCamera.cameraPosition = pCamera.previousPos;
                 }
             }        
             ClearManifold();

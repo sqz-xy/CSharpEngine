@@ -143,7 +143,7 @@ namespace OpenGL_Game.Scenes
             systemManager.ActionNonRenderableSystems(entityManager);
 
             sceneManager.inputManager.ReadInput(sceneManager, camera, entityManager);
-
+            sceneManager.collisionManager.ProcessCollisions(camera);
             
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();
