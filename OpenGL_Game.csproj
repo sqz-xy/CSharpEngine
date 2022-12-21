@@ -82,6 +82,7 @@
   <ItemGroup>
     <Compile Include="Camera.cs" />
     <Compile Include="Components\ComponentAudio.cs" />
+    <Compile Include="Components\ComponentCollisionAABB.cs" />
     <Compile Include="Components\ComponentDamage.cs" />
     <Compile Include="Components\ComponentHealth.cs" />
     <Compile Include="Components\ComponentOpenALAudio.cs" />
