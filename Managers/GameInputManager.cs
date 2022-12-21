@@ -86,18 +86,18 @@ namespace OpenGL_Game.Managers
             switch (pAction)
             {
                 case "MOVE_FORWARD":
-                    pCamera.previousPos = pCamera.cameraPosition - pCamera.cameraDirection * 0.1f;
-                    pCamera.MoveForward(0.1f);
+                    pCamera.previousPos = pCamera.cameraPosition;
+                    pCamera.MoveForward(0.05f);
                     break;
                 case "MOVE_BACKWARD":
-                    pCamera.previousPos = pCamera.cameraPosition - pCamera.cameraDirection * 0.1f;
-                    pCamera.MoveForward(-0.1f);
+                    pCamera.previousPos = pCamera.cameraPosition;
+                    pCamera.MoveForward(-0.05f);
                     break;
                 case "MOVE_LEFT":
-                    pCamera.RotateY(-0.03f);
+                    pCamera.RotateY(-0.02f);
                     break;
                 case "MOVE_RIGHT":
-                    pCamera.RotateY(0.03f);
+                    pCamera.RotateY(0.02f);
                     break;
                 case "SPECTATE":
                     Spectate(pCamera);
@@ -113,6 +113,7 @@ namespace OpenGL_Game.Managers
                     break;
             }
         }
+        
 
         private void LeaveSpectate(Camera pCamera)
         {
