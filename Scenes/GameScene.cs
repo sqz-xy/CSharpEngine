@@ -142,8 +142,8 @@ namespace OpenGL_Game.Scenes
 
             // Action ALL Non renderable systems
             systemManager.ActionNonRenderableSystems(entityManager);
-            
             sceneManager.collisionManager.ProcessCollisions(camera);
+            inputManager.ReadInput(null);
             
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
                 sceneManager.Exit();

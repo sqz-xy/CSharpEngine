@@ -44,12 +44,16 @@ namespace OpenGL_Game.Managers
         public override void ReadInput(Entity pEntity)
         {
             KeyboardState keyState = Keyboard.GetState();
-
+            ResetCooldowns();
+            
             foreach (KeyValuePair<string, Key> kvp in _keyBinds)
             {
                 if (keyState.IsKeyDown(kvp.Value))
                 {
-                    HandleInput(kvp.Key, pEntity);
+                    if (pEntity == null)
+                        HandleSceneInput(kvp.Key);
+                    else
+                        HandleEntityInput(kvp.Key, pEntity);
                 }
             }
 
@@ -59,32 +63,16 @@ namespace OpenGL_Game.Managers
             {
                 if (mouseState.IsButtonDown(kvp.Value))
                 {
-                    HandleInput(kvp.Key, pEntity);
+                    if (pEntity == null)
+                        HandleSceneInput(kvp.Key);
+                    else
+                        HandleEntityInput(kvp.Key, pEntity);
                 }
             }
         }
 
-        public override void HandleInput(string pAction, Entity pEntity)
+        public override void HandleEntityInput(string pAction, Entity pEntity)
         {
-            ResetCooldowns();
-
-            // Non camera dependant actions
-            switch (pAction)
-            {
-                case "START_GAME":
-                    _sceneManager.ChangeScene(SceneTypes.SCENE_GAME);
-                    break;
-                case "GAME_OVER":
-                    _sceneManager.ChangeScene(SceneTypes.SCENE_GAME_OVER);
-                    break;
-                case "CLOSE_GAME":
-                    _sceneManager.Close();
-                    break;
-            }
-
-            if (pEntity == null)
-                return;
-            
             ComponentPosition playerPosComponent;
             ComponentDirection playerDirComponent;
 
@@ -113,7 +101,24 @@ namespace OpenGL_Game.Managers
                     break;
             }
         }
-        
+
+        public override void HandleSceneInput(string pAction)
+        {
+            // Non camera dependant actions, can be called without a system
+            switch (pAction)
+            {
+                case "START_GAME":
+                    _sceneManager.ChangeScene(SceneTypes.SCENE_GAME);
+                    break;
+                case "GAME_OVER":
+                    _sceneManager.ChangeScene(SceneTypes.SCENE_GAME_OVER);
+                    break;
+                case "CLOSE_GAME":
+                    _sceneManager.Close();
+                    break;
+            }
+        }
+
         public void Shoot(Entity pEntity, float pSpeed)
         {
             if (_shootCooldown.ElapsedMilliseconds == 0)

@@ -12,12 +12,18 @@ namespace OpenGL_Game.Managers
         public abstract void ReadInput(Entity pEntity);
 
         /// <summary>
-        /// Handles user input by checking the bound action
+        /// Handles user input by checking the bound action, controls entities
         /// </summary>
         /// <param name="pAction">The action of the keybind</param>
         /// <param name="pSceneManager">the scene manager</param>
         /// <param name="pCamera">the camera</param>
-        public abstract void HandleInput(string pAction, Entity entity);
+        public abstract void HandleEntityInput(string pAction, Entity entity);
+        
+        /// <summary>
+        /// Handles user input by checking the bound action, controls the scene
+        /// </summary>
+        /// <param name="pAction"></param>
+        public abstract void HandleSceneInput(string pAction);
 
         /// <summary>
         /// Should be called on scene initialization, initialization logic for binds, i.e. assigning default binds
