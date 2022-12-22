@@ -110,10 +110,6 @@ namespace OpenGL_Game.Scenes
             ISystem collisionSphereSystem;
             collisionSphereSystem = new SystemCollisionSphereSphere(sceneManager.collisionManager);
             systemManager.AddSystem(collisionSphereSystem, false);
-
-            ISystem playerSystem;
-            playerSystem = new SystemPlayer(camera);
-            systemManager.AddSystem(playerSystem, false);
             
             ISystem healthSystem;
             healthSystem = new SystemHealth(entityManager, sceneManager);
@@ -124,7 +120,7 @@ namespace OpenGL_Game.Scenes
             systemManager.AddSystem(collisionAABBSystem, false);
 
             ISystem systemInput;
-            systemInput = new SystemInput(inputManager);
+            systemInput = new SystemInput(inputManager, camera);
             systemManager.AddSystem(systemInput, false);
         }
 

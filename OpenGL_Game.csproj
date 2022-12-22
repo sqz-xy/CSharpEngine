@@ -171,7 +171,6 @@
     <Compile Include="Systems\SystemHealth.cs" />
     <Compile Include="Systems\SystemInput.cs" />
     <Compile Include="Systems\SystemPhysics.cs" />
-    <Compile Include="Systems\SystemPlayer.cs" />
     <Compile Include="Systems\SystemRender.cs" />
     <Compile Include="Utility\Keybind.cs" />
   </ItemGroup>
