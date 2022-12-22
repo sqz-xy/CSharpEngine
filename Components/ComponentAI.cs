@@ -9,20 +9,27 @@
     {
         public ComponentTypes ComponentType { get; }
 
-        public float _cost;
+        private float _cost;
+        private bool _isActive;
+        private AICostTypes _costType;
 
-        public AICostTypes _costType;
-
-        public ComponentAI(AICostTypes pCostType)
+        public ComponentAI(AICostTypes pCostType, bool pIsActive)
         {
-            _costType = 0;
+            _cost = 0;
             _costType = pCostType;
+            _isActive = pIsActive;
         }
-
+        
         public float Cost
         {
             get { return _cost; }
             set { _cost = value; }
+        }
+
+        public bool IsActive
+        {
+            get { return _isActive; }
+            set { _isActive = value; }
         }
 
         public AICostTypes CostType

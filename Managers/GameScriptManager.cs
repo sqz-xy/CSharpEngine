@@ -134,8 +134,9 @@ namespace OpenGL_Game.Managers
                     return new ComponentDamage(int.Parse(pComponentValue));
                 case "COMPONENT_AI":
                     AICostTypes costType;
-                    Enum.TryParse(pComponentValue, out costType);
-                    return new ComponentAI(costType);
+                    string[] aiValues = pComponentValue.Split(' ');
+                    Enum.TryParse(aiValues[0], out costType);
+                    return new ComponentAI(costType, bool.Parse(aiValues[1]));
                 case "COMPONENT_SHADER":
                     string[] shaderValues = pComponentValue.Split(' ');
                     switch (shaderValues[0])

@@ -9,10 +9,13 @@ namespace OpenGL_Game.Components
     public abstract class ComponentShader : IComponent
     {
         public int pgmID;
+        public string vertexPath, fragmentPath;
 
         public ComponentShader(string pVertexPath, string pFragmentPath)
         {
             pgmID = GL.CreateProgram();
+            vertexPath = pVertexPath;
+            fragmentPath = pFragmentPath;
             
             GL.AttachShader(pgmID, ResourceManager.LoadShader(pVertexPath, ShaderType.VertexShader));
             GL.AttachShader(pgmID, ResourceManager.LoadShader(pFragmentPath, ShaderType.FragmentShader));
@@ -25,5 +28,6 @@ namespace OpenGL_Game.Components
         {
             get { return ComponentTypes.COMPONENT_SHADER; }
         }
+        
     }
 }

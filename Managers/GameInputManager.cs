@@ -17,15 +17,14 @@ namespace OpenGL_Game.Managers
     // Reset binds when changing scene
     public class GameInputManager : InputManager
     {
-        public static string bulletName = "Bullet";
+        public static string bulletName = "Bullet Source";
         private int bulletIndex = 0;
 
         private Stopwatch _shootCooldown;
         
         public Dictionary<string, Key> _keyBinds;
         public Dictionary<string, MouseButton> _mouseBinds;
-
-        private bool _spectating = false;
+        
         private Vector3 _previousPos;
 
         private SceneManager _sceneManager;
@@ -73,10 +72,7 @@ namespace OpenGL_Game.Managers
 
         public override void HandleEntityInput(string pAction, Entity pEntity)
         {
-            ComponentPosition playerPosComponent;
-            ComponentDirection playerDirComponent;
-
-            ExtractComponents(pEntity, out playerPosComponent, out playerDirComponent);
+            ExtractComponents(pEntity, out var playerPosComponent, out var playerDirComponent);
 
             // camera dependant actions
             switch (pAction)
@@ -96,8 +92,7 @@ namespace OpenGL_Game.Managers
                     playerDirComponent.Direction = Matrix3.CreateRotationY(0.03f) * playerDirComponent.Direction;
                     break;
                 case "SHOOT":
-                    if (!_spectating)
-                        Shoot(pEntity, 40.0f);
+                    Shoot(pEntity, 40.0f);
                     break;
             }
         }
@@ -123,24 +118,34 @@ namespace OpenGL_Game.Managers
         {
             if (_shootCooldown.ElapsedMilliseconds == 0)
             {
-                ComponentPosition playerPosComponent;
-                ComponentDirection playerDirComponent;
-                Vector3 playerPos, playerDir;
-            
-                ExtractComponents(pEntity, out playerPosComponent, out playerDirComponent);
-                playerPos = playerPosComponent.Position;
-                playerDir = playerDirComponent.Direction;
-                
+                ExtractComponents(pEntity, out var playerPosComponent, out var playerDirComponent);
+                var playerPos = playerPosComponent.Position;
+                var playerDir = playerDirComponent.Direction;
+
                 // Make a copy of the saved bullet
                 Entity storedBullet = _entityManager.FindRenderableEntity(bulletName);
-                Entity newBullet = new Entity($"{bulletName}{bulletIndex}");
+                Entity newBullet = new Entity($"Bullet{bulletIndex}");
 
-                foreach (var c in storedBullet.Components)        
-                    newBullet.AddComponent(c);
-            
+                foreach (var c in storedBullet.Components)
+                {
+                    if (c.GetType() == typeof(ComponentHealth))
+                        continue;
+                    
+                    IComponent componentCopy = c;
+                    newBullet.AddComponent(componentCopy);
+                }
+                
+                IComponent healthComponent = pEntity.Components.Find(delegate(IComponent component)
+                {
+                    return component.ComponentType == ComponentTypes.COMPONENT_HEALTH;
+                });
+                
+                ComponentHealth health = (ComponentHealth) healthComponent;
+                
                 // Spawn bullet in front of player with camera direction as velocity
                 newBullet.AddComponent(new ComponentPosition(playerPos + playerDir * 3));
                 newBullet.AddComponent(new ComponentVelocity(playerDir * pSpeed));
+                newBullet.AddComponent(new ComponentHealth(health.Health));
                 
                 IComponent audioComponent = newBullet.Components.Find(delegate(IComponent component)
                 {

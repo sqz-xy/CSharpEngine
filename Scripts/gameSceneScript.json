@@ -32,7 +32,7 @@
   ]
 }
 {
-  "Name": "Bullet",
+  "Name": "Bullet Source",
   "IsRenderable": "True",
   "Components": [
     {
@@ -49,6 +49,9 @@
     },
     {
       "COMPONENT_AUDIO": "Audio/buzz.wav false"
+    },
+    {
+      "COMPONENT_HEALTH": "1"
     }
   ]
 }
@@ -83,7 +86,7 @@
   ]
 }
 {
-  "Name": "FishPowerUpDamage",
+  "Name": "FishPowerUpAIDisable",
   "IsRenderable": "True",
   "Components": [
     {
@@ -165,7 +168,7 @@
       "COMPONENT_AUDIO": "Audio/buzz.wav false"
     },
     {
-      "COMPONENT_AI" : "G_X"
+      "COMPONENT_AI" : "G_X TRUE"
     },
     {
       "COMPONENT_CONTROLLABLE" : "False"

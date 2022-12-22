@@ -5,10 +5,12 @@ namespace OpenGL_Game.Components
     class ComponentTexture : IComponent
     {
         int texture;
+        private string textureName;
 
-        public ComponentTexture(string textureName)
+        public ComponentTexture(string pTextureName)
         {
-            texture = ResourceManager.LoadTexture(textureName);
+            textureName = pTextureName;
+            texture = ResourceManager.LoadTexture(pTextureName);
         }
 
         public int Texture

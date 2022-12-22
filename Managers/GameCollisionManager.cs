@@ -14,13 +14,13 @@ namespace OpenGL_Game.Managers
     {
         private Stopwatch _healthCooldown;
         private Stopwatch _enemyHealthCooldown;
-        private Stopwatch _powerUpCooldown;
+        private Stopwatch _powerUpHealthCooldown;
 
         public GameCollisionManager()
         {
             _healthCooldown = new Stopwatch();
             _enemyHealthCooldown = new Stopwatch();
-            _powerUpCooldown = new Stopwatch();
+            _powerUpHealthCooldown = new Stopwatch();
         }
         
         //TODO: BULLET DAMAGE POWER UP, DISABLE DRONES POWER UP
@@ -40,11 +40,23 @@ namespace OpenGL_Game.Managers
                     DamageCollision(collision.entity1, collision.entity2, "Player", "EnemyCat", _healthCooldown, 10);
                     DamageCollision(collision.entity1, collision.entity2, "EnemyCat", "Bullet", _enemyHealthCooldown, 10);
                 
-                    PowerUpHealth(collision.entity2, collision.entity1, "FishPowerUpHealth", "Player", _powerUpCooldown, 1, 10);
+                    PowerUpHealth(collision.entity2, collision.entity1, "FishPowerUpHealth", "Player", _powerUpHealthCooldown, 1, 10);
                 }
 
                 if (collision.collisionType == COLLISIONTYPE.SPHERE_AABB)
                 {
+                    if (collision.entity1.Name.Contains("Bullet"))
+                    {
+                        IComponent healthComponent = collision.entity1.Components.Find(delegate(IComponent component)
+                        {
+                            return component.ComponentType == ComponentTypes.COMPONENT_HEALTH;
+                        });
+                
+                        ComponentHealth health = (ComponentHealth) healthComponent;
+                        health.Health -= 10;
+                        continue;
+                    }
+                    
                     IComponent positionComponent = collision.entity1.Components.Find(delegate(IComponent component)
                     {
                         return component.ComponentType == ComponentTypes.COMPONENT_POSITION;
@@ -79,9 +91,11 @@ namespace OpenGL_Game.Managers
                 // Collects twice
                 health.Health += pHealth;
                 pStopwatch.Start();
-                
             }
         }
+        
+
+        
         
         private bool DamageCollision(Entity pEntityToAct, Entity pEntityToHit, string pEntity1Name, string pEntity2Name, Stopwatch pStopwatch, int pDamage)
         {
@@ -138,62 +152,8 @@ namespace OpenGL_Game.Managers
             if (_enemyHealthCooldown.ElapsedMilliseconds >= 1000)
                 _enemyHealthCooldown.Reset();
             
-            if (_powerUpCooldown.ElapsedMilliseconds >= 1000)
-                _powerUpCooldown.Reset();
+            if (_powerUpHealthCooldown.ElapsedMilliseconds >= 1000)
+                _powerUpHealthCooldown.Reset();
         }
-        
-        
-        /*private void PlayerEnemyCollision(Collision collision)
-        {
-            if (collision.entity1.Name == "Player" && collision.collisionType == COLLISIONTYPE.SPHERE_SPHERE)
-            {
-                if (collision.entity2.Name == "Moon2")
-                {
-                    IComponent playerHealthComponent = collision.entity1.Components.Find(delegate(IComponent component)
-                    {
-                        return component.ComponentType == ComponentTypes.COMPONENT_HEALTH;
-                    });
-                    ComponentHealth playerHealth = (ComponentHealth) playerHealthComponent;
-                    
-                    if (playerHealth.Health <= 0)
-                    {
-                        Console.WriteLine("Player Dead!");
-                    }                 
-                    
-                    if (_healthCooldown.ElapsedMilliseconds == 0)
-                    {
-                        playerHealth.Health -= 10;
-                        _healthCooldown.Start();
-                    }
-                }
-            }
-        }
-        
-        private void BulletEnemyCollision(Collision collision)
-        {
-            if (collision.entity1.Name == "Moon2" && collision.collisionType == COLLISIONTYPE.SPHERE_SPHERE)
-            {
-                if (collision.entity2.Name.Contains("Bullet"))
-                {
-                    IComponent playerHealthComponent = collision.entity1.Components.Find(delegate(IComponent component)
-                    {
-                        return component.ComponentType == ComponentTypes.COMPONENT_HEALTH;
-                    });
-                    ComponentHealth enemyHealth = (ComponentHealth) playerHealthComponent;
-
-                    if (enemyHealth.Health <= 0)
-                    {
-                        Console.WriteLine("Enemy Dead!");
-                    }
-                    
-                    if (_enemyHealthCooldown.ElapsedMilliseconds == 0)
-                    {
-                        enemyHealth.Health -= 10;
-                        _enemyHealthCooldown.Start();
-                    }
-
-                }
-            }
-        }*/
     }
 }
