@@ -49,7 +49,15 @@ namespace OpenGL_Game.Systems
                     });
                     ComponentDirection direction = (ComponentDirection)directionComponent;
                     
-                    MovePlayer(ref position, ref direction);
+                    IComponent controlComponent = components.Find(delegate(IComponent component)
+                    {
+                        return component.ComponentType == ComponentTypes.COMPONENT_CONTROLLABLE;
+                    });
+                    ComponentControllable control = (ComponentControllable)controlComponent;
+
+                    if (control.IsControllable)
+                        MovePlayer(ref position, ref direction);
+                    
                 }
         }
 
