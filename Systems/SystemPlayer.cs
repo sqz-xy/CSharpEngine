@@ -33,18 +33,9 @@ namespace OpenGL_Game.Systems
         public void OnAction(List<Entity> pEntity)
         {
             foreach (var entity in pEntity)
-                if (((entity.Mask & MASK) == MASK))
+                if ((entity.Mask & MASK) == MASK)
                 {
                     List<IComponent> components = entity.Components;
-
-                    IComponent controllableComponent = components.Find(delegate (IComponent component)
-                    {
-                        return component.ComponentType == ComponentTypes.COMPONENT_CONTROLLABLE;
-                    });
-                    ComponentControllable controllable = (ComponentControllable)controllableComponent;
-                    
-                    if (!controllable.IsControllable)
-                        return;
                     
                     IComponent positionComponent = components.Find(delegate (IComponent component)
                     {
@@ -66,6 +57,7 @@ namespace OpenGL_Game.Systems
         public void MovePlayer(ref ComponentPosition pPos, ref ComponentDirection pDir)
         {
             _camera.cameraPosition = pPos.Position;
+            _camera.cameraPosition.Y += 0.5f;
             _camera.cameraDirection = pDir.Direction;
             _camera.UpdateView();
         }

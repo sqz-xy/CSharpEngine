@@ -3,7 +3,7 @@
   "IsRenderable": "True",
   "Components": [
     {
-      "COMPONENT_POSITION": "-5.0 0.5 3.0"
+      "COMPONENT_POSITION": "-5.0 0.0 3.0"
     },
     {
       "COMPONENT_COLLISION_SPHERE": "0.5"
@@ -79,12 +79,6 @@
     },
     {
       "COMPONENT_AUDIO": "Audio/buzz.wav false"
-    },
-    {
-      "COMPONENT_CONTROLLABLE" : "False"
-    },
-    {
-      "COMPONENT_DIRECTION" : "0.8 0 -0.5"
     }
   ]
 }
@@ -172,6 +166,12 @@
     },
     {
       "COMPONENT_AI" : "G_X"
+    },
+    {
+      "COMPONENT_CONTROLLABLE" : "False"
+    },
+    {
+      "COMPONENT_DIRECTION" : "0.8 0 -0.5"
     }
   ]
 }
