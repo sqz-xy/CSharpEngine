@@ -110,13 +110,16 @@ namespace OpenGL_Game.Managers
                     return new ComponentPosition(new Vector3(posValues[0], posValues[1], posValues[2]));
                 case "COMPONENT_GEOMETRY":
                     return new ComponentGeometry(pComponentValue);
-                case "COMPONENT_RENDERABLE":
-                    return new ComponentRenderable(bool.Parse(pComponentValue));
+                case "COMPONENT_CONTROLLABLE":
+                    return new ComponentControllable(bool.Parse(pComponentValue));
                 case "COMPONENT_TEXTURE":
                     return new ComponentTexture(pComponentValue);
                 case "COMPONENT_VELOCITY":
                     float[] velValues = Array.ConvertAll(pComponentValue.Split(' '), float.Parse);
                     return new ComponentVelocity(new Vector3(velValues[0], velValues[1], velValues[2]));
+                case "COMPONENT_DIRECTION":
+                    float[] dirValues = Array.ConvertAll(pComponentValue.Split(' '), float.Parse);
+                    return new ComponentDirection(new Vector3(dirValues[0], dirValues[1], dirValues[2]));
                 case "COMPONENT_AUDIO":
                     string[] audioValues = pComponentValue.Split(' ');
                     return new ComponentOpenALAudio(audioValues[0], bool.Parse(audioValues[1]));

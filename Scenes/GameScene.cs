@@ -21,6 +21,7 @@ namespace OpenGL_Game.Scenes
         
         //EntityManager entityManager;
         SystemManager systemManager;
+        private GameInputManager inputManager;
 
         // Made static because there should only be one
         public Camera camera;
@@ -33,6 +34,7 @@ namespace OpenGL_Game.Scenes
             gameInstance = this;
             entityManager = new EntityManager();
             systemManager = new SystemManager();
+            inputManager = new GameInputManager(entityManager, base.sceneManager);
 
             // Set the title of the window
             sceneManager.Title = "Game";
@@ -58,8 +60,8 @@ namespace OpenGL_Game.Scenes
             CreateEntities();
             CreateSystems();
             
-            sceneManager.scriptManager.LoadControls("Scripts/GameControls.json", ref sceneManager.inputManager);
-            sceneManager.inputManager.InitializeBinds();
+            sceneManager.scriptManager.LoadControls("Scripts/GameControls.json", ref inputManager);
+            inputManager.InitializeBinds();
 
             // TODO: Add your initialization logic here
         }
@@ -120,7 +122,10 @@ namespace OpenGL_Game.Scenes
             ISystem collisionAABBSystem;
             collisionAABBSystem = new SystemCollisionSphereAABB(sceneManager.collisionManager);
             systemManager.AddSystem(collisionAABBSystem, false);
-            
+
+            ISystem systemInput;
+            systemInput = new SystemInput(inputManager);
+            systemManager.AddSystem(systemInput, false);
         }
 
         /// <summary>
@@ -141,8 +146,7 @@ namespace OpenGL_Game.Scenes
 
             // Action ALL Non renderable systems
             systemManager.ActionNonRenderableSystems(entityManager);
-
-            sceneManager.inputManager.ReadInput(sceneManager, camera, entityManager);
+            
             sceneManager.collisionManager.ProcessCollisions(camera);
             
             if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
@@ -177,7 +181,7 @@ namespace OpenGL_Game.Scenes
         public override void Close()
         {
             systemManager.CleanupSystems(entityManager);
-            sceneManager.inputManager.ClearBinds();
+            inputManager.ClearBinds();
             //sceneManager.keyboardDownDelegate -= Keyboard_KeyDown;
             //ResourceManager.RemoveAllAssets();
         }

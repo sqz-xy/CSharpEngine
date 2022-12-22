@@ -12,8 +12,7 @@ namespace OpenGL_Game.Systems
 {
     public class SystemPlayer : ISystem
     {
-        public static string PlayerName = "Player";
-        const ComponentTypes MASK = (ComponentTypes.COMPONENT_POSITION);
+        const ComponentTypes MASK = (ComponentTypes.COMPONENT_POSITION | ComponentTypes.COMPONENT_CONTROLLABLE | ComponentTypes.COMPONENT_DIRECTION);
         private Camera _camera;
 
         public SystemPlayer(Camera pCamera)
@@ -34,25 +33,41 @@ namespace OpenGL_Game.Systems
         public void OnAction(List<Entity> pEntity)
         {
             foreach (var entity in pEntity)
-                if (((entity.Mask & MASK) == MASK) && entity.Name == PlayerName)
+                if (((entity.Mask & MASK) == MASK))
                 {
                     List<IComponent> components = entity.Components;
 
+                    IComponent controllableComponent = components.Find(delegate (IComponent component)
+                    {
+                        return component.ComponentType == ComponentTypes.COMPONENT_CONTROLLABLE;
+                    });
+                    ComponentControllable controllable = (ComponentControllable)controllableComponent;
+                    
+                    if (!controllable.IsControllable)
+                        return;
+                    
                     IComponent positionComponent = components.Find(delegate (IComponent component)
                     {
                         return component.ComponentType == ComponentTypes.COMPONENT_POSITION;
                     });
                     ComponentPosition position = (ComponentPosition)positionComponent;
 
-
-                    MovePlayer(ref position);
+                    IComponent directionComponent = components.Find(delegate (IComponent component)
+                    {
+                        return component.ComponentType == ComponentTypes.COMPONENT_DIRECTION;
+                    });
+                    ComponentDirection direction = (ComponentDirection)directionComponent;
+                    
+                    MovePlayer(ref position, ref direction);
                 }
         }
 
         // Camera at player pos
-        public void MovePlayer(ref ComponentPosition pPos)
+        public void MovePlayer(ref ComponentPosition pPos, ref ComponentDirection pDir)
         {
-            pPos.Position = _camera.cameraPosition;
+            _camera.cameraPosition = pPos.Position;
+            _camera.cameraDirection = pDir.Direction;
+            _camera.UpdateView();
         }
     }
 }

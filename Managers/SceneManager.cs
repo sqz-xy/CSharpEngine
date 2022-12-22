@@ -14,8 +14,7 @@ namespace OpenGL_Game.Managers
         
         public static int width = 1200, height = 800;
         public static int windowXPos = 200, windowYPos = 80;
-
-        public GameInputManager inputManager;
+        
         public GameScriptManager scriptManager;
         public CollisionManager collisionManager;
 
@@ -39,7 +38,6 @@ namespace OpenGL_Game.Managers
         {
             this.X = windowXPos;
             this.Y = windowYPos;
-            inputManager = new GameInputManager();
             scriptManager = new GameScriptManager();
             collisionManager = new GameCollisionManager();
             

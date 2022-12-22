@@ -1,4 +1,6 @@
-﻿namespace OpenGL_Game.Managers
+﻿using OpenGL_Game.Objects;
+
+namespace OpenGL_Game.Managers
 {
     public abstract class InputManager
     {
@@ -7,7 +9,7 @@
         /// </summary>
         /// <param name="pSceneManager">The scene manager</param>
         /// <param name="pCamera">The camera</param>
-        public abstract void ReadInput(SceneManager pSceneManager, Camera pCamera, EntityManager pEntityManager);
+        public abstract void ReadInput(Entity pEntity);
 
         /// <summary>
         /// Handles user input by checking the bound action
@@ -15,7 +17,7 @@
         /// <param name="pAction">The action of the keybind</param>
         /// <param name="pSceneManager">the scene manager</param>
         /// <param name="pCamera">the camera</param>
-        public abstract void HandleInput(string pAction, SceneManager pSceneManager, Camera pCamera, EntityManager pEntityManager);
+        public abstract void HandleInput(string pAction, Entity entity);
 
         /// <summary>
         /// Should be called on scene initialization, initialization logic for binds, i.e. assigning default binds

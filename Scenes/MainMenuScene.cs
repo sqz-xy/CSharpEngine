@@ -4,27 +4,32 @@ using OpenTK.Graphics.OpenGL;
 using System.Drawing;
 using OpenTK.Input;
 using OpenGL_Game.Managers;
+using OpenGL_Game.Objects;
 
 namespace OpenGL_Game.Scenes
 {
     class MainMenuScene : Scene
     {
+        private GameInputManager inputManager;
         public MainMenuScene(SceneManager sceneManager) : base(sceneManager)
         {
+            entityManager = new EntityManager();
+            inputManager = new GameInputManager(entityManager, base.sceneManager);
+            inputManager.InitializeBinds();
+            
             // Set the title of the window
             sceneManager.Title = "Main Menu";
             // Set the Render and Update delegates to the Update and Render methods of this class
             sceneManager.renderer = Render;
             sceneManager.updater = Update;
             
-            sceneManager.scriptManager.LoadControls("Scripts/MainMenuControls.json", ref sceneManager.inputManager);
-            sceneManager.inputManager.InitializeBinds();
-            entityManager = new EntityManager();
+            sceneManager.scriptManager.LoadControls("Scripts/MainMenuControls.json", ref inputManager);
         }
 
         public override void Update(FrameEventArgs e)
         {
-            sceneManager.inputManager.ReadInput(sceneManager, null, entityManager);
+            var pEntity = new Entity("null");
+            inputManager.ReadInput(null);
         }
 
         public override void Render(FrameEventArgs e)
@@ -47,7 +52,7 @@ namespace OpenGL_Game.Scenes
         
         public override void Close()
         {
-            sceneManager.inputManager.ClearBinds();
+            inputManager.ClearBinds();
         }
         
     }

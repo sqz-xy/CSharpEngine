@@ -45,7 +45,19 @@ namespace OpenGL_Game.Managers
 
                 if (collision.collisionType == COLLISIONTYPE.SPHERE_AABB)
                 {
-                    pCamera.cameraPosition = pCamera.previousPos;
+                    IComponent positionComponent = collision.entity1.Components.Find(delegate(IComponent component)
+                    {
+                        return component.ComponentType == ComponentTypes.COMPONENT_POSITION;
+                    });
+                    ComponentPosition position = (ComponentPosition) positionComponent;
+                    
+                    IComponent directionComponent = collision.entity1.Components.Find(delegate(IComponent component)
+                    {
+                        return component.ComponentType == ComponentTypes.COMPONENT_DIRECTION;
+                    });
+                    ComponentDirection direction = (ComponentDirection) directionComponent;
+
+                    position.Position += direction.Direction * -0.1f;
                 }
             }        
             ClearManifold();

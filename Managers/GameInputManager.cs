@@ -26,19 +26,22 @@ namespace OpenGL_Game.Managers
         public Dictionary<string, MouseButton> _mouseBinds;
 
         private bool _spectating = false;
+        private Vector3 _previousPos;
 
-        private Vector3 _playerCameraPos;
-        private Vector3 _playerCameraTarget;
+        private SceneManager _sceneManager;
+        private EntityManager _entityManager;
 
-        public GameInputManager()
+        public GameInputManager(EntityManager pEntityManager, SceneManager pSceneManager)
         {
             _keyBinds = new Dictionary<string, Key>();
             _mouseBinds = new Dictionary<string, MouseButton>();
-
+            _sceneManager = pSceneManager;
+            _entityManager = pEntityManager;
+            
             _shootCooldown = new Stopwatch();
         }
 
-        public override void ReadInput(SceneManager pSceneManager, Camera pCamera, EntityManager pEntityManager)
+        public override void ReadInput(Entity pEntity)
         {
             KeyboardState keyState = Keyboard.GetState();
 
@@ -46,7 +49,7 @@ namespace OpenGL_Game.Managers
             {
                 if (keyState.IsKeyDown(kvp.Value))
                 {
-                    HandleInput(kvp.Key, pSceneManager, pCamera, pEntityManager);
+                    HandleInput(kvp.Key, pEntity);
                 }
             }
 
@@ -56,102 +59,83 @@ namespace OpenGL_Game.Managers
             {
                 if (mouseState.IsButtonDown(kvp.Value))
                 {
-                    HandleInput(kvp.Key, pSceneManager, pCamera, pEntityManager);
+                    HandleInput(kvp.Key, pEntity);
                 }
             }
         }
 
-        public override void HandleInput(string pAction, SceneManager pSceneManager, Camera pCamera, EntityManager pEntityManager)
+        public override void HandleInput(string pAction, Entity pEntity)
         {
             ResetCooldowns();
-           
+
             // Non camera dependant actions
             switch (pAction)
             {
                 case "START_GAME":
-                    pSceneManager.ChangeScene(SceneTypes.SCENE_GAME);
+                    _sceneManager.ChangeScene(SceneTypes.SCENE_GAME);
                     break;
                 case "GAME_OVER":
-                    pSceneManager.ChangeScene(SceneTypes.SCENE_GAME_OVER);
+                    _sceneManager.ChangeScene(SceneTypes.SCENE_GAME_OVER);
                     break;
                 case "CLOSE_GAME":
-                    pSceneManager.Close();
+                    _sceneManager.Close();
                     break;
             }
 
-            if (pCamera == null)
+            if (pEntity == null)
                 return;
+            
+            ComponentPosition playerPosComponent;
+            ComponentDirection playerDirComponent;
+
+            ExtractComponents(pEntity, out playerPosComponent, out playerDirComponent);
 
             // camera dependant actions
             switch (pAction)
             {
                 case "MOVE_FORWARD":
-                    pCamera.previousPos = pCamera.cameraPosition;
-                    pCamera.MoveForward(0.05f);
+                    _previousPos = playerPosComponent.Position;
+                    playerPosComponent.Position += (playerDirComponent.Direction * 4) * GameScene.dt;
                     break;
                 case "MOVE_BACKWARD":
-                    pCamera.previousPos = pCamera.cameraPosition;
-                    pCamera.MoveForward(-0.05f);
+                    _previousPos = playerPosComponent.Position;
+                    playerPosComponent.Position += -(playerDirComponent.Direction * 4) * GameScene.dt;
                     break;
                 case "MOVE_LEFT":
-                    pCamera.RotateY(-0.02f);
+                    playerDirComponent.Direction = Matrix3.CreateRotationY(-0.03f) * playerDirComponent.Direction;
                     break;
                 case "MOVE_RIGHT":
-                    pCamera.RotateY(0.02f);
-                    break;
-                case "SPECTATE":
-                    Spectate(pCamera);
-                    pCamera.UpdateView();
-                    break;
-                case "LEAVE_SPECTATE":
-                    LeaveSpectate(pCamera);
-                    pCamera.UpdateView();
+                    playerDirComponent.Direction = Matrix3.CreateRotationY(0.03f) * playerDirComponent.Direction;
                     break;
                 case "SHOOT":
                     if (!_spectating)
-                        Shoot(pEntityManager, pCamera, 40.0f);
+                        Shoot(pEntity, 40.0f);
                     break;
             }
         }
         
-
-        private void LeaveSpectate(Camera pCamera)
-        {
-            if (_spectating)
-            {
-                pCamera.cameraPosition = _playerCameraPos;
-                pCamera.targetPosition = _playerCameraTarget;
-                _spectating = false;
-            }
-        }
-
-        private void Spectate(Camera pCamera)
-        {
-            if (!_spectating)
-            {
-                _playerCameraPos = pCamera.cameraPosition;
-                _playerCameraTarget = pCamera.targetPosition;
-                pCamera.cameraPosition = new Vector3(0, 4, 7);
-                pCamera.targetPosition = new Vector3(0, 0, 0);
-                _spectating = true;
-            }
-        }
-       
-
-        public void Shoot(EntityManager pEntityManager, Camera pCamera, float pSpeed)
+        public void Shoot(Entity pEntity, float pSpeed)
         {
             if (_shootCooldown.ElapsedMilliseconds == 0)
             {
+                ComponentPosition playerPosComponent;
+                ComponentDirection playerDirComponent;
+                Vector3 playerPos, playerDir;
+            
+                ExtractComponents(pEntity, out playerPosComponent, out playerDirComponent);
+                playerPos = playerPosComponent.Position;
+                playerDir = playerDirComponent.Direction;
+                
                 // Make a copy of the saved bullet
-                Entity storedBullet = pEntityManager.FindRenderableEntity(bulletName);
+                Entity storedBullet = _entityManager.FindRenderableEntity(bulletName);
                 Entity newBullet = new Entity($"{bulletName}{bulletIndex}");
 
                 foreach (var c in storedBullet.Components)        
                     newBullet.AddComponent(c);
             
                 // Spawn bullet in front of player with camera direction as velocity
-                newBullet.AddComponent(new ComponentPosition(pCamera.cameraPosition + pCamera.cameraDirection * 3));
-                newBullet.AddComponent(new ComponentVelocity(pCamera.cameraDirection * pSpeed));
+                newBullet.AddComponent(new ComponentPosition(playerPos + playerDir * 3));
+                newBullet.AddComponent(new ComponentVelocity(playerDir * pSpeed));
                 
                 IComponent audioComponent = newBullet.Components.Find(delegate(IComponent component)
                 {
@@ -160,7 +144,7 @@ namespace OpenGL_Game.Managers
                 ComponentAudio audio = (ComponentAudio) audioComponent;
                 audio.PlayAudio();
 
-                pEntityManager.AddEntity(newBullet, true);
+                _entityManager.AddEntity(newBullet, true);
                 bulletIndex++;
                 _shootCooldown.Start();
             }
@@ -191,6 +175,23 @@ namespace OpenGL_Game.Managers
         {
             if (_shootCooldown.ElapsedMilliseconds >= 1000)
                 _shootCooldown.Reset();
+        }
+        
+        private void ExtractComponents(Entity pEntity, out ComponentPosition playerPos, out ComponentDirection playerDir)
+        {
+            List<IComponent> components = pEntity.Components;
+
+            IComponent positionComponent = components.Find(delegate (IComponent component)
+            {
+                return component.ComponentType == ComponentTypes.COMPONENT_POSITION;
+            });
+            playerPos = (ComponentPosition)positionComponent;
+
+            IComponent directionComponent = components.Find(delegate (IComponent component)
+            {
+                return component.ComponentType == ComponentTypes.COMPONENT_DIRECTION;
+            });
+            playerDir = (ComponentDirection)directionComponent;
         }
     }
 }

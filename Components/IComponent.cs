@@ -16,7 +16,8 @@ namespace OpenGL_Game.Components
         COMPONENT_HEALTH = 1 << 8,
         COMPONENT_COLLISION_AABB = 1 << 9,
         COMPONENT_AI = 1 << 10,
-        COMPONENT_RENDERABLE = 1 << 11
+        COMPONENT_CONTROLLABLE = 1 << 11,
+        COMPONENT_DIRECTION = 1 << 12
 
     }
 
