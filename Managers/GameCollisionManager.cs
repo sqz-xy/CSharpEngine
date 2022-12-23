@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Threading;
 using OpenGL_Game.Components;
 using OpenGL_Game.Objects;
-
+using OpenGL_Game.Scenes;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
@@ -36,7 +36,7 @@ namespace OpenGL_Game.Managers
                     DamageCollision(collision.entity1, collision.entity2, "Player", "EnemyCat", _healthCooldown, 10);
                     DamageCollision(collision.entity1, collision.entity2, "EnemyCat", "Bullet", _enemyHealthCooldown, 10);
                 
-                    PowerUpHealth(collision.entity2, collision.entity1, "FishPowerUpHealth", "Player", _powerUpHealthCooldown, 1, 5);
+                    PowerUpHealth(collision.entity2, collision.entity1, "FishPowerUpHealth", "Player", _powerUpHealthCooldown, 1, 15);
                     PowerUpSpeed(collision.entity2, collision.entity1, "FishPowerUpSpeed", "Player", _powerUpSpeedCooldown, 1, 1.2f);
                     PowerUpDamage(collision.entity2, collision.entity1, "FishPowerUpDamage", "Player", _powerUpSpeedCooldown, 1, 20);
                 }
@@ -115,11 +115,6 @@ namespace OpenGL_Game.Managers
                         damageValue = pDamage;
                     else
                         damageValue = damage.Damage;
-
-                    if (health.Health <= 0)
-                    {
-                        Console.WriteLine("Enemy Dead!");
-                    }
                     
                     if (pStopwatch.ElapsedMilliseconds == 0)
                     {
@@ -127,6 +122,7 @@ namespace OpenGL_Game.Managers
                         health.Health -= damageValue;
                         pStopwatch.Start();
                     }
+                    
                     return true;
                 }
             }

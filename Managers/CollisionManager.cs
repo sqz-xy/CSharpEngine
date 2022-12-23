@@ -24,6 +24,11 @@ namespace OpenGL_Game.Managers
     {
         protected List<Collision> _collisionManifold = new List<Collision>();
 
+        protected CollisionManager()
+        {
+
+        }
+
         public void ClearManifold() {_collisionManifold.Clear();}
         
         public void RegisterCollision(Entity pEntity1, Entity pEntity2, COLLISIONTYPE pCollisionType)

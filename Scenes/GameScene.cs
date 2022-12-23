@@ -18,7 +18,8 @@ namespace OpenGL_Game.Scenes
     {
         public static float dt = 0;
         public static int playerHealth = 30;
-        
+        public static int playerLives = 3;
+
         //EntityManager entityManager;
         SystemManager systemManager;
         private GameInputManager inputManager;
@@ -69,27 +70,6 @@ namespace OpenGL_Game.Scenes
         private void CreateEntities()
         {
             sceneManager.scriptManager.LoadEntities("Scripts/gameSceneScript.json", ref entityManager);
-
-            Entity newEntity;
-
-            newEntity = new Entity("Moon2");
-            newEntity.AddComponent(new ComponentPosition(-5.0f, 0.0f, 0.0f));
-            newEntity.AddComponent(new ComponentGeometry("Geometry/Moon/moon.obj"));
-            newEntity.AddComponent(new ComponentShaderDefault());
-            newEntity.AddComponent(new ComponentVelocity(0.5f, 0f, 0.0f));
-            newEntity.AddComponent(new ComponentCollisionSphere(1.5f));
-            newEntity.AddComponent(new ComponentOpenALAudio("Audio/buzz.wav", false));
-            //entityManager.AddEntity(newEntity, true);
-            
-            
-            newEntity = new Entity("Moon3");
-            newEntity.AddComponent(new ComponentPosition(5.0f, 0.0f, 0.0f));
-            newEntity.AddComponent(new ComponentGeometry("Geometry/Moon/moon.obj"));
-            newEntity.AddComponent(new ComponentShaderDefault());
-            newEntity.AddComponent(new ComponentVelocity(-0.5f, 0f, 0.0f));
-            newEntity.AddComponent(new ComponentCollisionSphere(1.5f));
-            newEntity.AddComponent(new ComponentOpenALAudio("Audio/buzz.wav", false));
-            //entityManager.AddEntity(newEntity, true);
         }
 
         private void CreateSystems() 
@@ -134,7 +114,6 @@ namespace OpenGL_Game.Scenes
             dt = (float)e.Time;
             //System.Console.WriteLine("fps=" + (int)(1.0/dt));
 
-                        
             // NEW for Audio
             // Update OpenAL Listener Position and Orientation based on the camera
             AL.Listener(ALListener3f.Position, ref camera.cameraPosition);
@@ -145,11 +124,8 @@ namespace OpenGL_Game.Scenes
             sceneManager.collisionManager.ProcessCollisions(camera);
             inputManager.ReadInput(null);
             
-            if (GamePad.GetState(1).Buttons.Back == ButtonState.Pressed)
-                sceneManager.Exit();
-
-            // TODO: Add your update logic here
-                   
+            if (playerLives <= 0)
+                sceneManager.ChangeScene(SceneTypes.SCENE_GAME_OVER);
         }
 
         /// <summary>
@@ -168,6 +144,7 @@ namespace OpenGL_Game.Scenes
             float width = sceneManager.Width, height = sceneManager.Height, fontSize = Math.Min(width, height) / 10f;
             GUI.clearColour = Color.Transparent;
             GUI.Label(new Rectangle(0, 0, (int)width, (int)(fontSize * 2f)), $"Health: {playerHealth}", 18, StringAlignment.Near, Color.White);
+            GUI.Label(new Rectangle(150, 0, (int)width, (int)(fontSize * 2f)), $"Lives: {playerLives}", 18, StringAlignment.Near, Color.White);
             GUI.Render();
         }
 
@@ -178,8 +155,7 @@ namespace OpenGL_Game.Scenes
         {
             systemManager.CleanupSystems(entityManager);
             inputManager.ClearBinds();
-            //sceneManager.keyboardDownDelegate -= Keyboard_KeyDown;
-            //ResourceManager.RemoveAllAssets();
+            ResourceManager.RemoveAllAssets();
         }
     }
 }

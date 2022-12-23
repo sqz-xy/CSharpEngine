@@ -44,9 +44,15 @@ namespace OpenGL_Game.Systems
                     if (entity.Name == "Player")
                     {
                         if (health.Health <= 0)
-                            SceneManager.ChangeScene(SceneTypes.SCENE_GAME_OVER, _sceneManager);
+                        {
+                            SceneManager.ChangeScene(SceneTypes.SCENE_GAME, _sceneManager);
+                            GameScene.playerLives--; 
+                        }
                         else
+                        {
                             GameScene.playerHealth = health.Health;
+                            
+                        }
                         continue;
                     }
                     
