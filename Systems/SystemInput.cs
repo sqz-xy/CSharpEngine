@@ -42,7 +42,6 @@ namespace OpenGL_Game.Systems
 
         public void Cleanup(Entity pEntity)
         {
-            throw new System.NotImplementedException();
         }
 
         public string Name { get; }
