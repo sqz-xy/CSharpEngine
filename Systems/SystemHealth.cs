@@ -39,7 +39,7 @@ namespace OpenGL_Game.Systems
             foreach (var entity in pEntity)
                 if (((entity.Mask & MASK) == MASK))
                 {
-                    ComponentHealth health = ComponentHelper.GetComponent<ComponentHealth>(entity, ComponentTypes.COMPONENT_HEALTH);
+                    var health = ComponentHelper.GetComponent<ComponentHealth>(entity, ComponentTypes.COMPONENT_HEALTH);
                     
                     if (entity.Name == "Player")
                     {

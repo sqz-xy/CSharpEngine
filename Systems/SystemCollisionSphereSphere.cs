@@ -52,10 +52,10 @@ namespace OpenGL_Game.Systems
             if (pEntity1 == pEntity2)
                 return;
             
-            ComponentPosition entity1Pos = ComponentHelper.GetComponent<ComponentPosition>(pEntity1, ComponentTypes.COMPONENT_POSITION);
-            ComponentCollisionSphere entity1Coll = ComponentHelper.GetComponent<ComponentCollisionSphere>(pEntity1, ComponentTypes.COMPONENT_COLLISION_SPHERE);
-            ComponentPosition entity2Pos = ComponentHelper.GetComponent<ComponentPosition>(pEntity2, ComponentTypes.COMPONENT_POSITION);
-            ComponentCollisionSphere entity2Coll = ComponentHelper.GetComponent<ComponentCollisionSphere>(pEntity2, ComponentTypes.COMPONENT_COLLISION_SPHERE);
+            var entity1Pos = ComponentHelper.GetComponent<ComponentPosition>(pEntity1, ComponentTypes.COMPONENT_POSITION);
+            var entity1Coll = ComponentHelper.GetComponent<ComponentCollisionSphere>(pEntity1, ComponentTypes.COMPONENT_COLLISION_SPHERE);
+            var entity2Pos = ComponentHelper.GetComponent<ComponentPosition>(pEntity2, ComponentTypes.COMPONENT_POSITION);
+            var entity2Coll = ComponentHelper.GetComponent<ComponentCollisionSphere>(pEntity2, ComponentTypes.COMPONENT_COLLISION_SPHERE);
 
             if ((entity1Pos.Position - entity2Pos.Position).Length < entity1Coll.CollisionField + entity2Coll.CollisionField)
             {

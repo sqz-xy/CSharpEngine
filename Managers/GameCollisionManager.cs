@@ -25,9 +25,6 @@ namespace OpenGL_Game.Managers
             _powerUpSpeedCooldown = new Stopwatch();
         }
         
-        //TODO: BULLET DAMAGE POWER UP, DISABLE DRONES POWER UP
-        
-        
         public override void ProcessCollisions(Camera pCamera)
         {
             ResetCooldowns();
@@ -55,7 +52,7 @@ namespace OpenGL_Game.Managers
 
                     var position = ComponentHelper.GetComponent<ComponentPosition>(collision.entity1, ComponentTypes.COMPONENT_POSITION);
                     var direction = ComponentHelper.GetComponent<ComponentDirection>(collision.entity1, ComponentTypes.COMPONENT_DIRECTION);
-
+                    
                     position.Position += direction.Direction * -0.1f;
                 }
             }        

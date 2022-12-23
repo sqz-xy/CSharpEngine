@@ -27,16 +27,16 @@ namespace OpenGL_Game.Components
         public override void ApplyShader(Matrix4 pModel, Geometry pGeometry)
         {
             GL.UseProgram(pgmID);
-
+            
             GL.Uniform1(uniform_stex, 0);
             GL.ActiveTexture(TextureUnit.Texture0);
-
+            
             GL.UniformMatrix4(uniform_mmodel, false, ref pModel);
             var modelViewProjection = pModel * GameScene.gameInstance.camera.view * GameScene.gameInstance.camera.projection;
             GL.UniformMatrix4(uniform_modelviewproj, false, ref modelViewProjection);
-
+            
             pGeometry.Render(uniform_diffuse);
-
+            
             GL.UseProgram(0);
         }
     }
