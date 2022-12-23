@@ -30,7 +30,10 @@
       "COMPONENT_DIRECTION" : "0.8 0 -0.5"
     },
     {
-      "COMPONENT_SPEED" : "2"
+      "COMPONENT_SPEED" : "1"
+    },
+    {
+      "COMPONENT_DAMAGE" : "10"
     }
   ]
 }
@@ -48,13 +51,13 @@
       "COMPONENT_SHADER": "Default"
     },
     {
-      "COMPONENT_DAMAGE": "30"
-    },
-    {
       "COMPONENT_AUDIO": "Audio/buzz.wav false"
     },
     {
       "COMPONENT_HEALTH": "1"
+    },
+    {
+      "COMPONENT_SPEED" : "1"
     }
   ]
 }
@@ -88,6 +91,30 @@
   "Components": [
     {
       "COMPONENT_POSITION": "-9.0 0.0 4.0"
+    },
+    {
+      "COMPONENT_GEOMETRY": "Geometry/FishPowerUp/fishPowerUp.obj"
+    },
+    {
+      "COMPONENT_SHADER": "Default"
+    },
+    {
+      "COMPONENT_AUDIO": "Audio/buzz.wav False"
+    },
+    {
+      "COMPONENT_HEALTH": "1"
+    },
+    {
+      "COMPONENT_COLLISION_SPHERE": "1.0"
+    }
+  ]
+}
+{
+  "Name": "FishPowerUpDamage",
+  "IsRenderable": "True",
+  "Components": [
+    {
+      "COMPONENT_POSITION": "0.0 0.0 -4.0"
     },
     {
       "COMPONENT_GEOMETRY": "Geometry/FishPowerUp/fishPowerUp.obj"

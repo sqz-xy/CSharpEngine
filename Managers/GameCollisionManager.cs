@@ -34,7 +34,6 @@ namespace OpenGL_Game.Managers
             
             foreach (var collision in _collisionManifold)
             {
-
                 if (collision.collisionType == COLLISIONTYPE.SPHERE_SPHERE)
                 {
                     DamageCollision(collision.entity1, collision.entity2, "Player", "EnemyCat", _healthCooldown, 10);
@@ -42,6 +41,7 @@ namespace OpenGL_Game.Managers
                 
                     PowerUpHealth(collision.entity2, collision.entity1, "FishPowerUpHealth", "Player", _powerUpHealthCooldown, 1, 5);
                     PowerUpSpeed(collision.entity2, collision.entity1, "FishPowerUpSpeed", "Player", _powerUpSpeedCooldown, 1, 1.2f);
+                    PowerUpDamage(collision.entity2, collision.entity1, "FishPowerUpDamage", "Player", _powerUpSpeedCooldown, 1, 20);
                 }
 
                 if (collision.collisionType == COLLISIONTYPE.SPHERE_AABB)
@@ -82,6 +82,18 @@ namespace OpenGL_Game.Managers
                 
                 // Collects twice
                 speed.Speed += pSpeed;
+                pStopwatch.Start();
+            }
+        }
+
+        private void PowerUpDamage(Entity pEntityToAct, Entity pEntityToHit, string pEntity1Name, string pEntity2Name, Stopwatch pStopwatch, int pDamage, int pDamageIncrease)
+        {
+            if (DamageCollision(pEntityToAct, pEntityToHit, pEntity1Name, pEntity2Name, pStopwatch, pDamage))
+            {
+                var damage = ComponentHelper.GetComponent<ComponentDamage>(pEntityToHit, ComponentTypes.COMPONENT_DAMAGE);
+                
+                // Collects twice
+                damage.Damage += pDamageIncrease;
                 pStopwatch.Start();
             }
         }

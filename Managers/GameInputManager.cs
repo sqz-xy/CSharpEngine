@@ -122,9 +122,11 @@ namespace OpenGL_Game.Managers
             {
                 var playerPosComponent = ComponentHelper.GetComponent<ComponentPosition>(pEntity, ComponentTypes.COMPONENT_POSITION);
                 var playerDirComponent = ComponentHelper.GetComponent<ComponentDirection>(pEntity, ComponentTypes.COMPONENT_DIRECTION);
+                var playerDamageComponent = ComponentHelper.GetComponent<ComponentDamage>(pEntity, ComponentTypes.COMPONENT_DAMAGE);
                 
                 var playerPos = playerPosComponent.Position;
                 var playerDir = playerDirComponent.Direction;
+                var playerDamage = playerDamageComponent.Damage;
 
                 // Make a copy of the saved bullet
                 var storedBullet = _entityManager.FindRenderableEntity(bulletName);
@@ -145,6 +147,7 @@ namespace OpenGL_Game.Managers
                 newBullet.AddComponent(new ComponentPosition(playerPos + playerDir * 3));
                 newBullet.AddComponent(new ComponentVelocity(playerDir * pSpeed));
                 newBullet.AddComponent(new ComponentHealth(health.Health));
+                newBullet.AddComponent(new ComponentDamage(playerDamage));
                 
                 var audio = ComponentHelper.GetComponent<ComponentAudio>(pEntity, ComponentTypes.COMPONENT_AUDIO);
                 audio.PlayAudio();
