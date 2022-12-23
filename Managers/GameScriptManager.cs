@@ -137,6 +137,8 @@ namespace OpenGL_Game.Managers
                     var aiValues = pComponentValue.Split(' ');
                     Enum.TryParse(aiValues[0], out costType);
                     return new ComponentAI(costType, bool.Parse(aiValues[1]));
+                case "COMPONENT_SPEED":
+                    return new ComponentSpeed(float.Parse(pComponentValue));
                 case "COMPONENT_SHADER":
                     var shaderValues = pComponentValue.Split(' ');
                     switch (shaderValues[0])

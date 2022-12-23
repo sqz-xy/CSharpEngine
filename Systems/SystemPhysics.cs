@@ -12,7 +12,7 @@ namespace OpenGL_Game.Systems
 {
     class SystemPhysics : ISystem
     {
-        const ComponentTypes MASK = (ComponentTypes.COMPONENT_POSITION | ComponentTypes.COMPONENT_VELOCITY);
+        const ComponentTypes MASK = (ComponentTypes.COMPONENT_POSITION | ComponentTypes.COMPONENT_VELOCITY | ComponentTypes.COMPONENT_SPEED);
 
         public SystemPhysics()
         {
@@ -36,16 +36,16 @@ namespace OpenGL_Game.Systems
                 {
                     var position = ComponentHelper.GetComponent<ComponentPosition>(entity, ComponentTypes.COMPONENT_POSITION);
                     var velocity = ComponentHelper.GetComponent<ComponentVelocity>(entity, ComponentTypes.COMPONENT_VELOCITY);
+                    var speed = ComponentHelper.GetComponent<ComponentSpeed>(entity, ComponentTypes.COMPONENT_SPEED);
                     
-                    Motion(ref position, ref velocity);
+                    Motion(ref position, ref velocity, ref speed);
                 }
         }
 
         // Pass by ref so the values within the entity change
-        public void Motion(ref ComponentPosition pPos, ref ComponentVelocity pVel)
+        private void Motion(ref ComponentPosition pPos, ref ComponentVelocity pVel, ref ComponentSpeed pSpeed)
         {
-            pPos.Position = pPos.Position + (pVel.Velocity * GameScene.dt);
-            
+            pPos.Position += (pVel.Velocity * GameScene.dt) * pSpeed.Speed;
         }
     }
 }

@@ -15,12 +15,14 @@ namespace OpenGL_Game.Managers
         private Stopwatch _healthCooldown;
         private Stopwatch _enemyHealthCooldown;
         private Stopwatch _powerUpHealthCooldown;
+        private Stopwatch _powerUpSpeedCooldown;
 
         public GameCollisionManager()
         {
             _healthCooldown = new Stopwatch();
             _enemyHealthCooldown = new Stopwatch();
             _powerUpHealthCooldown = new Stopwatch();
+            _powerUpSpeedCooldown = new Stopwatch();
         }
         
         //TODO: BULLET DAMAGE POWER UP, DISABLE DRONES POWER UP
@@ -38,7 +40,8 @@ namespace OpenGL_Game.Managers
                     DamageCollision(collision.entity1, collision.entity2, "Player", "EnemyCat", _healthCooldown, 10);
                     DamageCollision(collision.entity1, collision.entity2, "EnemyCat", "Bullet", _enemyHealthCooldown, 10);
                 
-                    PowerUpHealth(collision.entity2, collision.entity1, "FishPowerUpHealth", "Player", _powerUpHealthCooldown, 1, 10);
+                    PowerUpHealth(collision.entity2, collision.entity1, "FishPowerUpHealth", "Player", _powerUpHealthCooldown, 1, 5);
+                    PowerUpSpeed(collision.entity2, collision.entity1, "FishPowerUpSpeed", "Player", _powerUpSpeedCooldown, 1, 1.2f);
                 }
 
                 if (collision.collisionType == COLLISIONTYPE.SPHERE_AABB)
@@ -61,8 +64,6 @@ namespace OpenGL_Game.Managers
 
         private void PowerUpHealth(Entity pEntityToAct, Entity pEntityToHit, string pEntity1Name, string pEntity2Name, Stopwatch pStopwatch, int pDamage, int pHealth)
         {
-            // Doesnt work because of the order of precedence for the collided entities
-            
             if (DamageCollision(pEntityToAct, pEntityToHit, pEntity1Name, pEntity2Name, pStopwatch, pDamage))
             {
                 var health = ComponentHelper.GetComponent<ComponentHealth>(pEntityToHit, ComponentTypes.COMPONENT_HEALTH);
@@ -73,7 +74,17 @@ namespace OpenGL_Game.Managers
             }
         }
         
-
+        private void PowerUpSpeed(Entity pEntityToAct, Entity pEntityToHit, string pEntity1Name, string pEntity2Name, Stopwatch pStopwatch, int pDamage, float pSpeed)
+        {
+            if (DamageCollision(pEntityToAct, pEntityToHit, pEntity1Name, pEntity2Name, pStopwatch, pDamage))
+            {
+                var speed = ComponentHelper.GetComponent<ComponentSpeed>(pEntityToHit, ComponentTypes.COMPONENT_SPEED);
+                
+                // Collects twice
+                speed.Speed += pSpeed;
+                pStopwatch.Start();
+            }
+        }
         
         
         private bool DamageCollision(Entity pEntityToAct, Entity pEntityToHit, string pEntity1Name, string pEntity2Name, Stopwatch pStopwatch, int pDamage)
@@ -119,6 +130,9 @@ namespace OpenGL_Game.Managers
             
             if (_powerUpHealthCooldown.ElapsedMilliseconds >= 1000)
                 _powerUpHealthCooldown.Reset();
+            
+            if (_powerUpSpeedCooldown.ElapsedMilliseconds >= 1000)
+                _powerUpSpeedCooldown.Reset();
         }
     }
 }

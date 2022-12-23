@@ -1,10 +1,11 @@
 ﻿namespace OpenGL_Game.Components
 {
-    public class ComponentSpeed
+    public class ComponentSpeed : IComponent
     {
         float speed;
 
-        public ComponentSpeed(int pSpeed)
+        // Speed multiplier
+        public ComponentSpeed(float pSpeed)
         {
             this.speed = pSpeed;
         }

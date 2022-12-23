@@ -28,6 +28,9 @@
     },
     {
       "COMPONENT_DIRECTION" : "0.8 0 -0.5"
+    },
+    {
+      "COMPONENT_SPEED" : "2"
     }
   ]
 }
@@ -69,9 +72,6 @@
       "COMPONENT_SHADER": "Default"
     },
     {
-      "COMPONENT_RENDERABLE": "False"
-    },
-    {
       "COMPONENT_AUDIO": "Audio/buzz.wav False"
     },
     {
@@ -79,24 +79,21 @@
     }, 
     {
       "COMPONENT_COLLISION_SPHERE": "1.0"
-    },
-    {
-      "COMPONENT_AUDIO": "Audio/buzz.wav false"
     }
   ]
 }
 {
-  "Name": "FishPowerUpAIDisable",
+  "Name": "FishPowerUpSpeed",
   "IsRenderable": "True",
   "Components": [
+    {
+      "COMPONENT_POSITION": "-9.0 0.0 4.0"
+    },
     {
       "COMPONENT_GEOMETRY": "Geometry/FishPowerUp/fishPowerUp.obj"
     },
     {
       "COMPONENT_SHADER": "Default"
-    },
-    {
-      "COMPONENT_RENDERABLE": "False"
     },
     {
       "COMPONENT_AUDIO": "Audio/buzz.wav False"

@@ -74,17 +74,18 @@ namespace OpenGL_Game.Managers
         {
             var playerPosComponent = ComponentHelper.GetComponent<ComponentPosition>(pEntity, ComponentTypes.COMPONENT_POSITION);
             var playerDirComponent = ComponentHelper.GetComponent<ComponentDirection>(pEntity, ComponentTypes.COMPONENT_DIRECTION);
+            var playerSpeedComponent = ComponentHelper.GetComponent<ComponentSpeed>(pEntity, ComponentTypes.COMPONENT_SPEED);
 
             // camera dependant actions
             switch (pAction)
             {
                 case "MOVE_FORWARD":
                     _previousPos = playerPosComponent.Position;
-                    playerPosComponent.Position += (playerDirComponent.Direction * 4) * GameScene.dt;
+                    playerPosComponent.Position += ((playerDirComponent.Direction * 4) * GameScene.dt) * playerSpeedComponent.Speed;
                     break;
                 case "MOVE_BACKWARD":
                     _previousPos = playerPosComponent.Position;
-                    playerPosComponent.Position += -(playerDirComponent.Direction * 4) * GameScene.dt;
+                    playerPosComponent.Position += -((playerDirComponent.Direction * 4) * GameScene.dt) * playerSpeedComponent.Speed;
                     break;
                 case "MOVE_LEFT":
                     playerDirComponent.Direction = Matrix3.CreateRotationY(-0.03f) * playerDirComponent.Direction;
