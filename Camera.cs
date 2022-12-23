@@ -41,8 +41,7 @@ namespace OpenGL_Game
             cameraPosition += move;
             UpdateView();
         }
-
-
+        
         public void RotateY(float angle)
         {
             cameraDirection = Matrix3.CreateRotationY(angle) * cameraDirection;

@@ -56,13 +56,11 @@ namespace OpenGL_Game.Managers
                         health.Health -= 10;
                         continue;
                     }
-                    
-                    IComponent positionComponent = collision.entity1.Components.Find(delegate(IComponent component)
-                    {
-                        return component.ComponentType == ComponentTypes.COMPONENT_POSITION;
-                    });
-                    ComponentPosition position = (ComponentPosition) positionComponent;
-                    
+
+                    ComponentPosition position =
+                        ComponentHelper.GetComponent<ComponentPosition>(collision.entity1,
+                            ComponentTypes.COMPONENT_POSITION);
+
                     IComponent directionComponent = collision.entity1.Components.Find(delegate(IComponent component)
                     {
                         return component.ComponentType == ComponentTypes.COMPONENT_DIRECTION;

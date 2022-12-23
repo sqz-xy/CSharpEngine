@@ -87,6 +87,7 @@
     <Compile Include="Components\ComponentDamage.cs" />
     <Compile Include="Components\ComponentDirection.cs" />
     <Compile Include="Components\ComponentHealth.cs" />
+    <Compile Include="Components\ComponentHelper.cs" />
     <Compile Include="Components\ComponentOpenALAudio.cs" />
     <Compile Include="Components\ComponentCollisionSphere.cs" />
     <Compile Include="Components\ComponentControllable.cs" />
@@ -172,7 +173,6 @@
     <Compile Include="Systems\SystemInput.cs" />
     <Compile Include="Systems\SystemPhysics.cs" />
     <Compile Include="Systems\SystemRender.cs" />
-    <Compile Include="Utility\Keybind.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
