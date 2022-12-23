@@ -49,6 +49,10 @@ namespace OpenGL_Game.Managers
                         health.Health -= 10;
                         continue;
                     }
+                    
+                    // Walls only collide with player after bullet check
+                    if (!collision.entity1.Name.Contains("Player"))
+                        continue;
 
                     var position = ComponentHelper.GetComponent<ComponentPosition>(collision.entity1, ComponentTypes.COMPONENT_POSITION);
                     var direction = ComponentHelper.GetComponent<ComponentDirection>(collision.entity1, ComponentTypes.COMPONENT_DIRECTION);

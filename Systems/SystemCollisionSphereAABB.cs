@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using OpenGL_Game.Components;
 using OpenGL_Game.Managers;
 using OpenGL_Game.Objects;
+using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
 namespace OpenGL_Game.Systems
 {
@@ -65,7 +67,7 @@ namespace OpenGL_Game.Systems
             
             if (xDistance >= (AABBCol.Width + sphereCol.CollisionField) || yDistance >= (AABBCol.Height + sphereCol.CollisionField) || zDistance >= (AABBCol.Depth + sphereCol.CollisionField))
                 return;
-                
+            
             if ((xDistance < AABBCol.Width) || (yDistance < AABBCol.Height) || (zDistance < AABBCol.Depth))
                 _collisionManager.RegisterCollision(pEntity1, pEntity2, COLLISIONTYPE.SPHERE_AABB);
 

@@ -10,7 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd grassTex.jpg
+map_Kd C:\\Users\\proto\\RiderProjects\\GAMES-ARCHITECTURE-ACWRECLONE\\Geometry\\Maze\\grassTex.jpg
 
 newmtl Material
 Ns 359.999993
@@ -21,4 +21,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd brickTex.png
+map_Kd C:\\Users\\proto\\RiderProjects\\GAMES-ARCHITECTURE-ACWRECLONE\\Geometry\\Maze\\brickTex.png
