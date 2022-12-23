@@ -66,7 +66,7 @@
   "IsRenderable": "True",
   "Components": [
     {
-      "COMPONENT_POSITION": "6.0 0.0 4.0"
+      "COMPONENT_POSITION": "8.5 0.0 4.0"
     },
     {
       "COMPONENT_GEOMETRY": "Geometry/FishPowerUp/fishPowerUp.obj"
@@ -90,7 +90,7 @@
   "IsRenderable": "True",
   "Components": [
     {
-      "COMPONENT_POSITION": "-9.0 0.0 4.0"
+      "COMPONENT_POSITION": "-9.0 0.0 6.0"
     },
     {
       "COMPONENT_GEOMETRY": "Geometry/FishPowerUp/fishPowerUp.obj"
@@ -138,7 +138,7 @@
   "IsRenderable": "True",
   "Components": [
     {
-      "COMPONENT_POSITION": "5.0 0.0 0.0"
+      "COMPONENT_POSITION": "7.5 0.0 0.0"
     },
     {
       "COMPONENT_GEOMETRY": "Geometry/CatEnemy/catEnemy.obj"
@@ -183,7 +183,7 @@
   "IsRenderable": "True",
   "Components": [
     {
-      "COMPONENT_POSITION": "-10.0 0.0 0.0"
+      "COMPONENT_POSITION": "-9.0 0.0 -5"
     },
     {
       "COMPONENT_GEOMETRY": "Geometry/CatEnemy/catEnemy.obj"
