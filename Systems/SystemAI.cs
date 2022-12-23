@@ -29,20 +29,10 @@ namespace OpenGL_Game.Systems
             foreach (var entity in pEntity)
                 if (((entity.Mask & MASK) == MASK))
                 {
-                    List<IComponent> components = entity.Components;
                     Entity playerEntity = null;
                     
-                    IComponent positionComponent = components.Find(delegate (IComponent component)
-                    {
-                        return component.ComponentType == ComponentTypes.COMPONENT_POSITION;
-                    });
-                    ComponentPosition position = (ComponentPosition)positionComponent;
-
-                    IComponent aiComponent = components.Find(delegate(IComponent component)
-                    {
-                        return component.ComponentType == ComponentTypes.COMPONENT_AI;
-                    });
-                    ComponentAI ai = (ComponentAI) aiComponent;
+                    var position = ComponentHelper.GetComponent<ComponentPosition>(entity, ComponentTypes.COMPONENT_POSITION);
+                    var ai = ComponentHelper.GetComponent<ComponentAI>(entity, ComponentTypes.COMPONENT_AI);
                 }
         }
 

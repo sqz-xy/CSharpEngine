@@ -52,36 +52,15 @@ namespace OpenGL_Game.Systems
             if (pEntity1 == pEntity2)
                 return;
             
-            ComponentPosition entity1Pos, entity2Pos;
-            ComponentCollisionSphere entity1Coll, entity2Coll;
+            ComponentPosition entity1Pos = ComponentHelper.GetComponent<ComponentPosition>(pEntity1, ComponentTypes.COMPONENT_POSITION);
+            ComponentCollisionSphere entity1Coll = ComponentHelper.GetComponent<ComponentCollisionSphere>(pEntity1, ComponentTypes.COMPONENT_COLLISION_SPHERE);
+            ComponentPosition entity2Pos = ComponentHelper.GetComponent<ComponentPosition>(pEntity2, ComponentTypes.COMPONENT_POSITION);
+            ComponentCollisionSphere entity2Coll = ComponentHelper.GetComponent<ComponentCollisionSphere>(pEntity2, ComponentTypes.COMPONENT_COLLISION_SPHERE);
 
-            ExtractComponents(pEntity1, out entity1Pos, out entity1Coll);
-            ExtractComponents(pEntity2, out entity2Pos, out entity2Coll);
-
-          
             if ((entity1Pos.Position - entity2Pos.Position).Length < entity1Coll.CollisionField + entity2Coll.CollisionField)
             {
                 _collisionManager.RegisterCollision(pEntity1, pEntity2, COLLISIONTYPE.SPHERE_SPHERE);
             }
         }
-        
-        private void ExtractComponents(Entity pEntity, out ComponentPosition pComponentPosition, out ComponentCollisionSphere pComponentCollision)
-        {
-
-            List<IComponent> components = pEntity.Components;
-
-            IComponent positionComponent = components.Find(delegate (IComponent component)
-            {
-                return component.ComponentType == ComponentTypes.COMPONENT_POSITION;
-            });
-            pComponentPosition = (ComponentPosition)positionComponent;
-
-            IComponent collisionComponent = components.Find(delegate (IComponent component)
-            {
-                return component.ComponentType == ComponentTypes.COMPONENT_COLLISION_SPHERE;
-            });
-            pComponentCollision = (ComponentCollisionSphere)collisionComponent;
-        }
-
     }
 }

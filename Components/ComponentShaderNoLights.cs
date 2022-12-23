@@ -29,7 +29,7 @@ namespace OpenGL_Game.Components
             GL.ActiveTexture(TextureUnit.Texture0);
             
             GL.UniformMatrix4(uniform_mmodel, false, ref pModel);
-            Matrix4 modelViewProjection = pModel * GameScene.gameInstance.camera.view * GameScene.gameInstance.camera.projection;
+            var modelViewProjection = pModel * GameScene.gameInstance.camera.view * GameScene.gameInstance.camera.projection;
             GL.UniformMatrix4(uniform_modelviewproj, false, ref modelViewProjection);
             
             pGeometry.Render(uniform_diffuse);

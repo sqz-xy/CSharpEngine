@@ -23,7 +23,7 @@ namespace ObjLoader.Loader.TypeParsers
 
         public override void Parse(string line)
         {
-            string[] parts = line.Split(new[]{' '}, StringSplitOptions.RemoveEmptyEntries);
+            var parts = line.Split(new[]{' '}, StringSplitOptions.RemoveEmptyEntries);
 
             var x = parts[0].ParseInvariantFloat();
             var y = parts[1].ParseInvariantFloat();

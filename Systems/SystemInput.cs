@@ -21,26 +21,10 @@ namespace OpenGL_Game.Systems
             foreach (var entity in pEntity)
                 if ((entity.Mask & MASK) == MASK)
                 {
-                    List<IComponent> components = entity.Components;
+                    var position = ComponentHelper.GetComponent<ComponentPosition>(entity, ComponentTypes.COMPONENT_POSITION);
+                    var direction = ComponentHelper.GetComponent<ComponentDirection>(entity, ComponentTypes.COMPONENT_DIRECTION);
+                    var control = ComponentHelper.GetComponent<ComponentControllable>(entity, ComponentTypes.COMPONENT_CONTROLLABLE);
                     
-                    IComponent positionComponent = components.Find(delegate (IComponent component)
-                    {
-                        return component.ComponentType == ComponentTypes.COMPONENT_POSITION;
-                    });
-                    ComponentPosition position = (ComponentPosition)positionComponent;
-
-                    IComponent directionComponent = components.Find(delegate (IComponent component)
-                    {
-                        return component.ComponentType == ComponentTypes.COMPONENT_DIRECTION;
-                    });
-                    ComponentDirection direction = (ComponentDirection)directionComponent;
-                    
-                    IComponent controlComponent = components.Find(delegate(IComponent component)
-                    {
-                        return component.ComponentType == ComponentTypes.COMPONENT_CONTROLLABLE;
-                    });
-                    ComponentControllable control = (ComponentControllable)controlComponent;
-
                     if (control.IsControllable)
                         Control(entity, ref position, ref direction);
                 }

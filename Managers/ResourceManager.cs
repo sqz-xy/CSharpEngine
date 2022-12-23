@@ -63,7 +63,7 @@ namespace OpenGL_Game.Managers
             if (shader == 0)
             {
                 shader = GL.CreateShader(pType);
-                using (StreamReader sr = new StreamReader(pFileName))
+                using (var sr = new StreamReader(pFileName))
                 {
                     GL.ShaderSource(shader, sr.ReadToEnd());
                 }
@@ -94,8 +94,8 @@ namespace OpenGL_Game.Managers
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
 
-                Bitmap bmp = new Bitmap(filename);
-                BitmapData bmp_data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                var bmp = new Bitmap(filename);
+                var bmp_data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
                 GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, bmp_data.Width, bmp_data.Height, 0,
                     OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bmp_data.Scan0);
@@ -120,12 +120,12 @@ namespace OpenGL_Game.Managers
 
                 // Load a .wav file from disk.
                 int channels, bits_per_sample, sample_rate;
-                byte[] sound_data = LoadWave(
+                var sound_data = LoadWave(
                     File.Open(filename, FileMode.Open),
                     out channels,
                     out bits_per_sample,
                     out sample_rate);
-                ALFormat sound_format =
+                var sound_format =
                     channels == 1 && bits_per_sample == 8 ? ALFormat.Mono8 :
                     channels == 1 && bits_per_sample == 16 ? ALFormat.Mono16 :
                     channels == 2 && bits_per_sample == 8 ? ALFormat.Stereo8 :
@@ -148,37 +148,37 @@ namespace OpenGL_Game.Managers
             if (stream == null)
                 throw new ArgumentNullException("stream");
 
-            using (BinaryReader reader = new BinaryReader(stream))
+            using (var reader = new BinaryReader(stream))
             {
                 // RIFF header
-                string signature = new string(reader.ReadChars(4));
+                var signature = new string(reader.ReadChars(4));
                 if (signature != "RIFF")
                     throw new NotSupportedException("Specified stream is not a wave file.");
 
-                int riff_chunck_size = reader.ReadInt32();
+                var riff_chunck_size = reader.ReadInt32();
 
-                string format = new string(reader.ReadChars(4));
+                var format = new string(reader.ReadChars(4));
                 if (format != "WAVE")
                     throw new NotSupportedException("Specified stream is not a wave file.");
 
                 // WAVE header
-                string format_signature = new string(reader.ReadChars(4));
+                var format_signature = new string(reader.ReadChars(4));
                 if (format_signature != "fmt ")
                     throw new NotSupportedException("Specified wave file is not supported.");
 
-                int format_chunk_size = reader.ReadInt32();
+                var format_chunk_size = reader.ReadInt32();
                 int audio_format = reader.ReadInt16();
                 int num_channels = reader.ReadInt16();
-                int sample_rate = reader.ReadInt32();
-                int byte_rate = reader.ReadInt32();
+                var sample_rate = reader.ReadInt32();
+                var byte_rate = reader.ReadInt32();
                 int block_align = reader.ReadInt16();
                 int bits_per_sample = reader.ReadInt16();
 
-                string data_signature = new string(reader.ReadChars(4));
+                var data_signature = new string(reader.ReadChars(4));
                 if (data_signature != "data")
                     throw new NotSupportedException("Specified wave file is not supported.");
 
-                int data_chunk_size = reader.ReadInt32();
+                var data_chunk_size = reader.ReadInt32();
 
                 channels = num_channels;
                 bits = bits_per_sample;

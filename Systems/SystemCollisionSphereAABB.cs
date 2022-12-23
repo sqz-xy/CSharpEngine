@@ -54,12 +54,10 @@ namespace OpenGL_Game.Systems
             if (pEntity1 == pEntity2)
                 return;
             
-            ComponentPosition spherePos, AABBPos;
-            ComponentCollisionSphere sphereCol;
-            ComponentCollisionAABB AABBCol;
-            
-            ExtractComponents(pEntity1, out spherePos, out sphereCol);
-            ExtractComponents(pEntity2, out AABBPos, out AABBCol);
+            ComponentPosition spherePos = ComponentHelper.GetComponent<ComponentPosition>(pEntity1, ComponentTypes.COMPONENT_POSITION);
+            ComponentPosition AABBPos = ComponentHelper.GetComponent<ComponentPosition>(pEntity2, ComponentTypes.COMPONENT_POSITION);
+            ComponentCollisionSphere sphereCol = ComponentHelper.GetComponent<ComponentCollisionSphere>(pEntity1, ComponentTypes.COMPONENT_COLLISION_SPHERE);
+            ComponentCollisionAABB AABBCol = ComponentHelper.GetComponent<ComponentCollisionAABB>(pEntity2, ComponentTypes.COMPONENT_COLLISION_AABB);
 
             var xDistance = Math.Abs(spherePos.Position.X - AABBPos.Position.X);
             var yDistance = Math.Abs(spherePos.Position.Y - AABBPos.Position.Y);
@@ -71,47 +69,12 @@ namespace OpenGL_Game.Systems
             if ((xDistance < AABBCol.Width) || (yDistance < AABBCol.Height) || (zDistance < AABBCol.Depth))
                 _collisionManager.RegisterCollision(pEntity1, pEntity2, COLLISIONTYPE.SPHERE_AABB);
 
-            float cornerDistance = ((xDistance - AABBCol.Width) * (xDistance - AABBCol.Width)) +
-                                   ((yDistance - AABBCol.Height) * (yDistance - AABBCol.Height)) +
-                                   ((yDistance - AABBCol.Depth) * (yDistance - AABBCol.Depth));
+            var cornerDistance = ((xDistance - AABBCol.Width) * (xDistance - AABBCol.Width)) +
+                                 ((yDistance - AABBCol.Height) * (yDistance - AABBCol.Height)) +
+                                 ((yDistance - AABBCol.Depth) * (yDistance - AABBCol.Depth));
             
             if (cornerDistance < (sphereCol.CollisionField * sphereCol.CollisionField))
                 _collisionManager.RegisterCollision(pEntity1, pEntity2, COLLISIONTYPE.SPHERE_AABB);
-        }
-        
-        private void ExtractComponents(Entity pEntity, out ComponentPosition pComponentPosition, out ComponentCollisionSphere pComponentCollision)
-        {
-            List<IComponent> components = pEntity.Components;
-
-            IComponent positionComponent = components.Find(delegate (IComponent component)
-            {
-                return component.ComponentType == ComponentTypes.COMPONENT_POSITION;
-            });
-            pComponentPosition = (ComponentPosition)positionComponent;
-
-            IComponent collisionComponent = components.Find(delegate (IComponent component)
-            {
-                return component.ComponentType == ComponentTypes.COMPONENT_COLLISION_SPHERE;
-            });
-            pComponentCollision = (ComponentCollisionSphere)collisionComponent;
-        }
-        
-        private void ExtractComponents(Entity pEntity, out ComponentPosition pComponentPosition, out ComponentCollisionAABB pComponentCollision)
-        {
-
-            List<IComponent> components = pEntity.Components;
-
-            IComponent positionComponent = components.Find(delegate (IComponent component)
-            {
-                return component.ComponentType == ComponentTypes.COMPONENT_POSITION;
-            });
-            pComponentPosition = (ComponentPosition)positionComponent;
-
-            IComponent collisionComponent = components.Find(delegate (IComponent component)
-            {
-                return component.ComponentType == ComponentTypes.COMPONENT_COLLISION_AABB;
-            });
-            pComponentCollision = (ComponentCollisionAABB)collisionComponent;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace OpenGL_Game.Managers
         public GameScriptManager()
         {
             // Set the json serializer settings
-            JsonSerializerSettings jss = new JsonSerializerSettings
+            var jss = new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.All
             };
@@ -33,8 +33,8 @@ namespace OpenGL_Game.Managers
        /// <param name="pEntityManager">The entity manager</param>
        public override void LoadEntities(string pScriptName, ref EntityManager pEntityManager)
        {
-           JsonSerializer serializer = new JsonSerializer();
-           JsonTextReader reader = new JsonTextReader(new StreamReader(pScriptName));
+           var serializer = new JsonSerializer();
+           var reader = new JsonTextReader(new StreamReader(pScriptName));
            reader.SupportMultipleContent = true;            // Support multiple objects
            
            // For each object
@@ -55,19 +55,19 @@ namespace OpenGL_Game.Managers
                }
                
                // Get the name of the object
-               JToken token = obj.SelectToken("Name");
+               var token = obj.SelectToken("Name");
                if (token == null) {continue; }
-               Entity newEntity = new Entity(token.ToString());
+               var newEntity = new Entity(token.ToString());
 
                 // isRenderable?
                 token = obj.SelectToken("IsRenderable");
                 if (token == null) { continue; }
-                bool isRenderable = bool.Parse(token.ToString());
+                var isRenderable = bool.Parse(token.ToString());
 
                 // Get the components
                 token = obj.SelectToken("Components");
                 if (token == null) {continue; }
-                JArray jsonComponents = JArray.Parse(token.ToString());
+                var jsonComponents = JArray.Parse(token.ToString());
 
                
                // Compare json components with the entity components
@@ -75,7 +75,7 @@ namespace OpenGL_Game.Managers
                {
                    foreach (JObject jsonComponent in jsonComponents)
                    {
-                       foreach (JProperty property in jsonComponent.Properties())
+                       foreach (var property in jsonComponent.Properties())
                        {
                            if (property.Name != componentType)
                                continue;
@@ -106,7 +106,7 @@ namespace OpenGL_Game.Managers
             switch (pComponentType)
             {
                 case "COMPONENT_POSITION":
-                    float[] posValues = Array.ConvertAll(pComponentValue.Split(' '), float.Parse);
+                    var posValues = Array.ConvertAll(pComponentValue.Split(' '), float.Parse);
                     return new ComponentPosition(new Vector3(posValues[0], posValues[1], posValues[2]));
                 case "COMPONENT_GEOMETRY":
                     return new ComponentGeometry(pComponentValue);
@@ -115,30 +115,30 @@ namespace OpenGL_Game.Managers
                 case "COMPONENT_TEXTURE":
                     return new ComponentTexture(pComponentValue);
                 case "COMPONENT_VELOCITY":
-                    float[] velValues = Array.ConvertAll(pComponentValue.Split(' '), float.Parse);
+                    var velValues = Array.ConvertAll(pComponentValue.Split(' '), float.Parse);
                     return new ComponentVelocity(new Vector3(velValues[0], velValues[1], velValues[2]));
                 case "COMPONENT_DIRECTION":
-                    float[] dirValues = Array.ConvertAll(pComponentValue.Split(' '), float.Parse);
+                    var dirValues = Array.ConvertAll(pComponentValue.Split(' '), float.Parse);
                     return new ComponentDirection(new Vector3(dirValues[0], dirValues[1], dirValues[2]));
                 case "COMPONENT_AUDIO":
-                    string[] audioValues = pComponentValue.Split(' ');
+                    var audioValues = pComponentValue.Split(' ');
                     return new ComponentOpenALAudio(audioValues[0], bool.Parse(audioValues[1]));
                 case "COMPONENT_COLLISION_SPHERE":
                     return new ComponentCollisionSphere(float.Parse(pComponentValue));
                 case "COMPONENT_HEALTH":
                     return new ComponentHealth(int.Parse(pComponentValue));
                 case "COMPONENT_COLLISION_AABB":
-                    string[] AABValues = pComponentValue.Split(' ');
+                    var AABValues = pComponentValue.Split(' ');
                     return new ComponentCollisionAABB(float.Parse(AABValues[0]), float.Parse(AABValues[1]), float.Parse(AABValues[2]));
                 case "COMPONENT_DAMAGE":
                     return new ComponentDamage(int.Parse(pComponentValue));
                 case "COMPONENT_AI":
                     AICostTypes costType;
-                    string[] aiValues = pComponentValue.Split(' ');
+                    var aiValues = pComponentValue.Split(' ');
                     Enum.TryParse(aiValues[0], out costType);
                     return new ComponentAI(costType, bool.Parse(aiValues[1]));
                 case "COMPONENT_SHADER":
-                    string[] shaderValues = pComponentValue.Split(' ');
+                    var shaderValues = pComponentValue.Split(' ');
                     switch (shaderValues[0])
                     {
                         case "Default":
@@ -157,8 +157,8 @@ namespace OpenGL_Game.Managers
 
         public override void LoadControls(string pScriptName, ref GameInputManager pInputManager)
         {
-            JsonSerializer serializer = new JsonSerializer();
-            JsonTextReader reader = new JsonTextReader(new StreamReader(pScriptName));
+            var serializer = new JsonSerializer();
+            var reader = new JsonTextReader(new StreamReader(pScriptName));
             reader.SupportMultipleContent = true;            // Support multiple objects
 
             // For each object
@@ -179,13 +179,13 @@ namespace OpenGL_Game.Managers
                 }
                 
                 // Get the name of the object
-                JToken token = obj.SelectToken("Controls");
+                var token = obj.SelectToken("Controls");
                 if (token == null) { continue; }
-                JArray jsonControls = JArray.Parse(token.ToString());
+                var jsonControls = JArray.Parse(token.ToString());
 
                 foreach (JObject jsonControl in jsonControls)
                 {
-                    foreach (JProperty property in jsonControl.Properties())
+                    foreach (var property in jsonControl.Properties())
                     {
                         GetControls(property.Name, (string)property.Value, ref pInputManager);
                     }

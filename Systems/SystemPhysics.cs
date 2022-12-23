@@ -34,20 +34,9 @@ namespace OpenGL_Game.Systems
             foreach (var entity in pEntity)
                 if ((entity.Mask & MASK) == MASK)
                 {
-                    List<IComponent> components = entity.Components;
-
-                    IComponent positionComponent = components.Find(delegate(IComponent component)
-                    {
-                        return component.ComponentType == ComponentTypes.COMPONENT_POSITION;
-                    });
-                    ComponentPosition position = (ComponentPosition)positionComponent;
-
-                    IComponent velocityComponent = components.Find(delegate(IComponent component)
-                    {
-                        return component.ComponentType == ComponentTypes.COMPONENT_VELOCITY;
-                    });
-                    ComponentVelocity velocity = (ComponentVelocity)velocityComponent;
-
+                    var position = ComponentHelper.GetComponent<ComponentPosition>(entity, ComponentTypes.COMPONENT_POSITION);
+                    var velocity = ComponentHelper.GetComponent<ComponentVelocity>(entity, ComponentTypes.COMPONENT_VELOCITY);
+                    
                     Motion(ref position, ref velocity);
                 }
         }

@@ -32,8 +32,6 @@ namespace OpenGL_Game.Managers
             
             foreach (var collision in _collisionManifold)
             {
-                //PlayerEnemyCollision(collision);
-                //BulletEnemyCollision(collision);
 
                 if (collision.collisionType == COLLISIONTYPE.SPHERE_SPHERE)
                 {
@@ -47,25 +45,13 @@ namespace OpenGL_Game.Managers
                 {
                     if (collision.entity1.Name.Contains("Bullet"))
                     {
-                        IComponent healthComponent = collision.entity1.Components.Find(delegate(IComponent component)
-                        {
-                            return component.ComponentType == ComponentTypes.COMPONENT_HEALTH;
-                        });
-                
-                        ComponentHealth health = (ComponentHealth) healthComponent;
+                        var health = ComponentHelper.GetComponent<ComponentHealth>(collision.entity1, ComponentTypes.COMPONENT_HEALTH);
                         health.Health -= 10;
                         continue;
                     }
 
-                    ComponentPosition position =
-                        ComponentHelper.GetComponent<ComponentPosition>(collision.entity1,
-                            ComponentTypes.COMPONENT_POSITION);
-
-                    IComponent directionComponent = collision.entity1.Components.Find(delegate(IComponent component)
-                    {
-                        return component.ComponentType == ComponentTypes.COMPONENT_DIRECTION;
-                    });
-                    ComponentDirection direction = (ComponentDirection) directionComponent;
+                    var position = ComponentHelper.GetComponent<ComponentPosition>(collision.entity1, ComponentTypes.COMPONENT_POSITION);
+                    var direction = ComponentHelper.GetComponent<ComponentDirection>(collision.entity1, ComponentTypes.COMPONENT_DIRECTION);
 
                     position.Position += direction.Direction * -0.1f;
                 }
@@ -79,12 +65,7 @@ namespace OpenGL_Game.Managers
             
             if (DamageCollision(pEntityToAct, pEntityToHit, pEntity1Name, pEntity2Name, pStopwatch, pDamage))
             {
-                IComponent healthComponent = pEntityToHit.Components.Find(delegate(IComponent component)
-                {
-                    return component.ComponentType == ComponentTypes.COMPONENT_HEALTH;
-                });
-                
-                ComponentHealth health = (ComponentHealth) healthComponent;
+                var health = ComponentHelper.GetComponent<ComponentHealth>(pEntityToHit, ComponentTypes.COMPONENT_HEALTH);
                 
                 // Collects twice
                 health.Health += pHealth;
@@ -101,23 +82,9 @@ namespace OpenGL_Game.Managers
             {
                 if (pEntityToHit.Name.Contains(pEntity2Name))
                 {
-                    IComponent healthComponent = pEntityToAct.Components.Find(delegate(IComponent component)
-                    {
-                        return component.ComponentType == ComponentTypes.COMPONENT_HEALTH;
-                    });
-                    ComponentHealth health = (ComponentHealth) healthComponent;
-                    
-                    IComponent damageComponent = pEntityToHit.Components.Find(delegate(IComponent component)
-                    {
-                        return component.ComponentType == ComponentTypes.COMPONENT_DAMAGE;
-                    });
-                    ComponentDamage damage = (ComponentDamage) damageComponent;
-                    
-                    IComponent audioComponent = pEntityToHit.Components.Find(delegate(IComponent component)
-                    {
-                        return component.ComponentType == ComponentTypes.COMPONENT_AUDIO;
-                    });
-                    ComponentAudio audio = (ComponentAudio) audioComponent;
+                    var health = ComponentHelper.GetComponent<ComponentHealth>(pEntityToAct, ComponentTypes.COMPONENT_HEALTH);
+                    var damage = ComponentHelper.GetComponent<ComponentDamage>(pEntityToHit, ComponentTypes.COMPONENT_DAMAGE);
+                    var audio = ComponentHelper.GetComponent<ComponentAudio>(pEntityToHit, ComponentTypes.COMPONENT_AUDIO);
                     
                     int damageValue;
                     if (damage == null)

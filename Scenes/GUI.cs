@@ -72,11 +72,11 @@ namespace OpenGL_Game.Scenes
 
         static public void Label(Rectangle rect, string text, int fontSize, StringAlignment sa, Color color)
         {
-            StringFormat stringFormat = new StringFormat();
+            var stringFormat = new StringFormat();
             stringFormat.Alignment = sa;
             stringFormat.LineAlignment = sa;
 
-            SolidBrush brush = new SolidBrush(color);
+            var brush = new SolidBrush(color);
 
             textGFX.DrawString(text, new Font("Arial", fontSize), brush, rect, stringFormat);
         }
@@ -92,7 +92,7 @@ namespace OpenGL_Game.Scenes
 
             GL.BindTexture(TextureTarget.Texture2D, textTexture);
 
-            BitmapData data = textBMP.LockBits(new Rectangle(0, 0, textBMP.Width, textBMP.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            var data = textBMP.LockBits(new Rectangle(0, 0, textBMP.Width, textBMP.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, (int)textBMP.Width, (int)textBMP.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
             textBMP.UnlockBits(data);
 

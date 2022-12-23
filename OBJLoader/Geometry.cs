@@ -43,16 +43,16 @@ namespace OpenGL_Game.OBJLoader
             try
             {
                 // This OBJ parser library is developed by chrisjansson and available at https://github.com/chrisjansson/ObjLoader
-                ObjLoader.Loader.Loaders.LoadResult obj = LoadOBJObject(filename);
+                var obj = LoadOBJObject(filename);
 
                 // This code assumes that all faces in all groups are defined as triangles or quads
                 foreach (var group in obj.Groups)
                 {
-                    Group newGroup = new Group();
+                    var newGroup = new Group();
                     if (group.Material.DiffuseTextureMap != null)
                     {
                         // Q: Does the DiffuseTextureMap have a full folder path?
-                        int index = group.Material.DiffuseTextureMap.LastIndexOf('\\');
+                        var index = group.Material.DiffuseTextureMap.LastIndexOf('\\');
                         if (index < 0)
                         {
                             // A: NO, so just add the geometery path
@@ -61,7 +61,7 @@ namespace OpenGL_Game.OBJLoader
                         else
                         {
                             // A: YES, so remove the path and then add the geometery path
-                            string diffuseTextureMap = group.Material.DiffuseTextureMap.Substring(index+1);
+                            var diffuseTextureMap = group.Material.DiffuseTextureMap.Substring(index+1);
                             newGroup.texture = ResourceManager.LoadTexture(path + diffuseTextureMap);
                         }
                     }
@@ -69,9 +69,9 @@ namespace OpenGL_Game.OBJLoader
                     {
                         newGroup.texture = ResourceManager.LoadTexture("Geometry\\Default\\default.png");   // OBJ NEW 
                     }
-                    bool error = false;
-                    string errorMessage = "";
-                    bool primitiveSet = false;
+                    var error = false;
+                    var errorMessage = "";
+                    var primitiveSet = false;
                     foreach (var face in group.Faces)
                     {
                         ++newGroup.numberOfFaces;
@@ -104,10 +104,10 @@ namespace OpenGL_Game.OBJLoader
                             errorMessage = "The " + filename + " file does not have triangular or quad faces and so will not be rendered correctly";
                         }
 
-                        for (int i = 0; i < face.Count; ++i)
+                        for (var i = 0; i < face.Count; ++i)
                         {
                             // obj indexing starts at 1, so we need to subtract 1
-                            int v = face[i].VertexIndex - 1;
+                            var v = face[i].VertexIndex - 1;
                             newGroup.vertices.Add(obj.Vertices[v].X);
                             newGroup.vertices.Add(obj.Vertices[v].Y);
                             newGroup.vertices.Add(obj.Vertices[v].Z);
@@ -115,7 +115,7 @@ namespace OpenGL_Game.OBJLoader
                             if (obj.Textures.Count > 0)
                             {
                                 // obj indexing starts at 1, so we need to subtract 1
-                                int t = face[i].TextureIndex - 1;
+                                var t = face[i].TextureIndex - 1;
                                 newGroup.textureCoords.Add(obj.Textures[t].X);
                                 // OpenGL tex coords start at top-left
                                 newGroup.textureCoords.Add(1.0f-obj.Textures[t].Y);
@@ -124,7 +124,7 @@ namespace OpenGL_Game.OBJLoader
                             if (obj.Normals.Count > 0)
                             {
                                 // obj indexing starts at 1, so we need to subtract 1
-                                int n = face[i].NormalIndex - 1;
+                                var n = face[i].NormalIndex - 1;
                                 newGroup.normals.Add(obj.Normals[n].X);
                                 newGroup.normals.Add(obj.Normals[n].Y);
                                 newGroup.normals.Add(obj.Normals[n].Z);

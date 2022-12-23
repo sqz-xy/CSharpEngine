@@ -42,10 +42,10 @@ namespace OpenGL_Game.Managers
 
         public override void ReadInput(Entity pEntity)
         {
-            KeyboardState keyState = Keyboard.GetState();
+            var keyState = Keyboard.GetState();
             ResetCooldowns();
             
-            foreach (KeyValuePair<string, Key> kvp in _keyBinds)
+            foreach (var kvp in _keyBinds)
             {
                 if (keyState.IsKeyDown(kvp.Value))
                 {
@@ -56,9 +56,9 @@ namespace OpenGL_Game.Managers
                 }
             }
 
-            MouseState mouseState = Mouse.GetState();
+            var mouseState = Mouse.GetState();
 
-            foreach (KeyValuePair<string, MouseButton> kvp in _mouseBinds)
+            foreach (var kvp in _mouseBinds)
             {
                 if (mouseState.IsButtonDown(kvp.Value))
                 {
@@ -72,7 +72,8 @@ namespace OpenGL_Game.Managers
 
         public override void HandleEntityInput(string pAction, Entity pEntity)
         {
-            ExtractComponents(pEntity, out var playerPosComponent, out var playerDirComponent);
+            var playerPosComponent = ComponentHelper.GetComponent<ComponentPosition>(pEntity, ComponentTypes.COMPONENT_POSITION);
+            var playerDirComponent = ComponentHelper.GetComponent<ComponentDirection>(pEntity, ComponentTypes.COMPONENT_DIRECTION);
 
             // camera dependant actions
             switch (pAction)
@@ -118,40 +119,33 @@ namespace OpenGL_Game.Managers
         {
             if (_shootCooldown.ElapsedMilliseconds == 0)
             {
-                ExtractComponents(pEntity, out var playerPosComponent, out var playerDirComponent);
+                var playerPosComponent = ComponentHelper.GetComponent<ComponentPosition>(pEntity, ComponentTypes.COMPONENT_POSITION);
+                var playerDirComponent = ComponentHelper.GetComponent<ComponentDirection>(pEntity, ComponentTypes.COMPONENT_DIRECTION);
+                
                 var playerPos = playerPosComponent.Position;
                 var playerDir = playerDirComponent.Direction;
 
                 // Make a copy of the saved bullet
-                Entity storedBullet = _entityManager.FindRenderableEntity(bulletName);
-                Entity newBullet = new Entity($"Bullet{bulletIndex}");
+                var storedBullet = _entityManager.FindRenderableEntity(bulletName);
+                var newBullet = new Entity($"Bullet{bulletIndex}");
 
                 foreach (var c in storedBullet.Components)
                 {
                     if (c.GetType() == typeof(ComponentHealth))
                         continue;
                     
-                    IComponent componentCopy = c;
+                    var componentCopy = c;
                     newBullet.AddComponent(componentCopy);
                 }
                 
-                IComponent healthComponent = pEntity.Components.Find(delegate(IComponent component)
-                {
-                    return component.ComponentType == ComponentTypes.COMPONENT_HEALTH;
-                });
-                
-                ComponentHealth health = (ComponentHealth) healthComponent;
+                var health = ComponentHelper.GetComponent<ComponentHealth>(pEntity, ComponentTypes.COMPONENT_HEALTH);
                 
                 // Spawn bullet in front of player with camera direction as velocity
                 newBullet.AddComponent(new ComponentPosition(playerPos + playerDir * 3));
                 newBullet.AddComponent(new ComponentVelocity(playerDir * pSpeed));
                 newBullet.AddComponent(new ComponentHealth(health.Health));
                 
-                IComponent audioComponent = newBullet.Components.Find(delegate(IComponent component)
-                {
-                    return component.ComponentType == ComponentTypes.COMPONENT_AUDIO;
-                });
-                ComponentAudio audio = (ComponentAudio) audioComponent;
+                var audio = ComponentHelper.GetComponent<ComponentAudio>(pEntity, ComponentTypes.COMPONENT_AUDIO);
                 audio.PlayAudio();
 
                 _entityManager.AddEntity(newBullet, true);
@@ -187,21 +181,5 @@ namespace OpenGL_Game.Managers
                 _shootCooldown.Reset();
         }
         
-        private void ExtractComponents(Entity pEntity, out ComponentPosition playerPos, out ComponentDirection playerDir)
-        {
-            List<IComponent> components = pEntity.Components;
-
-            IComponent positionComponent = components.Find(delegate (IComponent component)
-            {
-                return component.ComponentType == ComponentTypes.COMPONENT_POSITION;
-            });
-            playerPos = (ComponentPosition)positionComponent;
-
-            IComponent directionComponent = components.Find(delegate (IComponent component)
-            {
-                return component.ComponentType == ComponentTypes.COMPONENT_DIRECTION;
-            });
-            playerDir = (ComponentDirection)directionComponent;
-        }
     }
 }

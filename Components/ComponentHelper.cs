@@ -6,7 +6,7 @@ namespace OpenGL_Game.Components
     {
         public static T GetComponent<T>(Entity pEntity, ComponentTypes pComponentType)
         {
-            IComponent componentToGet = pEntity.Components.Find(delegate(IComponent component)
+            var componentToGet = pEntity.Components.Find(delegate(IComponent component)
             {
                 return component.ComponentType == pComponentType;
             });

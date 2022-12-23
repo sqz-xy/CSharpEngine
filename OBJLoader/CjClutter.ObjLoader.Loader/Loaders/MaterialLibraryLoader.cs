@@ -82,11 +82,11 @@ namespace ObjLoader.Loader.Loaders
 
         private Vec3 ParseVec3(string data)
         {
-            string[] parts = data.Split(' ');
+            var parts = data.Split(' ');
 
-            float x = parts[0].ParseInvariantFloat();
-            float y = parts[1].ParseInvariantFloat();
-            float z = parts[2].ParseInvariantFloat();
+            var x = parts[0].ParseInvariantFloat();
+            var y = parts[1].ParseInvariantFloat();
+            var z = parts[2].ParseInvariantFloat();
 
             return new Vec3(x, y, z);
         }

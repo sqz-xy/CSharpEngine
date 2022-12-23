@@ -52,7 +52,7 @@ namespace OpenGL_Game.Managers
 
         public bool DeleteRenderableEntity(string name)
         {
-            Entity entityToDelete = renderableEntityList.FirstOrDefault(i => i.Name == name);
+            var entityToDelete = renderableEntityList.FirstOrDefault(i => i.Name == name);
             renderableEntityList.Remove(entityToDelete);
             
             if (entityToDelete == null)
@@ -64,7 +64,7 @@ namespace OpenGL_Game.Managers
 
         public bool DeleteNonRenderableEntity(string name)
         {
-            Entity entityToDelete = nonRenderableEntityList.FirstOrDefault(i => i.Name == name);
+            var entityToDelete = nonRenderableEntityList.FirstOrDefault(i => i.Name == name);
 
             if (entityToDelete == null)
                 return false;
