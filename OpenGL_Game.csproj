@@ -86,6 +86,7 @@
     <Compile Include="Components\ComponentCollisionAABB.cs" />
     <Compile Include="Components\ComponentDamage.cs" />
     <Compile Include="Components\ComponentDirection.cs" />
+    <Compile Include="Components\ComponentEntityFlag.cs" />
     <Compile Include="Components\ComponentHealth.cs" />
     <Compile Include="Components\ComponentHelper.cs" />
     <Compile Include="Components\ComponentOpenALAudio.cs" />
@@ -160,6 +161,7 @@
     <Compile Include="Managers\ResourceManager.cs" />
     <Compile Include="Scenes\GameOverScene.cs" />
     <Compile Include="Scenes\GameScene.cs" />
+    <Compile Include="Scenes\GameWinScene.cs" />
     <Compile Include="Scenes\GUI.cs" />
     <Compile Include="Scenes\IScene.cs" />
     <Compile Include="Scenes\MainMenuScene.cs" />

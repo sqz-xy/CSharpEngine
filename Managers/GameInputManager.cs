@@ -94,7 +94,7 @@ namespace OpenGL_Game.Managers
                     playerDirComponent.Direction = Matrix3.CreateRotationY(0.03f) * playerDirComponent.Direction;
                     break;
                 case "SHOOT":
-                    Shoot(pEntity, 40.0f);
+                    Shoot(pEntity, 20.0f);
                     break;
             }
         }
@@ -144,7 +144,7 @@ namespace OpenGL_Game.Managers
                 var health = ComponentHelper.GetComponent<ComponentHealth>(pEntity, ComponentTypes.COMPONENT_HEALTH);
                 
                 // Spawn bullet in front of player with camera direction as velocity
-                newBullet.AddComponent(new ComponentPosition(playerPos + playerDir * 3));
+                newBullet.AddComponent(new ComponentPosition(playerPos + playerDir));
                 newBullet.AddComponent(new ComponentVelocity(playerDir * pSpeed));
                 newBullet.AddComponent(new ComponentHealth(health.Health));
                 newBullet.AddComponent(new ComponentDamage(playerDamage));

@@ -19,6 +19,7 @@ namespace OpenGL_Game.Scenes
         public static float dt = 0;
         public static int playerHealth = 30;
         public static int playerLives = 3;
+        private int droneCount = 9999;
 
         //EntityManager entityManager;
         SystemManager systemManager;
@@ -56,8 +57,7 @@ namespace OpenGL_Game.Scenes
             // Set Camera
             camera = new Camera(new Vector3(-5.0f, 0.5f, 3.0f), new Vector3(0, 0.5f, 0), (float)(sceneManager.Width) / (float)(sceneManager.Height), 0.1f, 100f);
             //camera = new Camera(new Vector3(0, 4, 7), new Vector3(0, 0, 0), (float)(sceneManager.Width) / (float)(sceneManager.Height), 0.1f, 100f);
-         
-
+            
             CreateEntities();
             CreateSystems();
             
@@ -126,6 +126,22 @@ namespace OpenGL_Game.Scenes
             
             if (playerLives <= 0)
                 sceneManager.ChangeScene(SceneTypes.SCENE_GAME_OVER);
+            
+            if (droneCount <= 0)
+                sceneManager.ChangeScene(SceneTypes.SCENE_GAME_WIN);
+
+            int tempDroneCount = 0;
+            foreach (var entity in entityManager.RenderableEntities())
+            {
+                var flagComponent = ComponentHelper.GetComponent<ComponentEntityFlag>(entity, ComponentTypes.COMPONENT_ENTITY_FLAG);
+
+                if (flagComponent == null)
+                    continue;
+                
+                if (flagComponent.Flag == EntityFlags.Enemy)
+                    tempDroneCount++;
+            }
+            droneCount = tempDroneCount;
         }
 
         /// <summary>
@@ -145,6 +161,7 @@ namespace OpenGL_Game.Scenes
             GUI.clearColour = Color.Transparent;
             GUI.Label(new Rectangle(0, 0, (int)width, (int)(fontSize * 2f)), $"Health: {playerHealth}", 18, StringAlignment.Near, Color.White);
             GUI.Label(new Rectangle(150, 0, (int)width, (int)(fontSize * 2f)), $"Lives: {playerLives}", 18, StringAlignment.Near, Color.White);
+            GUI.Label(new Rectangle(300, 0, (int)width, (int)(fontSize * 2f)), $"Drone Count: {droneCount}", 18, StringAlignment.Near, Color.White);
             GUI.Render();
         }
 

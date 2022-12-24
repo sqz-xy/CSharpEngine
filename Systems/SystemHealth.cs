@@ -14,7 +14,7 @@ namespace OpenGL_Game.Systems
 {
     public class SystemHealth : ISystem
     {
-        const ComponentTypes MASK = (ComponentTypes.COMPONENT_HEALTH);
+        const ComponentTypes MASK = (ComponentTypes.COMPONENT_HEALTH | ComponentTypes.COMPONENT_ENTITY_FLAG);
         private EntityManager _entityManager;
         private SceneManager _sceneManager;
 
@@ -40,8 +40,9 @@ namespace OpenGL_Game.Systems
                 if (((entity.Mask & MASK) == MASK))
                 {
                     var health = ComponentHelper.GetComponent<ComponentHealth>(entity, ComponentTypes.COMPONENT_HEALTH);
+                    var entityFlag = ComponentHelper.GetComponent<ComponentEntityFlag>(entity, ComponentTypes.COMPONENT_ENTITY_FLAG);
                     
-                    if (entity.Name == "Player")
+                    if (entityFlag.Flag == EntityFlags.Player)
                     {
                         if (health.Health <= 0)
                         {

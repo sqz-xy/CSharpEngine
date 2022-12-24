@@ -7,16 +7,15 @@ using OpenGL_Game.Managers;
 
 namespace OpenGL_Game.Scenes
 {
-    class GameOverScene : Scene
+    class GameWinScene : Scene
     {
-        public GameOverScene(SceneManager sceneManager) : base(sceneManager)
+        public GameWinScene(SceneManager sceneManager) : base(sceneManager)
         {
             // Set the title of the window
-            sceneManager.Title = "Game Over";
+            sceneManager.Title = "You Win!";
             // Set the Render and Update delegates to the Update and Render methods of this class
             sceneManager.renderer = Render;
             sceneManager.updater = Update;
-            
         }
 
         public override void Update(FrameEventArgs e)
@@ -36,11 +35,11 @@ namespace OpenGL_Game.Scenes
 
             //Display the Title
             float width = sceneManager.Width, height = sceneManager.Height, fontSize = Math.Min(width, height) / 10f;
-            GUI.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int)(fontSize * 2f)), "Game Over", (int)fontSize, StringAlignment.Center);
+            GUI.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int)(fontSize * 2f)), "You Win!", (int)fontSize, StringAlignment.Center);
 
             GUI.Render();
         }
-
+        
         public override void Close()
         {
     

@@ -143,6 +143,9 @@ namespace OpenGL_Game.Managers
                     case SceneTypes.SCENE_GAME_OVER:
                         scene = new GameOverScene(this);
                         break;
+                    case SceneTypes.SCENE_GAME_WIN:
+                        scene = new GameWinScene(this);
+                        break;
                     default:
                         scene = new MainMenuScene(this);
                         break;
@@ -171,6 +174,9 @@ namespace OpenGL_Game.Managers
                     break;
                 case SceneTypes.SCENE_GAME_OVER:
                     pSceneManager.scene = new GameOverScene(pSceneManager);
+                    break;
+                case SceneTypes.SCENE_GAME_WIN:
+                    pSceneManager.scene = new GameWinScene(pSceneManager);
                     break;
                 default:
                     pSceneManager.scene = new MainMenuScene(pSceneManager);
