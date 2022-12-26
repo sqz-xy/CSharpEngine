@@ -126,9 +126,12 @@ namespace OpenGL_Game.Scenes
             // Render score
             float width = sceneManager.Width, height = sceneManager.Height, fontSize = Math.Min(width, height) / 10f;
             GUI.clearColour = Color.Transparent;
-            GUI.Label(new Rectangle(0, 0, (int)width, (int)(fontSize * 2f)), $"Health: {playerHealth}", 18, StringAlignment.Near, Color.White);
-            GUI.Label(new Rectangle(150, 0, (int)width, (int)(fontSize * 2f)), $"Lives: {playerLives}", 18, StringAlignment.Near, Color.White);
-            GUI.Label(new Rectangle(300, 0, (int)width, (int)(fontSize * 2f)), $"Drone Count: {droneCount}", 18, StringAlignment.Near, Color.White);
+            GUI.Label(new Rectangle(40, 0, (int)width, (int)(fontSize * 2f)), $"Health: {playerHealth}", 18, StringAlignment.Near, Color.White);
+            GUI.Label(new Rectangle(220, 0, (int)width, (int)(fontSize * 2f)), $"Lives: {playerLives}", 18, StringAlignment.Near, Color.White);
+            GUI.Label(new Rectangle(360, 0, (int)width, (int)(fontSize * 2f)), $"Drone Count: {droneCount}", 18, StringAlignment.Near, Color.White);
+            GUI.Image("Images/droneicon.bmp", 32, 32, 330, 0);
+            GUI.Image("Images/hearticon.bmp", 32, 32, 190, 0);
+            GUI.Image("Images/healthicon.bmp", 32, 32, 10, 0);
             GUI.Render();
         }
 

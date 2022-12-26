@@ -56,13 +56,16 @@ namespace OpenGL_Game.Scenes
         {
             var img = System.Drawing.Image.FromFile(pFileName);
             var resizedImg = new Bitmap(img, new Size((int)pWidth, (int)pHeight));
+            resizedImg.MakeTransparent();
             textGFX.DrawImage(resizedImg, new Point(0, 0));
         }
 
-        public static void Image(string pFileName, int pPositionX, int pPositionY)
+        public static void Image(string pFileName, float pWidth, float pHeight, int pPositionX, int pPositionY)
         {
             var img = System.Drawing.Image.FromFile(pFileName);
-            textGFX.DrawImage(img, new Point(pPositionX, pPositionY));
+            var resizedImg = new Bitmap(img, new Size((int)pWidth, (int)pHeight));
+            resizedImg.MakeTransparent();
+            textGFX.DrawImage(resizedImg, new Point(pPositionX, pPositionY));
         }
 
         public static void Label(Rectangle rect, string text)
