@@ -48,14 +48,10 @@ namespace OpenGL_Game.Systems
         {
             // If an entity is dead and has a looping ambient sound, stop its ambient audio.
             foreach (var component in pEntity.Components)
-            {
                 if (component is ComponentOpenALAudio audio && audio.IsLooping)
-                {
                     audio.StopAudio();
-                }
-            }
-            
-            if (_entityManager.DeleteRenderableEntity(pEntity.Name))
+
+            if (_entityManager.DeleteRenderableEntity(pEntity.Name)) 
                 return;
 
             _entityManager.DeleteNonRenderableEntity(pEntity.Name);

@@ -1,4 +1,5 @@
 ﻿using OpenGL_Game.Components;
+using OpenGL_Game.Scenes;
 
 namespace OpenGL_Game.Managers
 {
@@ -10,15 +11,7 @@ namespace OpenGL_Game.Managers
         /// <param name="pScriptName">The name of the script</param>
         /// <param name="pEntityManager">The entity manager</param>
         public abstract void LoadEntities(string pScriptName, ref EntityManager pEntityManager);
-
-        /// <summary>
-        /// Converts component strings into component objects
-        /// </summary>
-        /// <param name="pComponentType">The type of component to create</param>
-        /// <param name="pComponentValue">The values for the component</param>
-        /// <returns>An IComponent object</returns>
-        public abstract IComponent GetComponent(string pComponentType, string pComponentValue);
-
+        
         /// <summary>
         /// Reads a script to load controls for a scene
         /// </summary>
@@ -27,11 +20,18 @@ namespace OpenGL_Game.Managers
         public abstract void LoadControls(string pScriptName, ref GameInputManager pInputManager);
 
         /// <summary>
-        /// Adds the controls to the binding dictionary
+        /// Reads a file to load any extra scene data
         /// </summary>
-        /// <param name="pAction">The action</param>
-        /// <param name="pBind">The input to bind to</param>
-        /// <param name="pInputManager">The game input manager</param>
-        public abstract void GetControls(string pAction, string pBind, ref GameInputManager pInputManager);
+        /// <param name="pFileName">Name of data script</param>
+        /// <param name="pScene">Scene to add data to</param>
+        public abstract void LoadData(string pFileName, Scene pScene);
+
+        /// <summary>
+        /// Saves data to a specific file
+        /// </summary>
+        /// <param name="pFileName">Name of the data script</param>
+        /// <param name="pScene">Scene to save data from</param>
+        public abstract void SaveData(string pFileName, Scene pScene);
+
     }
 }

@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 using OpenGL_Game.Components;
 using OpenGL_Game.Objects;
 using OpenGL_Game.OBJLoader;
-
+using OpenGL_Game.Scenes;
 using OpenTK;
 using OpenTK.Audio.OpenAL;
 using OpenTK.Input;
@@ -88,6 +88,7 @@ namespace OpenGL_Game.Managers
 
                 pEntityManager.AddEntity(newEntity, isRenderable);
            }
+           reader.Close();
        }
 
         /// <summary>
@@ -96,7 +97,7 @@ namespace OpenGL_Game.Managers
         /// <param name="pComponentType">The type of component to create</param>
         /// <param name="pComponentValue">The values for the component</param>
         /// <returns>An IComponent object</returns>
-        public override IComponent GetComponent(string pComponentType, string pComponentValue)
+        private IComponent GetComponent(string pComponentType, string pComponentValue)
         {
             // May need to be changed in the future depending on the values of future component types
             // For each component type, return the component object, for components requiring vectors, split and format the string
@@ -193,9 +194,53 @@ namespace OpenGL_Game.Managers
                     }
                 }
             }
-        }    
-        
-        public override void GetControls(string pAction, string pBind, ref GameInputManager pInputManager)
+            reader.Close();
+        }
+
+        public override void LoadData(string pFileName, Scene pScene)
+        {
+            var serializer = new JsonSerializer();
+            var reader = new JsonTextReader(new StreamReader(pFileName));
+            reader.SupportMultipleContent = true;            // Support multiple objects
+
+            // For each object
+            while (true)
+            {
+                if (!reader.Read())
+                    break;
+
+                JObject obj;
+                try
+                {
+                    obj = (JObject) serializer.Deserialize(reader);
+                }
+                catch (JsonSerializationException e)
+                {
+                    Console.WriteLine(e.Message);
+                    return;
+                }
+
+                // Get the name of the object
+                var token = obj.SelectToken("Lives");
+                var gameScene = (GameScene) pScene;
+                gameScene.playerLives = token.Value<int>();
+            }
+            reader.Close();
+        }
+
+        public override void SaveData(string pFileName, Scene pScene)
+        {
+            var writer = new JsonTextWriter(new StreamWriter(pFileName));
+            var gameScene = (GameScene) pScene;
+            
+            writer.WriteStartObject();
+            writer.WritePropertyName("Lives");
+            writer.WriteValue(gameScene.playerLives);
+            writer.WriteEndObject();
+            writer.Close();
+        }
+
+        private void GetControls(string pAction, string pBind, ref GameInputManager pInputManager)
         {
            // Reset binds, error checking, look for enum mapping function
            if (pBind.Split('.')[0] != "MouseButton")

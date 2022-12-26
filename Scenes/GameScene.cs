@@ -7,6 +7,7 @@ using OpenGL_Game.Managers;
 using OpenGL_Game.Objects;
 using System.Drawing;
 using System;
+using System.Linq;
 using OpenTK.Audio.OpenAL;
 
 namespace OpenGL_Game.Scenes
@@ -17,9 +18,10 @@ namespace OpenGL_Game.Scenes
     class GameScene : Scene
     {
         public static float dt = 0;
-        private static int playerLives = 3;
-        private int playerHealth = 30;
-        private int droneCount = 9999;
+        public int playerLives = 3;
+        public int maxLives = 3;
+        public int playerHealth = 30;
+        public int droneCount = 3;
 
         //EntityManager entityManager;
         SystemManager systemManager;
@@ -62,6 +64,7 @@ namespace OpenGL_Game.Scenes
             CreateSystems();
             
             sceneManager.scriptManager.LoadControls("Scripts/GameControls.json", ref inputManager);
+            sceneManager.scriptManager.LoadData("Scripts/gameData.json",  this);
             inputManager.InitializeBinds();
 
             // TODO: Add your initialization logic here
@@ -133,8 +136,8 @@ namespace OpenGL_Game.Scenes
 
             if (playerHealth <= 0)
             {
-                sceneManager.ChangeScene(SceneTypes.SCENE_GAME);
                 playerLives--;
+                sceneManager.ChangeScene(SceneTypes.SCENE_GAME);
             }
             
             if (playerLives <= 0)
@@ -178,8 +181,19 @@ namespace OpenGL_Game.Scenes
         /// </summary>
         public override void Close()
         {
+            sceneManager.scriptManager.SaveData("Scripts/gameData.json", this);
             systemManager.CleanupSystems(entityManager);
             inputManager.ClearBinds();
+
+            foreach (var entity in entityManager.RenderableEntities().Concat(entityManager.NonRenderableEntities()))
+            {
+                var audioComponents = ComponentHelper.GetComponents<ComponentAudio>(entity);
+                foreach (var audioComponent in audioComponents)
+                {
+                    audioComponent.StopAudio();
+                }
+            }
+            
             ResourceManager.RemoveAllAssets();
         }
     }
