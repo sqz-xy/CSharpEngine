@@ -11,13 +11,20 @@ namespace OpenGL_Game.Managers
         /// <param name="pScriptName">The name of the script</param>
         /// <param name="pEntityManager">The entity manager</param>
         public abstract void LoadEntities(string pScriptName, ref EntityManager pEntityManager);
+
+        /// <summary>
+        /// Reads a script to create systems for a scene
+        /// </summary>
+        /// <param name="pScriptName">Name of the script to read</param>
+        /// <param name="pSystemManager">The system manager</param>
+        public abstract void LoadSystems(string pScriptName, ref SystemManager pSystemManager, ref CollisionManager pCollisionManager, ref EntityManager pEntityManager, ref InputManager pInputManager, ref Camera pCamera);
         
         /// <summary>
         /// Reads a script to load controls for a scene
         /// </summary>
         /// <param name="pScriptName">Name of the controls script</param>
         /// <param name="pInputManager">The game input manager</param>
-        public abstract void LoadControls(string pScriptName, ref GameInputManager pInputManager);
+        public abstract void LoadControls(string pScriptName, ref InputManager inputManager);
 
         /// <summary>
         /// Reads a file to load any extra scene data

@@ -25,7 +25,7 @@ namespace OpenGL_Game.Managers
             _powerUpSpeedCooldown = new Stopwatch();
         }
         
-        public override void ProcessCollisions(Camera pCamera)
+        public override void ProcessCollisions()
         {
             ResetCooldowns();
             

@@ -9,6 +9,7 @@ using OpenGL_Game.Components;
 using OpenGL_Game.Objects;
 using OpenGL_Game.OBJLoader;
 using OpenGL_Game.Scenes;
+using OpenGL_Game.Systems;
 using OpenTK;
 using OpenTK.Audio.OpenAL;
 using OpenTK.Input;
@@ -91,7 +92,69 @@ namespace OpenGL_Game.Managers
            reader.Close();
        }
 
-        /// <summary>
+       public override void LoadSystems(string pScriptName, ref SystemManager pSystemManager, ref CollisionManager pCollisionManager, ref EntityManager pEntityManager, ref InputManager pInputManager, ref Camera pCamera)
+       {
+           var serializer = new JsonSerializer();
+           var reader = new JsonTextReader(new StreamReader(pScriptName));
+           reader.SupportMultipleContent = true;            // Support multiple objects
+           
+           // For each object
+           while (true)
+           {
+               if (!reader.Read())
+                   break;
+
+               JObject obj;
+               try
+               {
+                   obj = (JObject) serializer.Deserialize(reader);
+               }
+               catch  (JsonSerializationException e)
+               {
+                   Console.WriteLine(e.Message);
+                   return;
+               }
+               
+               // Get the name of the object
+               var token = obj.SelectToken("Name");
+               if (token == null) { continue; }
+               
+               var isRenderable = obj.SelectToken("Renderable");
+               if (token == null) { continue; }
+               
+               ISystem newSystem = GetSystem(token.Value<String>(), ref pCollisionManager, ref pEntityManager, ref pInputManager, ref pCamera);
+               pSystemManager.AddSystem(newSystem, (bool) isRenderable);
+           }
+           reader.Close();
+       }
+
+       private ISystem GetSystem(string pSystemName, ref CollisionManager pCollisionManager, ref EntityManager pEntityManager, ref InputManager pInputManager, ref Camera pCamera)
+       {
+           switch (pSystemName)
+           {
+               case "SystemRender":
+                   return new SystemRender();
+               case "SystemPhysics":
+                   return new SystemPhysics();
+               case "SystemAudio":
+                   return new SystemAudio();
+               case "SystemAmbient":
+                   return new SystemAmbient();
+               case "SystemHealth":
+                   return new SystemHealth(pEntityManager);
+               case "SystemCollisionSphereSphere":
+                   return new SystemCollisionSphereSphere(pCollisionManager);
+               case "SystemCollisionSphereAABB":
+                   return new SystemCollisionSphereAABB(pCollisionManager);
+               case "SystemInput":
+                   return new SystemInput(pInputManager, pCamera);
+               default:
+                   return null;
+           }
+       }
+       
+
+       /// <summary>
         /// Converts component strings into component objects
         /// </summary>
         /// <param name="pComponentType">The type of component to create</param>
@@ -158,7 +221,7 @@ namespace OpenGL_Game.Managers
             }
         }
 
-        public override void LoadControls(string pScriptName, ref GameInputManager pInputManager)
+        public override void LoadControls(string pScriptName, ref InputManager pInputManager)
         {
             var serializer = new JsonSerializer();
             var reader = new JsonTextReader(new StreamReader(pScriptName));
@@ -240,18 +303,19 @@ namespace OpenGL_Game.Managers
             writer.Close();
         }
 
-        private void GetControls(string pAction, string pBind, ref GameInputManager pInputManager)
+        private void GetControls(string pAction, string pBind, ref InputManager pInputManager)
         {
+            var gameInputManager = (GameInputManager) pInputManager; 
            // Reset binds, error checking, look for enum mapping function
            if (pBind.Split('.')[0] != "MouseButton")
            {
                 Enum.TryParse(pBind, out Key keyBind);
-                pInputManager._keyBinds.Add(pAction, keyBind);
+                gameInputManager._keyBinds.Add(pAction, keyBind);
            }
            else
            {
                 Enum.TryParse(pBind, out MouseButton mouseBind);
-                pInputManager._mouseBinds.Add(pAction, mouseBind);
+                gameInputManager._mouseBinds.Add(pAction, mouseBind);
            }
         }
     }

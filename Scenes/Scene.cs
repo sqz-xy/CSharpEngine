@@ -6,8 +6,7 @@ namespace OpenGL_Game.Scenes
     public abstract class Scene : IScene
     {
         protected SceneManager sceneManager;
-        protected EntityManager entityManager;
-
+        
         public Scene(SceneManager sceneManager)
         {
             this.sceneManager = sceneManager;

@@ -4,6 +4,15 @@ namespace OpenGL_Game.Managers
 {
     public abstract class InputManager
     {
+        protected SceneManager _sceneManager;
+        protected EntityManager _entityManager;
+        
+        public InputManager(EntityManager pEntityManager, SceneManager pSceneManager)
+        {
+            _sceneManager = pSceneManager;
+            _entityManager = pEntityManager;
+        }
+        
         /// <summary>
         /// Reads input from the user and handles response if the response is bound, should be called during an update loop
         /// </summary>

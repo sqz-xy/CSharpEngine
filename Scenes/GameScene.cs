@@ -22,11 +22,7 @@ namespace OpenGL_Game.Scenes
         public int maxLives = 3;
         public int playerHealth = 30;
         public int droneCount = 3;
-
-        //EntityManager entityManager;
-        SystemManager systemManager;
-        private GameInputManager inputManager;
-
+        
         // Made static because there should only be one
         public Camera camera;
         public Camera specCamera;
@@ -36,79 +32,42 @@ namespace OpenGL_Game.Scenes
         public GameScene(SceneManager sceneManager) : base(sceneManager)
         {
             gameInstance = this;
-            entityManager = new EntityManager();
-            systemManager = new SystemManager();
-            inputManager = new GameInputManager(entityManager, base.sceneManager);
-
+            sceneManager.entityManager = new EntityManager();
+            sceneManager.systemManager = new SystemManager();
+            sceneManager.inputManager = new GameInputManager(sceneManager.entityManager, base.sceneManager);
+            
             // Set the title of the window
             sceneManager.Title = "Game";
-            // Set the Render and Update delegates to the Update and Render methods of this class
             sceneManager.renderer = Render;
             sceneManager.updater = Update;
-            // Set Keyboard events to go to a method in this class
-            //sceneManager.keyboardDownDelegate += Keyboard_KeyDown;
-
+            
             // Enable Depth Testing
             GL.Enable(EnableCap.DepthTest);
             GL.DepthMask(true);
-            //.Enable(EnableCap.CullFace);
-            //GL.CullFace(CullFaceMode.Back);
-
+            
             GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
             // Set Camera
             camera = new Camera(new Vector3(-5.0f, 0.5f, 3.0f), new Vector3(0, 0.5f, 0), (float)(sceneManager.Width) / (float)(sceneManager.Height), 0.1f, 100f);
-            //camera = new Camera(new Vector3(0, 4, 7), new Vector3(0, 0, 0), (float)(sceneManager.Width) / (float)(sceneManager.Height), 0.1f, 100f);
-            
+
             CreateEntities();
             CreateSystems();
             
-            sceneManager.scriptManager.LoadControls("Scripts/GameControls.json", ref inputManager);
+            sceneManager.scriptManager.LoadControls("Scripts/gameControls.json", ref sceneManager.inputManager);
             sceneManager.scriptManager.LoadData("Scripts/gameData.json",  this);
-            inputManager.InitializeBinds();
+            sceneManager.inputManager.InitializeBinds();
 
             // TODO: Add your initialization logic here
         }
 
         private void CreateEntities()
         {
-            sceneManager.scriptManager.LoadEntities("Scripts/gameSceneScript.json", ref entityManager);
+            sceneManager.scriptManager.LoadEntities("Scripts/gameEntityList.json", ref sceneManager.entityManager);
         }
 
-        private void CreateSystems() 
+        private void CreateSystems()
         {
-            ISystem newSystem;
-
-            newSystem = new SystemRender();
-            systemManager.AddSystem(newSystem, true);
-
-            ISystem physicsSystem;
-            physicsSystem = new SystemPhysics();
-            systemManager.AddSystem(physicsSystem, false);
-
-            ISystem audioSystem;
-            audioSystem = new SystemAudio();
-            systemManager.AddSystem(audioSystem, false);
-
-            ISystem collisionSphereSystem;
-            collisionSphereSystem = new SystemCollisionSphereSphere(sceneManager.collisionManager);
-            systemManager.AddSystem(collisionSphereSystem, false);
-            
-            ISystem healthSystem;
-            healthSystem = new SystemHealth(entityManager);
-            systemManager.AddSystem(healthSystem, false);
-
-            ISystem collisionAABBSystem;
-            collisionAABBSystem = new SystemCollisionSphereAABB(sceneManager.collisionManager);
-            systemManager.AddSystem(collisionAABBSystem, false);
-
-            ISystem systemInput;
-            systemInput = new SystemInput(inputManager, camera);
-            systemManager.AddSystem(systemInput, false);
-
-            ISystem systemAmbient;
-            systemAmbient = new SystemAmbient();
-            systemManager.AddSystem(systemAmbient, false);
+            sceneManager.scriptManager.LoadSystems("Scripts/gameSystemList.json", ref sceneManager.systemManager, ref sceneManager.collisionManager, ref sceneManager.entityManager, ref sceneManager.inputManager, ref camera);
         }
 
         /// <summary>
@@ -119,19 +78,12 @@ namespace OpenGL_Game.Scenes
         public override void Update(FrameEventArgs e)
         {
             dt = (float)e.Time;
-            //System.Console.WriteLine("fps=" + (int)(1.0/dt));
-
-            // NEW for Audio
+            
             // Update OpenAL Listener Position and Orientation based on the camera
             AL.Listener(ALListener3f.Position, ref camera.cameraPosition);
             AL.Listener(ALListenerfv.Orientation, ref camera.cameraDirection, ref camera.cameraUp);
-
-            // Action ALL Non renderable systems
-            systemManager.ActionNonRenderableSystems(entityManager);
-            sceneManager.collisionManager.ProcessCollisions(camera);
-            inputManager.ReadInput(null);
-
-            ComponentHealth health = ComponentHelper.GetComponent<ComponentHealth>(entityManager.FindRenderableEntity("Player"), ComponentTypes.COMPONENT_HEALTH);
+            
+            ComponentHealth health = ComponentHelper.GetComponent<ComponentHealth>(sceneManager.entityManager.FindRenderableEntity("Player"), ComponentTypes.COMPONENT_HEALTH);
             playerHealth = health.Health;
 
             if (playerHealth <= 0)
@@ -147,12 +99,16 @@ namespace OpenGL_Game.Scenes
                 sceneManager.ChangeScene(SceneTypes.SCENE_GAME_WIN);
 
             int tempDroneCount = 0;
-            foreach (var entity in entityManager.RenderableEntities())
+            foreach (var entity in sceneManager.entityManager.RenderableEntities())
             {
                 if (entity.Name.Contains("EnemyCat"))
                     tempDroneCount++;
             }
             droneCount = tempDroneCount;
+            
+            // Action ALL Non renderable systems
+            sceneManager.systemManager.ActionNonRenderableSystems(sceneManager.entityManager);
+            sceneManager.inputManager.ReadInput(null);
         }
 
         /// <summary>
@@ -165,7 +121,7 @@ namespace OpenGL_Game.Scenes
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             // Action ALL renderable systems
-            systemManager.ActionRenderableSystems(entityManager);
+            sceneManager.systemManager.ActionRenderableSystems(sceneManager.entityManager);
 
             // Render score
             float width = sceneManager.Width, height = sceneManager.Height, fontSize = Math.Min(width, height) / 10f;
@@ -182,10 +138,10 @@ namespace OpenGL_Game.Scenes
         public override void Close()
         {
             sceneManager.scriptManager.SaveData("Scripts/gameData.json", this);
-            systemManager.CleanupSystems(entityManager);
-            inputManager.ClearBinds();
+            sceneManager.systemManager.CleanupSystems(sceneManager.entityManager);
+            sceneManager.inputManager.ClearBinds();
 
-            foreach (var entity in entityManager.RenderableEntities().Concat(entityManager.NonRenderableEntities()))
+            foreach (var entity in sceneManager.entityManager.RenderableEntities().Concat(sceneManager.entityManager.NonRenderableEntities()))
             {
                 var audioComponents = ComponentHelper.GetComponents<ComponentAudio>(entity);
                 foreach (var audioComponent in audioComponents)

@@ -15,8 +15,11 @@ namespace OpenGL_Game.Managers
         public static int width = 1200, height = 800;
         public static int windowXPos = 200, windowYPos = 80;
         
-        public GameScriptManager scriptManager;
+        public ScriptManager scriptManager;
         public CollisionManager collisionManager;
+        public InputManager inputManager;
+        public SystemManager systemManager;
+        public EntityManager entityManager;
 
         public delegate void SceneDelegate(FrameEventArgs e);
         public SceneDelegate renderer;
@@ -38,36 +41,13 @@ namespace OpenGL_Game.Managers
         {
             this.X = windowXPos;
             this.Y = windowYPos;
+            
             scriptManager = new GameScriptManager();
             collisionManager = new GameCollisionManager();
             
             audioContext = new AudioContext();
         }
-
-        protected override void OnKeyDown(KeyboardKeyEventArgs e)
-        {
-            base.OnKeyDown(e);
-            if (e.Key == Key.Escape) Exit();
-            if (keyboardDownDelegate != null) keyboardDownDelegate.Invoke(e);
-        }
-
-        protected override void OnKeyUp(KeyboardKeyEventArgs e)
-        {
-            base.OnKeyUp(e);
-            if (keyboardUpDelegate != null) keyboardUpDelegate.Invoke(e);
-        }
-
-        protected override void OnMouseDown(MouseButtonEventArgs e)
-        {
-            base.OnMouseDown(e);
-            if(mouseDelegate != null) mouseDelegate.Invoke(e);
-        }
-
-        protected override void OnMouseMove(MouseMoveEventArgs e)
-        {
-            base.OnMouseMove(e);
-        }
-
+        
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
@@ -87,7 +67,7 @@ namespace OpenGL_Game.Managers
         {
             base.OnUpdateFrame(e);
             
-            //collisionManager.ProcessCollisions();
+            collisionManager.ProcessCollisions();
             
             updater(e);
         }

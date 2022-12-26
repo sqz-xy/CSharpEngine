@@ -46,6 +46,6 @@ namespace OpenGL_Game.Managers
             _collisionManifold.Add(collision);
         }
         
-        public abstract void ProcessCollisions(Camera pCamera);
+        public abstract void ProcessCollisions();
     }
 }

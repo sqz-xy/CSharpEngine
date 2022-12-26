@@ -26,16 +26,11 @@ namespace OpenGL_Game.Managers
         public Dictionary<string, MouseButton> _mouseBinds;
         
         private Vector3 _previousPos;
-
-        private SceneManager _sceneManager;
-        private EntityManager _entityManager;
-
-        public GameInputManager(EntityManager pEntityManager, SceneManager pSceneManager)
+        
+        public GameInputManager(EntityManager pEntityManager, SceneManager pSceneManager) : base(pEntityManager, pSceneManager)
         {
             _keyBinds = new Dictionary<string, Key>();
-            _mouseBinds = new Dictionary<string, MouseButton>();
-            _sceneManager = pSceneManager;
-            _entityManager = pEntityManager;
+            _mouseBinds = new Dictionary<string, MouseButton>(); ;
             
             _shootCooldown = new Stopwatch();
         }

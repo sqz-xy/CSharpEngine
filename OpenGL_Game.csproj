@@ -419,14 +419,17 @@
     <Content Include="Geometry\Wraith_Raider_Starship\yx1_02_01_01.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Scripts\GameControls.json">
+    <Content Include="Scripts\gameControls.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\gameData.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Scripts\gameSceneScript.json">
+    <Content Include="Scripts\gameEntityList.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\gameSystemList.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\MainMenuControls.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

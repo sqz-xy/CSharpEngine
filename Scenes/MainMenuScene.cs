@@ -10,12 +10,11 @@ namespace OpenGL_Game.Scenes
 {
     class MainMenuScene : Scene
     {
-        private GameInputManager inputManager;
         public MainMenuScene(SceneManager sceneManager) : base(sceneManager)
         {
-            entityManager = new EntityManager();
-            inputManager = new GameInputManager(entityManager, base.sceneManager);
-            inputManager.InitializeBinds();
+            sceneManager.entityManager = new EntityManager();
+            sceneManager.inputManager = new GameInputManager(sceneManager.entityManager, base.sceneManager);
+            sceneManager.inputManager.InitializeBinds();
             
             // Set the title of the window
             sceneManager.Title = "Main Menu";
@@ -23,13 +22,12 @@ namespace OpenGL_Game.Scenes
             sceneManager.renderer = Render;
             sceneManager.updater = Update;
             
-            sceneManager.scriptManager.LoadControls("Scripts/MainMenuControls.json", ref inputManager);
+            sceneManager.scriptManager.LoadControls("Scripts/MainMenuControls.json", ref sceneManager.inputManager);
         }
 
         public override void Update(FrameEventArgs e)
         {
-            var pEntity = new Entity("null");
-            inputManager.ReadInput(null);
+            sceneManager.inputManager.ReadInput(null);
         }
 
         public override void Render(FrameEventArgs e)
@@ -52,7 +50,7 @@ namespace OpenGL_Game.Scenes
         
         public override void Close()
         {
-            inputManager.ClearBinds();
+            sceneManager.inputManager.ClearBinds();
         }
         
     }

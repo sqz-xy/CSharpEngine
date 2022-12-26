@@ -1,0 +1,32 @@
+﻿{
+  "Name" : "SystemRender",
+  "Renderable" : "True"
+}
+{
+  "Name" : "SystemPhysics",
+  "Renderable" : "false"
+}
+{
+  "Name" : "SystemAudio",
+  "Renderable" : "false"
+}
+{
+  "Name" : "SystemCollisionSphereSphere",
+  "Renderable" : "false"
+}
+{
+  "Name" : "SystemHealth",
+  "Renderable" : "false"
+}
+{
+  "Name" : "SystemCollisionSphereAABB",
+  "Renderable" : "false"
+}
+{
+  "Name" : "SystemInput",
+  "Renderable" : "false"
+}
+{
+  "Name" : "SystemAmbient",
+  "Renderable" : "false"
+}
