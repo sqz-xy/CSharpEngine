@@ -8,10 +8,12 @@ namespace OpenGL_Game.Components
     public class ComponentOpenALAudio : ComponentAudio
     {
         int _audioSource;
+        private string _audioName;
 
         public ComponentOpenALAudio(string pAudioName, bool pIsLooping)
         {
             _audioSource = AL.GenSource();
+            _audioName = pAudioName;
             AL.Source(_audioSource, ALSourcei.Buffer, ResourceManager.LoadAudio(pAudioName)); // attach the buffer to a source
             AL.Source(_audioSource, ALSourceb.Looping, pIsLooping); // source loops infinitely
         }
@@ -19,6 +21,11 @@ namespace OpenGL_Game.Components
         public int AudioSource
         {
             get { return _audioSource; }
+        }
+
+        public string AudioName
+        {
+            get { return _audioName; }
         }
         
         public override void PlayAudio()
