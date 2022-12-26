@@ -86,7 +86,6 @@
     <Compile Include="Components\ComponentCollisionAABB.cs" />
     <Compile Include="Components\ComponentDamage.cs" />
     <Compile Include="Components\ComponentDirection.cs" />
-    <Compile Include="Components\ComponentEntityFlag.cs" />
     <Compile Include="Components\ComponentHealth.cs" />
     <Compile Include="Components\ComponentHelper.cs" />
     <Compile Include="Components\ComponentOpenALAudio.cs" />

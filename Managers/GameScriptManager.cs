@@ -139,8 +139,6 @@ namespace OpenGL_Game.Managers
                     return new ComponentAI(costType, bool.Parse(aiValues[1]));
                 case "COMPONENT_SPEED":
                     return new ComponentSpeed(float.Parse(pComponentValue));
-                case "COMPONENT_ENTITY_FLAG":
-                    return new ComponentEntityFlag(pComponentValue);
                 case "COMPONENT_SHADER":
                     var shaderValues = pComponentValue.Split(' ');
                     switch (shaderValues[0])

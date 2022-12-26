@@ -14,14 +14,12 @@ namespace OpenGL_Game.Systems
 {
     public class SystemHealth : ISystem
     {
-        const ComponentTypes MASK = (ComponentTypes.COMPONENT_HEALTH | ComponentTypes.COMPONENT_ENTITY_FLAG);
+        const ComponentTypes MASK = (ComponentTypes.COMPONENT_HEALTH);
         private EntityManager _entityManager;
-        private SceneManager _sceneManager;
 
-        public SystemHealth(EntityManager pEntityManager, SceneManager pSceneManager)
+        public SystemHealth(EntityManager pEntityManager)
         {
             _entityManager = pEntityManager;
-            _sceneManager = pSceneManager;
         }
 
         public void Cleanup(Entity pEntity)
@@ -40,23 +38,7 @@ namespace OpenGL_Game.Systems
                 if (((entity.Mask & MASK) == MASK))
                 {
                     var health = ComponentHelper.GetComponent<ComponentHealth>(entity, ComponentTypes.COMPONENT_HEALTH);
-                    var entityFlag = ComponentHelper.GetComponent<ComponentEntityFlag>(entity, ComponentTypes.COMPONENT_ENTITY_FLAG);
-                    
-                    if (entityFlag.Flag == EntityFlags.Player)
-                    {
-                        if (health.Health <= 0)
-                        {
-                            SceneManager.ChangeScene(SceneTypes.SCENE_GAME, _sceneManager);
-                            GameScene.playerLives--; 
-                        }
-                        else
-                        {
-                            GameScene.playerHealth = health.Health;
-                            
-                        }
-                        continue;
-                    }
-                    
+
                     if (health.Health <= 0) 
                             KillEntity(entity);
                 }

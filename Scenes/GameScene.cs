@@ -17,8 +17,8 @@ namespace OpenGL_Game.Scenes
     class GameScene : Scene
     {
         public static float dt = 0;
-        public static int playerHealth = 30;
-        public static int playerLives = 3;
+        private int playerHealth = 30;
+        private static int playerLives = 3;
         private int droneCount = 9999;
 
         //EntityManager entityManager;
@@ -92,7 +92,7 @@ namespace OpenGL_Game.Scenes
             systemManager.AddSystem(collisionSphereSystem, false);
             
             ISystem healthSystem;
-            healthSystem = new SystemHealth(entityManager, sceneManager);
+            healthSystem = new SystemHealth(entityManager);
             systemManager.AddSystem(healthSystem, false);
 
             ISystem collisionAABBSystem;
@@ -123,6 +123,15 @@ namespace OpenGL_Game.Scenes
             systemManager.ActionNonRenderableSystems(entityManager);
             sceneManager.collisionManager.ProcessCollisions(camera);
             inputManager.ReadInput(null);
+
+            ComponentHealth health = ComponentHelper.GetComponent<ComponentHealth>(entityManager.FindRenderableEntity("Player"), ComponentTypes.COMPONENT_HEALTH);
+            playerHealth = health.Health;
+
+            if (playerHealth <= 0)
+            {
+                sceneManager.ChangeScene(SceneTypes.SCENE_GAME);
+                playerLives--;
+            }
             
             if (playerLives <= 0)
                 sceneManager.ChangeScene(SceneTypes.SCENE_GAME_OVER);
@@ -133,12 +142,7 @@ namespace OpenGL_Game.Scenes
             int tempDroneCount = 0;
             foreach (var entity in entityManager.RenderableEntities())
             {
-                var flagComponent = ComponentHelper.GetComponent<ComponentEntityFlag>(entity, ComponentTypes.COMPONENT_ENTITY_FLAG);
-
-                if (flagComponent == null)
-                    continue;
-                
-                if (flagComponent.Flag == EntityFlags.Enemy)
+                if (entity.Name.Contains("EnemyCat"))
                     tempDroneCount++;
             }
             droneCount = tempDroneCount;
