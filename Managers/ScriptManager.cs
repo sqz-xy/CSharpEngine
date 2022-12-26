@@ -31,14 +31,14 @@ namespace OpenGL_Game.Managers
         /// </summary>
         /// <param name="pFileName">Name of data script</param>
         /// <param name="pScene">Scene to add data to</param>
-        public abstract void LoadData(string pFileName, Scene pScene);
+        public abstract void LoadData(string pFileName, string pDataName, out string pDataValue);
 
         /// <summary>
         /// Saves data to a specific file
         /// </summary>
         /// <param name="pFileName">Name of the data script</param>
         /// <param name="pScene">Scene to save data from</param>
-        public abstract void SaveData(string pFileName, Scene pScene);
+        public abstract void SaveData(string pFileName, string pDataName, string pDataValue);
 
     }
 }

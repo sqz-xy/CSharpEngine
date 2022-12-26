@@ -260,8 +260,9 @@ namespace OpenGL_Game.Managers
             reader.Close();
         }
 
-        public override void LoadData(string pFileName, Scene pScene)
+        public override void LoadData(string pFileName, string pDataName, out string pDataValue)
         {
+            pDataValue = "";
             var serializer = new JsonSerializer();
             var reader = new JsonTextReader(new StreamReader(pFileName));
             reader.SupportMultipleContent = true;            // Support multiple objects
@@ -272,7 +273,7 @@ namespace OpenGL_Game.Managers
                 if (!reader.Read())
                     break;
 
-                JObject obj;
+                JObject obj = null;
                 try
                 {
                     obj = (JObject) serializer.Deserialize(reader);
@@ -280,25 +281,22 @@ namespace OpenGL_Game.Managers
                 catch (JsonSerializationException e)
                 {
                     Console.WriteLine(e.Message);
-                    return;
                 }
 
                 // Get the name of the object
-                var token = obj.SelectToken("Lives");
-                var gameScene = (GameScene) pScene;
-                gameScene.playerLives = token.Value<int>();
+                var token = obj.SelectToken(pDataName);
+                pDataValue = token.Value<string>();
             }
             reader.Close();
         }
 
-        public override void SaveData(string pFileName, Scene pScene)
+        public override void SaveData(string pFileName, string pDataName, string pDataValue)
         {
             var writer = new JsonTextWriter(new StreamWriter(pFileName));
-            var gameScene = (GameScene) pScene;
             
             writer.WriteStartObject();
-            writer.WritePropertyName("Lives");
-            writer.WriteValue(gameScene.playerLives);
+            writer.WritePropertyName(pDataName);
+            writer.WriteValue(pDataValue);
             writer.WriteEndObject();
             writer.Close();
         }
@@ -309,7 +307,7 @@ namespace OpenGL_Game.Managers
            // Reset binds, error checking, look for enum mapping function
            if (pBind.Split('.')[0] != "MouseButton")
            {
-                Enum.TryParse(pBind, out Key keyBind);
+               Enum.TryParse(pBind, out Key keyBind);
                 gameInputManager._keyBinds.Add(pAction, keyBind);
            }
            else

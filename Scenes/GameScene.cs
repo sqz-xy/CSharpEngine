@@ -25,7 +25,6 @@ namespace OpenGL_Game.Scenes
         
         // Made static because there should only be one
         public Camera camera;
-        public Camera specCamera;
 
         public static GameScene gameInstance;
 
@@ -54,7 +53,9 @@ namespace OpenGL_Game.Scenes
             CreateSystems();
             
             sceneManager.scriptManager.LoadControls("Scripts/gameControls.json", ref sceneManager.inputManager);
-            sceneManager.scriptManager.LoadData("Scripts/gameData.json",  this);
+            sceneManager.scriptManager.LoadData("Scripts/gameData.json",  "Lives", out var livesString);
+            playerLives = int.Parse(livesString);
+            
             sceneManager.inputManager.InitializeBinds();
 
             // TODO: Add your initialization logic here
@@ -86,6 +87,9 @@ namespace OpenGL_Game.Scenes
             ComponentHealth health = ComponentHelper.GetComponent<ComponentHealth>(sceneManager.entityManager.FindRenderableEntity("Player"), ComponentTypes.COMPONENT_HEALTH);
             playerHealth = health.Health;
 
+            // Action ALL Non renderable systems
+            sceneManager.systemManager.ActionNonRenderableSystems(sceneManager.entityManager);
+            
             if (playerHealth <= 0)
             {
                 playerLives--;
@@ -105,10 +109,6 @@ namespace OpenGL_Game.Scenes
                     tempDroneCount++;
             }
             droneCount = tempDroneCount;
-            
-            // Action ALL Non renderable systems
-            sceneManager.systemManager.ActionNonRenderableSystems(sceneManager.entityManager);
-            sceneManager.inputManager.ReadInput(null);
         }
 
         /// <summary>
@@ -137,7 +137,7 @@ namespace OpenGL_Game.Scenes
         /// </summary>
         public override void Close()
         {
-            sceneManager.scriptManager.SaveData("Scripts/gameData.json", this);
+            sceneManager.scriptManager.SaveData("Scripts/gameData.json", "Lives", playerLives.ToString());
             sceneManager.systemManager.CleanupSystems(sceneManager.entityManager);
             sceneManager.inputManager.ClearBinds();
 

@@ -9,20 +9,20 @@ namespace OpenGL_Game.Scenes
     static class GUI
     {
 
-        static private Bitmap textBMP; //The image being drawn
+        private static Bitmap textBMP; //The image being drawn
         static Bitmap TextBMP
         {
             get { return textBMP; }
             set { }
         }//Stop outside scripts from changing GUI
 
-        static private int textTexture;//The location of the texture on the graphics card
-        static private Graphics textGFX;//Used to adjust the textBMP bitmap
+        private static int textTexture;//The location of the texture on the graphics card
+        private static Graphics textGFX;//Used to adjust the textBMP bitmap
 
-        static private int m_width, m_height;
-        static public Vector2 guiPosition = Vector2.Zero;
+        private static int m_width, m_height;
+        public static Vector2 guiPosition = Vector2.Zero;
 
-        static public Color clearColour = Color.CornflowerBlue;
+        public static Color clearColour = Color.CornflowerBlue;
 
         //Called by SceneManager onLoad, and when screen size is changed
         public static void SetUpGUI(int width, int height)
@@ -52,25 +52,38 @@ namespace OpenGL_Game.Scenes
             GL.Disable(EnableCap.Texture2D);
         }
 
-        static public void Label(Rectangle rect, string text)
+        public static void Image(string pFileName, float pWidth, float pHeight)
+        {
+            var img = System.Drawing.Image.FromFile(pFileName);
+            var resizedImg = new Bitmap(img, new Size((int)pWidth, (int)pHeight));
+            textGFX.DrawImage(resizedImg, new Point(0, 0));
+        }
+
+        public static void Image(string pFileName, int pPositionX, int pPositionY)
+        {
+            var img = System.Drawing.Image.FromFile(pFileName);
+            textGFX.DrawImage(img, new Point(pPositionX, pPositionY));
+        }
+
+        public static void Label(Rectangle rect, string text)
         {
             Label(rect, text, 20, StringAlignment.Near);
         }
-        static public void Label(Rectangle rect, string text, StringAlignment sa)
+        public static void Label(Rectangle rect, string text, StringAlignment sa)
         {
             Label(rect, text, 20, sa);
         }
-        static public void Label(Rectangle rect, string text, int fontSize)
+        public static void Label(Rectangle rect, string text, int fontSize)
         {
             Label(rect, text, fontSize, StringAlignment.Near);
         }
 
-        static public void Label(Rectangle rect, string text, int fontSize, StringAlignment sa)
+        public static void Label(Rectangle rect, string text, int fontSize, StringAlignment sa)
         {
             Label(rect, text, fontSize, sa, Color.White);
         }
 
-        static public void Label(Rectangle rect, string text, int fontSize, StringAlignment sa, Color color)
+        public static void Label(Rectangle rect, string text, int fontSize, StringAlignment sa, Color color)
         {
             var stringFormat = new StringFormat();
             stringFormat.Alignment = sa;
@@ -81,7 +94,7 @@ namespace OpenGL_Game.Scenes
             textGFX.DrawString(text, new Font("Arial", fontSize), brush, rect, stringFormat);
         }
 
-        static public void Render()
+        public static void Render()
         {
             // Enable the texture
             GL.Enable(EnableCap.Blend);

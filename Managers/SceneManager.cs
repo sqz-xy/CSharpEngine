@@ -68,6 +68,7 @@ namespace OpenGL_Game.Managers
             base.OnUpdateFrame(e);
             
             collisionManager.ProcessCollisions();
+            inputManager.ReadInput(null);
             
             updater(e);
         }

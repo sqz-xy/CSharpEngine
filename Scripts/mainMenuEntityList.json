@@ -1,0 +1,12 @@
+﻿{
+  "Name": "MusicSource",
+  "IsRenderable": "False",
+  "Components": [
+    {
+      "COMPONENT_POSITION": "0 0.0 0"
+    },
+    {
+      "COMPONENT_AUDIO": "Audio/mainmenumusic.wav True"
+    }
+  ]
+}

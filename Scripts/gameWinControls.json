@@ -1,0 +1,10 @@
+﻿{
+  "Controls": [
+    {
+      "START_GAME": "Space"
+    },
+    {
+      "CLOSE_GAME": "Q"
+    }
+  ]
+}

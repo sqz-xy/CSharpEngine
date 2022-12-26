@@ -1,7 +1,7 @@
 {
   "Controls": [
     {
-      "START_GAME": "MouseButton.Left"
+      "START_GAME": "Space"
     },
     {
       "CLOSE_GAME": "Q"

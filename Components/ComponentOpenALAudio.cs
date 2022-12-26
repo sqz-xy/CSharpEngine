@@ -8,10 +8,7 @@ namespace OpenGL_Game.Components
     public class ComponentOpenALAudio : ComponentAudio
     {
         int _audioSource;
-        private string _audioName;
-        private bool _isPlaying;
-        private bool _isLooping;
-
+        
         public ComponentOpenALAudio(string pAudioName, bool pIsLooping)
         {
             _audioSource = AL.GenSource();
@@ -26,21 +23,6 @@ namespace OpenGL_Game.Components
             get { return _audioSource; }
         }
 
-        public string AudioName
-        {
-            get { return _audioName; }
-        }
-
-        public bool IsPlaying
-        {
-            get { return _isPlaying; }
-        }
-
-        public bool IsLooping
-        {
-            get { return _isLooping; }
-        }
-        
         public override void PlayAudio()
         {
             if (_isLooping && _isPlaying)

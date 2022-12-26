@@ -13,8 +13,11 @@ namespace OpenGL_Game.Systems
                 if ((entity.Mask & MASK) == MASK)
                 {
                     var audioComponents = ComponentHelper.GetComponents<ComponentAudio>(entity);
-                    if (audioComponents.Count > 1)
-                        PlayAmbientSound(audioComponents[1]);
+                    foreach (var audioComponent in audioComponents)
+                    {
+                        if (audioComponent.IsLooping)
+                            PlayAmbientSound(audioComponent);
+                    }
                 }
         }
         

@@ -102,9 +102,6 @@ namespace OpenGL_Game.Managers
                 case "START_GAME":
                     _sceneManager.ChangeScene(SceneTypes.SCENE_GAME);
                     break;
-                case "GAME_OVER":
-                    _sceneManager.ChangeScene(SceneTypes.SCENE_GAME_OVER);
-                    break;
                 case "CLOSE_GAME":
                     _sceneManager.Close();
                     break;
@@ -128,7 +125,6 @@ namespace OpenGL_Game.Managers
                 var newBullet = new Entity($"Bullet{bulletIndex}");
 
                 var bulletSound = ComponentHelper.GetComponent<ComponentAudio>(storedBullet, ComponentTypes.COMPONENT_AUDIO);
-                
 
                 foreach (var c in storedBullet.Components)
                 {
