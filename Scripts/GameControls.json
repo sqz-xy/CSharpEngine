@@ -20,12 +20,6 @@
     },
     {
       "SHOOT": "MouseButton.Left"
-    },
-    {
-      "SPECTATE": "T"
-    },
-    {
-      "LEAVE_SPECTATE" :  "Y"
     }
   ]
 }

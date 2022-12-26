@@ -8,7 +8,6 @@ namespace OpenGL_Game.Components
     public class ComponentOpenALAudio : ComponentAudio
     {
         int _audioSource;
-        private bool playingAudio = false;
 
         public ComponentOpenALAudio(string pAudioName, bool pIsLooping)
         {
@@ -24,9 +23,7 @@ namespace OpenGL_Game.Components
         
         public override void PlayAudio()
         {
-            // This will need to be moved
             AL.SourcePlay(_audioSource); // play the audio source 
-            playingAudio = true;
         }
 
         public override void StopAudio()

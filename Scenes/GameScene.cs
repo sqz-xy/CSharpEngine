@@ -17,8 +17,8 @@ namespace OpenGL_Game.Scenes
     class GameScene : Scene
     {
         public static float dt = 0;
-        private int playerHealth = 30;
         private static int playerLives = 3;
+        private int playerHealth = 30;
         private int droneCount = 9999;
 
         //EntityManager entityManager;

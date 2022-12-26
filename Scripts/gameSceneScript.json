@@ -78,6 +78,9 @@
       "COMPONENT_AUDIO": "Audio/buzz.wav False"
     },
     {
+      "COMPONENT_AUDIO": "Audio/buzz.wav False"
+    },
+    {
       "COMPONENT_HEALTH": "1"
     }, 
     {
