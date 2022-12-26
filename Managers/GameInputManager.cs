@@ -132,6 +132,9 @@ namespace OpenGL_Game.Managers
                 var storedBullet = _entityManager.FindRenderableEntity(bulletName);
                 var newBullet = new Entity($"Bullet{bulletIndex}");
 
+                var bulletSound = ComponentHelper.GetComponent<ComponentAudio>(storedBullet, ComponentTypes.COMPONENT_AUDIO);
+                
+
                 foreach (var c in storedBullet.Components)
                 {
                     if (c.GetType() == typeof(ComponentHealth))
@@ -149,9 +152,7 @@ namespace OpenGL_Game.Managers
                 newBullet.AddComponent(new ComponentHealth(health.Health));
                 newBullet.AddComponent(new ComponentDamage(playerDamage));
                 
-                var audio = ComponentHelper.GetComponent<ComponentAudio>(pEntity, ComponentTypes.COMPONENT_AUDIO);
-                audio.PlayAudio();
-
+                bulletSound.PlayAudio();
                 _entityManager.AddEntity(newBullet, true);
                 bulletIndex++;
                 _shootCooldown.Start();

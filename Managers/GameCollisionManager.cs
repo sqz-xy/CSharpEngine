@@ -108,7 +108,7 @@ namespace OpenGL_Game.Managers
                 {
                     var health = ComponentHelper.GetComponent<ComponentHealth>(pEntityToAct, ComponentTypes.COMPONENT_HEALTH);
                     var damage = ComponentHelper.GetComponent<ComponentDamage>(pEntityToHit, ComponentTypes.COMPONENT_DAMAGE);
-                    var audio = ComponentHelper.GetComponent<ComponentAudio>(pEntityToHit, ComponentTypes.COMPONENT_AUDIO);
+                    var audio = ComponentHelper.GetComponent<ComponentAudio>(pEntityToAct, ComponentTypes.COMPONENT_AUDIO);
                     
                     int damageValue;
                     if (damage == null)

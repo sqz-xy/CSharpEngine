@@ -102,6 +102,10 @@ namespace OpenGL_Game.Scenes
             ISystem systemInput;
             systemInput = new SystemInput(inputManager, camera);
             systemManager.AddSystem(systemInput, false);
+
+            ISystem systemAmbient;
+            systemAmbient = new SystemAmbient();
+            systemManager.AddSystem(systemAmbient, false);
         }
 
         /// <summary>

@@ -9,13 +9,10 @@
       "COMPONENT_COLLISION_SPHERE": "0.25"
     },
     {
-      "COMPONENT_AUDIO": "Audio/buzz.wav False"
-    },
-    {
       "COMPONENT_HEALTH": "30"
     },
     {
-      "COMPONENT_AUDIO": "Audio/buzz.wav false"
+      "COMPONENT_AUDIO": "Audio/playerdamage.wav false"
     },
     {
       "COMPONENT_GEOMETRY": "Geometry/Skybox/skyBox.obj"
@@ -51,7 +48,7 @@
       "COMPONENT_SHADER": "Default"
     },
     {
-      "COMPONENT_AUDIO": "Audio/buzz.wav false"
+      "COMPONENT_AUDIO": "Audio/gunshot.wav false"
     },
     {
       "COMPONENT_HEALTH": "1"
@@ -75,10 +72,10 @@
       "COMPONENT_SHADER": "Default"
     },
     {
-      "COMPONENT_AUDIO": "Audio/buzz.wav False"
+      "COMPONENT_AUDIO": "Audio/powerupgrab.wav False"
     },
     {
-      "COMPONENT_AUDIO": "Audio/buzz.wav False"
+      "COMPONENT_AUDIO": "Audio/powerupambient.wav True"
     },
     {
       "COMPONENT_HEALTH": "1"
@@ -102,7 +99,10 @@
       "COMPONENT_SHADER": "Default"
     },
     {
-      "COMPONENT_AUDIO": "Audio/buzz.wav False"
+      "COMPONENT_AUDIO": "Audio/powerupgrab.wav False"
+    },
+    {
+      "COMPONENT_AUDIO": "Audio/powerupambient.wav True"
     },
     {
       "COMPONENT_HEALTH": "1"
@@ -126,7 +126,10 @@
       "COMPONENT_SHADER": "Default"
     },
     {
-      "COMPONENT_AUDIO": "Audio/buzz.wav False"
+      "COMPONENT_AUDIO": "Audio/powerupgrab.wav False"
+    },
+    {
+      "COMPONENT_AUDIO": "Audio/powerupambient.wav True"
     },
     {
       "COMPONENT_HEALTH": "1"
@@ -156,9 +159,6 @@
       "COMPONENT_RENDERABLE": "False"
     },
     {
-      "COMPONENT_AUDIO": "Audio/buzz.wav False"
-    },
-    {
       "COMPONENT_COLLISION_SPHERE": "0.5"
     },
     {
@@ -168,9 +168,6 @@
       "COMPONENT_DAMAGE": "30"
     },
     {
-      "COMPONENT_AUDIO": "Audio/buzz.wav false"
-    },
-    {
       "COMPONENT_AI" : "G_X TRUE"
     },
     {
@@ -178,6 +175,9 @@
     },
     {
       "COMPONENT_DIRECTION" : "0.8 0 -0.5"
+    },
+    {
+      "COMPONENT_AUDIO": "Audio/catscream.wav false"
     }
   ]
 }
@@ -201,9 +201,6 @@
       "COMPONENT_RENDERABLE": "False"
     },
     {
-      "COMPONENT_AUDIO": "Audio/buzz.wav False"
-    },
-    {
       "COMPONENT_COLLISION_SPHERE": "0.5"
     },
     {
@@ -213,7 +210,7 @@
       "COMPONENT_DAMAGE": "30"
     },
     {
-      "COMPONENT_AUDIO": "Audio/buzz.wav false"
+      "COMPONENT_AUDIO": "Audio/catscream.wav false"
     }
   ]
 }
@@ -237,9 +234,6 @@
       "COMPONENT_RENDERABLE": "False"
     },
     {
-      "COMPONENT_AUDIO": "Audio/buzz.wav False"
-    },
-    {
       "COMPONENT_COLLISION_SPHERE": "0.5"
     },
     {
@@ -249,7 +243,7 @@
       "COMPONENT_DAMAGE": "30"
     },
     {
-      "COMPONENT_AUDIO": "Audio/buzz.wav false"
+      "COMPONENT_AUDIO": "Audio/catscream.wav false"
     }
   ]
 }

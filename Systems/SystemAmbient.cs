@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
 using OpenGL_Game.Components;
 using OpenGL_Game.Objects;
-using OpenGL_Game.OBJLoader;
-using OpenTK;
-using OpenTK.Audio.OpenAL;
 
 namespace OpenGL_Game.Systems
 {
-    public class SystemAudio : ISystem
+    public class SystemAmbient : ISystem
     {
         const ComponentTypes MASK = (ComponentTypes.COMPONENT_POSITION | ComponentTypes.COMPONENT_AUDIO);
         public void OnAction(List<Entity> pEntity)
@@ -15,19 +12,15 @@ namespace OpenGL_Game.Systems
             foreach (var entity in pEntity)
                 if ((entity.Mask & MASK) == MASK)
                 {
-                    var position = ComponentHelper.GetComponent<ComponentPosition>(entity, ComponentTypes.COMPONENT_POSITION);
-
                     var audioComponents = ComponentHelper.GetComponents<ComponentAudio>(entity);
-                    UpdateSourcePosition(audioComponents, position.Position);
+                    if (audioComponents.Count > 1)
+                        PlayAmbientSound(audioComponents[1]);
                 }
         }
         
-        private void UpdateSourcePosition(List<ComponentAudio> pAudioComponents, Vector3 pPosition)
+        private void PlayAmbientSound(ComponentAudio pComponentAudio)
         {
-            foreach (var audioComponent in pAudioComponents)
-            {
-                audioComponent.UpdateAudioPosition(pPosition);
-            }
+            pComponentAudio.PlayAudio();
         }
         
         public void Cleanup(Entity pEntity)

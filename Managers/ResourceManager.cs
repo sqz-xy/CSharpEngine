@@ -108,10 +108,8 @@ namespace OpenGL_Game.Managers
         
         public static int LoadAudio(string filename)
         {
-            int audioBuffer;
-            
             // Mine
-            audioDictionary.TryGetValue(filename, out audioBuffer);
+            audioDictionary.TryGetValue(filename, out var audioBuffer);
 
             if (audioBuffer == 0)
             {
