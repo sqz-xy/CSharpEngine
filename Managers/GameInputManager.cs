@@ -83,13 +83,13 @@ namespace OpenGL_Game.Managers
                     playerPosComponent.Position += -((playerDirComponent.Direction * 4) * GameScene.dt) * playerSpeedComponent.Speed;
                     break;
                 case "MOVE_LEFT":
-                    playerDirComponent.Direction = Matrix3.CreateRotationY(-0.03f) * playerDirComponent.Direction;
+                    playerDirComponent.Direction = Matrix3.CreateRotationY(-4f * GameScene.dt) * playerDirComponent.Direction;
                     break;
                 case "MOVE_RIGHT":
-                    playerDirComponent.Direction = Matrix3.CreateRotationY(0.03f) * playerDirComponent.Direction;
+                    playerDirComponent.Direction = Matrix3.CreateRotationY(4f * GameScene.dt) * playerDirComponent.Direction;
                     break;
                 case "SHOOT":
-                    Shoot(pEntity, 20.0f);
+                    Shoot(pEntity, 10.0f);
                     break;
             }
         }
