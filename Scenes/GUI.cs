@@ -39,8 +39,6 @@ namespace OpenGL_Game.Scenes
                 _textures.Add(new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb)); // match window size); 
                 _layers.Add(Graphics.FromImage(_textures[i]));
                 _layers[i].Clear(clearColour);
-     
-                
             }
             
             for (int i = 0; i < pLayerCount; i++)

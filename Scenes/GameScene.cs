@@ -8,7 +8,10 @@ using OpenGL_Game.Objects;
 using System.Drawing;
 using System;
 using System.Linq;
+using System.Numerics;
 using OpenTK.Audio.OpenAL;
+using Vector2 = OpenTK.Vector2;
+using Vector3 = OpenTK.Vector3;
 
 namespace OpenGL_Game.Scenes
 {
@@ -23,8 +26,6 @@ namespace OpenGL_Game.Scenes
         public int playerHealth = 30;
         public int droneCount = 3;
 
-        private int angle = 0;
-        
         // Made static because there should only be one
         public Camera camera;
 
@@ -49,7 +50,7 @@ namespace OpenGL_Game.Scenes
             GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
             // Set Camera
-            camera = new Camera(new Vector3(-5.0f, 0.5f, 3.0f), new Vector3(0, 0.5f, 0), (float)(sceneManager.Width) / (float)(sceneManager.Height), 0.1f, 100f);
+            camera = new Camera(new Vector3(-5.0f, 0.5f, 3.0f), new Vector3(-5.0f, 0.5f, 3.0f), (float)(sceneManager.Width) / (float)(sceneManager.Height), 0.1f, 100f);
 
             CreateEntities();
             CreateSystems();
@@ -134,8 +135,17 @@ namespace OpenGL_Game.Scenes
             GUI.Image("Images/droneicon.bmp", 32, 32, 330, 0, 0);
             GUI.Image("Images/hearticon.bmp", 32, 32, 190, 0, 0);
             GUI.Image("Images/healthicon.bmp", 32, 32, 10, 0, 0);
-            GUI.Image("Images/minimap.bmp", 256, 256, 800, 0, 0, angle);
-            angle++;
+            GUI.Image("Images/minimap.bmp", 256, 256, 880, 20, 0);
+            
+            var playerPosition = ComponentHelper.GetComponent<ComponentPosition>(sceneManager.entityManager.FindRenderableEntity("Player"), ComponentTypes.COMPONENT_POSITION);
+            var pos = playerPosition.Position;
+            var sourceDir = new Vector3(0.22f, 0, -0.97f);
+            
+            var playerDirection = ComponentHelper.GetComponent<ComponentDirection>(sceneManager.entityManager.FindRenderableEntity("Player"), ComponentTypes.COMPONENT_DIRECTION);
+            var angle = Vector3.CalculateAngle(sourceDir, playerDirection.Direction);
+
+            GUI.Image("Images/healthicon.bmp", 32, 32, (int)pos.X + 960, (int)pos.Z + 130, 0, (int)MathHelper.RadiansToDegrees(angle));
+            
             GUI.RenderLayer(0);
         }
 

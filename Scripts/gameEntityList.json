@@ -18,13 +18,13 @@
       "COMPONENT_GEOMETRY": "Geometry/Skybox/skyBox.obj"
     },
     {
-      "COMPONENT_SHADER": "NoLights Shaders/vs.glsl Shaders/fs_nolights.glsl" 
+      "COMPONENT_SHADER": "NoLights Shaders/vs.glsl Shaders/fs_nolights.glsl"
     },
     {
       "COMPONENT_CONTROLLABLE" : "True"
     },
     {
-      "COMPONENT_DIRECTION" : "0.8 0 -0.5"
+      "COMPONENT_DIRECTION" : "0 0 -0.97"
     },
     {
       "COMPONENT_SPEED" : "1"
