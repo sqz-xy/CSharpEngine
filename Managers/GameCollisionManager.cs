@@ -82,7 +82,7 @@ namespace OpenGL_Game.Managers
                 var speed = ComponentHelper.GetComponent<ComponentSpeed>(pEntityToHit, ComponentTypes.COMPONENT_SPEED);
                 
                 // Collects twice
-                speed.Speed += pSpeed;
+                speed.Speed *= pSpeed;
                 pStopwatch.Start();
             }
         }
