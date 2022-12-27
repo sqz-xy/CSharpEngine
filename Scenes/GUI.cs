@@ -76,6 +76,7 @@ namespace OpenGL_Game.Scenes
             // resize for screen bounds
             var img = System.Drawing.Image.FromFile(pFileName);
             var resizedImg = new Bitmap(img, new Size((int)pWidth, (int)pHeight));
+            resizedImg.MakeTransparent();
 
             // Create a new bitmap which is larger than the image to be drawn
             var newImg = new Bitmap((int) ((int)pWidth + (pWidth / 2)), (int)((int)pHeight + (pWidth / 2)));
@@ -87,7 +88,7 @@ namespace OpenGL_Game.Scenes
             
             // Create a new bitmap for the image 
             Bitmap rotatedImage = new Bitmap(resizedImg.Width, resizedImg.Height);
-            
+
             // Make a graphics object from the empty bitmap
             using(Graphics g = Graphics.FromImage(rotatedImage)) 
             {

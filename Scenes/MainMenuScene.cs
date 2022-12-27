@@ -89,6 +89,5 @@ namespace OpenGL_Game.Scenes
             
             ResourceManager.RemoveAllAssets();
         }
-        
     }
 }

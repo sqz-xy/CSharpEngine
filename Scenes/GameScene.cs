@@ -135,16 +135,31 @@ namespace OpenGL_Game.Scenes
             GUI.Image("Images/droneicon.bmp", 32, 32, 330, 0, 0);
             GUI.Image("Images/hearticon.bmp", 32, 32, 190, 0, 0);
             GUI.Image("Images/healthicon.bmp", 32, 32, 10, 0, 0);
-            GUI.Image("Images/minimap.bmp", 256, 256, 880, 20, 0);
+            GUI.Image("Images/minimap.bmp", 256, 256, 900, 0, 0);
             
             var playerPosition = ComponentHelper.GetComponent<ComponentPosition>(sceneManager.entityManager.FindRenderableEntity("Player"), ComponentTypes.COMPONENT_POSITION);
             var pos = playerPosition.Position;
-            var sourceDir = new Vector3(0.22f, 0, -0.97f);
+            var sourceDir = new Vector3(0.0f, 0, -0.97f);
             
             var playerDirection = ComponentHelper.GetComponent<ComponentDirection>(sceneManager.entityManager.FindRenderableEntity("Player"), ComponentTypes.COMPONENT_DIRECTION);
-            var angle = Vector3.CalculateAngle(sourceDir, playerDirection.Direction);
 
-            GUI.Image("Images/healthicon.bmp", 32, 32, (int)pos.X + 960, (int)pos.Z + 130, 0, (int)MathHelper.RadiansToDegrees(angle));
+            var angle = Vector3.CalculateAngle(sourceDir, playerDirection.Direction);
+            if (playerDirection.Direction.X < 0)
+                angle = -angle;
+            
+            // Offset for image location and player speed
+            GUI.Image("Images/playericon.bmp", 32, 32, (int)(pos.X * 12.5f) + 1000, (int)(pos.Z * 12.5f) + 100, 0, (int)MathHelper.RadiansToDegrees(angle));
+
+            foreach (var entity in sceneManager.entityManager.RenderableEntities())
+            {
+                if (entity.Name.Contains("FishPowerUp"))
+                {
+                    var powerUpPosition = ComponentHelper.GetComponent<ComponentPosition>(sceneManager.entityManager.FindRenderableEntity(entity.Name), ComponentTypes.COMPONENT_POSITION);
+                    pos = powerUpPosition.Position;
+                    GUI.Image("Images/fishicon.bmp", 32, 32, (int)(pos.X * 12.5f) + 1010, (int)(pos.Z * 12.5f) + 110, 0);
+                }
+            }
+            
             
             GUI.RenderLayer(0);
         }

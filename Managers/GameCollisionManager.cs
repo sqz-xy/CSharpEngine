@@ -46,7 +46,7 @@ namespace OpenGL_Game.Managers
                     if (collision.entity1.Name.Contains("Bullet"))
                     {
                         var health = ComponentHelper.GetComponent<ComponentHealth>(collision.entity1, ComponentTypes.COMPONENT_HEALTH);
-                        health.Health -= 10;
+                        health.Health -= 1000;
                         continue;
                     }
                     
