@@ -4,6 +4,7 @@ using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 using OpenGL_Game.Scenes;
 using System.Collections.Generic;
+using System.Drawing;
 using OpenTK.Audio;
 
 namespace OpenGL_Game.Managers
@@ -41,6 +42,7 @@ namespace OpenGL_Game.Managers
         {
             this.X = windowXPos;
             this.Y = windowYPos;
+            this.Icon = new Icon("Images/gameicon.ico");
             
             scriptManager = new GameScriptManager();
             collisionManager = new GameCollisionManager();
@@ -58,7 +60,7 @@ namespace OpenGL_Game.Managers
             //GL.CullFace(CullFaceMode.Back);
 
             //Load the GUI
-            GUI.SetUpGUI(width, height);
+            GUI.SetUpGUI(width, height, 2);
 
             ChangeScene(SceneTypes.SCENE_MAIN_MENU);
         }
@@ -102,7 +104,7 @@ namespace OpenGL_Game.Managers
             SceneManager.height = Height;
 
             //Load the GUI
-            GUI.SetUpGUI(Width, Height);
+            GUI.SetUpGUI(Width, Height, 2);
         }
 
         public void ChangeScene(SceneTypes pSceneType)

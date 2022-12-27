@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Drawing;
@@ -8,16 +9,10 @@ namespace OpenGL_Game.Scenes
 {
     static class GUI
     {
-
-        private static Bitmap textBMP; //The image being drawn
-        static Bitmap TextBMP
-        {
-            get { return textBMP; }
-            set { }
-        }//Stop outside scripts from changing GUI
-
-        private static int textTexture;//The location of the texture on the graphics card
-        private static Graphics textGFX;//Used to adjust the textBMP bitmap
+        // List of textures for GUI layers
+        private static List<int> _layerIDs;
+        private static List<Graphics> _layers;
+        private static List<Bitmap> _textures;
 
         private static int m_width, m_height;
         public static Vector2 guiPosition = Vector2.Zero;
@@ -25,68 +20,109 @@ namespace OpenGL_Game.Scenes
         public static Color clearColour = Color.CornflowerBlue;
 
         //Called by SceneManager onLoad, and when screen size is changed
-        public static void SetUpGUI(int width, int height)
+        public static void SetUpGUI(int width, int height, int pLayerCount)
         {
+            // Clear old GUI Data 
+            if (_layerIDs != null)
+                GL.DeleteTextures(_layerIDs.Count, _layerIDs.ToArray());
+            
+            // Initialise GUI Data storage
+            _layerIDs = new List<int>();
+            _layers = new List<Graphics>();
+            _textures = new List<Bitmap>();
+
             m_width = width;
             m_height = height;
-
-            // Create Bitmap
-            textBMP = new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb); // match window size
-            //Setup the graphics
-            textGFX = Graphics.FromImage(textBMP);
-            textGFX.Clear(clearColour);
-
-            //Load the texture into the Graphics Card
-            if (textTexture > 0)
+            
+            for (int i = 0; i < pLayerCount; i++)
             {
-                GL.DeleteTexture(textTexture);
-                textTexture = 0;
+                _textures.Add(new Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb)); // match window size); 
+                _layers.Add(Graphics.FromImage(_textures[i]));
+                _layers[i].Clear(clearColour);
+     
+                
             }
-            textTexture = GL.GenTexture();
-            GL.Enable(EnableCap.Texture2D);
-            GL.BindTexture(TextureTarget.Texture2D, textTexture);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Linear);
-            GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.Linear);
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, textBMP.Width, textBMP.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, IntPtr.Zero);
-            GL.BindTexture(TextureTarget.Texture2D, 0);
-            GL.Disable(EnableCap.Texture2D);
+            
+            for (int i = 0; i < pLayerCount; i++)
+            {
+                int layerID = GL.GenTexture();
+                GL.Enable(EnableCap.Texture2D);
+                GL.BindTexture(TextureTarget.Texture2D, layerID);
+                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)All.Linear);
+                GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)All.Linear);
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, _textures[i].Width, _textures[i].Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, IntPtr.Zero);
+                GL.BindTexture(TextureTarget.Texture2D, layerID);
+                GL.Disable(EnableCap.Texture2D);
+                _layerIDs.Add(layerID);
+            }
         }
 
-        public static void Image(string pFileName, float pWidth, float pHeight)
+        public static void Image(string pFileName, float pWidth, float pHeight, int pLayer)
         {
             var img = System.Drawing.Image.FromFile(pFileName);
             var resizedImg = new Bitmap(img, new Size((int)pWidth, (int)pHeight));
             resizedImg.MakeTransparent();
-            textGFX.DrawImage(resizedImg, new Point(0, 0));
+            _layers[pLayer].DrawImage(resizedImg, new Point(0, 0));
         }
 
-        public static void Image(string pFileName, float pWidth, float pHeight, int pPositionX, int pPositionY)
+        public static void Image(string pFileName, float pWidth, float pHeight, int pPositionX, int pPositionY, int pLayer)
         {
             var img = System.Drawing.Image.FromFile(pFileName);
             var resizedImg = new Bitmap(img, new Size((int)pWidth, (int)pHeight));
             resizedImg.MakeTransparent();
-            textGFX.DrawImage(resizedImg, new Point(pPositionX, pPositionY));
+            _layers[pLayer].DrawImage(resizedImg, new Point(pPositionX, pPositionY));
+        }
+        
+        public static void Image(string pFileName, float pWidth, float pHeight, int pPositionX, int pPositionY, int pLayer, int pAngle)
+        {
+            // resize for screen bounds
+            var img = System.Drawing.Image.FromFile(pFileName);
+            var resizedImg = new Bitmap(img, new Size((int)pWidth, (int)pHeight));
+
+            // Create a new bitmap which is larger than the image to be drawn
+            var newImg = new Bitmap((int) ((int)pWidth + (pWidth / 2)), (int)((int)pHeight + (pWidth / 2)));
+            
+            using (Graphics g = Graphics.FromImage(newImg))
+                g.DrawImageUnscaled(resizedImg, (resizedImg.Width / 4), (resizedImg.Height / 4), newImg.Width, newImg.Height);
+
+            resizedImg = newImg;
+            
+            // Create a new bitmap for the image 
+            Bitmap rotatedImage = new Bitmap(resizedImg.Width, resizedImg.Height);
+            
+            // Make a graphics object from the empty bitmap
+            using(Graphics g = Graphics.FromImage(rotatedImage)) 
+            {
+                // Rotate it using the dimensions from the larger bitmap (Prevents the image being cutoff from the bounds of the original image)
+                g.TranslateTransform((float)resizedImg.Width / 2, (float)resizedImg.Height / 2);
+                g.RotateTransform(pAngle);
+                g.TranslateTransform(-(float)resizedImg.Width / 2, -(float)resizedImg.Height / 2);
+                g.DrawImage(resizedImg, new Point(0, 0)); 
+            }
+            
+            // Draw the rotated image
+            _layers[pLayer].DrawImage(rotatedImage, new Point(pPositionX, pPositionY));
         }
 
-        public static void Label(Rectangle rect, string text)
+        public static void Label(Rectangle rect, string text, int pLayer)
         {
-            Label(rect, text, 20, StringAlignment.Near);
+            Label(rect, text, 20, StringAlignment.Near, pLayer);
         }
-        public static void Label(Rectangle rect, string text, StringAlignment sa)
+        public static void Label(Rectangle rect, string text, StringAlignment sa, int pLayer)
         {
-            Label(rect, text, 20, sa);
+            Label(rect, text, 20, sa, pLayer);
         }
-        public static void Label(Rectangle rect, string text, int fontSize)
+        public static void Label(Rectangle rect, string text, int fontSize, int pLayer)
         {
-            Label(rect, text, fontSize, StringAlignment.Near);
-        }
-
-        public static void Label(Rectangle rect, string text, int fontSize, StringAlignment sa)
-        {
-            Label(rect, text, fontSize, sa, Color.White);
+            Label(rect, text, fontSize, StringAlignment.Near, pLayer);
         }
 
-        public static void Label(Rectangle rect, string text, int fontSize, StringAlignment sa, Color color)
+        public static void Label(Rectangle rect, string text, int fontSize, StringAlignment sa, int pLayer)
+        {
+            Label(rect, text, fontSize, sa, Color.White, pLayer);
+        }
+
+        public static void Label(Rectangle rect, string text, int fontSize, StringAlignment sa, Color color, int pLayer)
         {
             var stringFormat = new StringFormat();
             stringFormat.Alignment = sa;
@@ -94,10 +130,10 @@ namespace OpenGL_Game.Scenes
 
             var brush = new SolidBrush(color);
 
-            textGFX.DrawString(text, new Font("Arial", fontSize), brush, rect, stringFormat);
+            _layers[pLayer].DrawString(text, new Font("Arial", fontSize), brush, rect, stringFormat);
         }
 
-        public static void Render()
+        public static void RenderLayer(int pLayer)
         {
             // Enable the texture
             GL.Enable(EnableCap.Blend);
@@ -105,12 +141,11 @@ namespace OpenGL_Game.Scenes
 
             GL.Enable(EnableCap.Texture2D);
             GL.Hint(HintTarget.PerspectiveCorrectionHint, HintMode.Nicest);
+            GL.BindTexture(TextureTarget.Texture2D, _layerIDs[pLayer]);
 
-            GL.BindTexture(TextureTarget.Texture2D, textTexture);
-
-            var data = textBMP.LockBits(new Rectangle(0, 0, textBMP.Width, textBMP.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, (int)textBMP.Width, (int)textBMP.Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
-            textBMP.UnlockBits(data);
+            var data = _textures[pLayer].LockBits(new Rectangle(0, 0, _textures[pLayer].Width, _textures[pLayer].Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, (int)_textures[pLayer].Width, (int)_textures[pLayer].Height, 0, OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, data.Scan0);
+            _textures[pLayer].UnlockBits(data);
 
             GL.Begin(PrimitiveType.Quads);
             GL.TexCoord2(0f, 1f); GL.Vertex2(guiPosition.X, guiPosition.Y);
@@ -119,10 +154,12 @@ namespace OpenGL_Game.Scenes
             GL.TexCoord2(0f, 0f); GL.Vertex2(guiPosition.X, guiPosition.Y + m_height);
             GL.End();
 
-            GL.BindTexture(TextureTarget.Texture2D, 0);
+            GL.BindTexture(TextureTarget.Texture2D, _layerIDs[pLayer]);
             GL.Disable(EnableCap.Texture2D);
 
-            textGFX.Clear(clearColour);
+            _layers[pLayer].Clear(clearColour);
+            
         }
+        
     }
 }

@@ -40,12 +40,12 @@ namespace OpenGL_Game.Scenes
 
             //Display the Title
             float width = sceneManager.Width, height = sceneManager.Height, fontSize = Math.Min(width, height) / 10f;
-            GUI.Image("Images/gamelose.bmp", width, height);
-            GUI.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int)(fontSize * 2f)), "Game Over,", (int)fontSize, StringAlignment.Center, Color.MidnightBlue);
-            GUI.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int) ((int)(fontSize * 2f) + fontSize * 2.5f)), "The Cats Win!", (int)fontSize, StringAlignment.Center, Color.MidnightBlue);
-            GUI.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int) (((int)(fontSize * 2f)) + height * 1.5f)), "Press Space to Play again!", (int)fontSize / 2, StringAlignment.Center, Color.MidnightBlue);
+            GUI.Image("Images/gamelose.bmp", width, height, 0);
+            GUI.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int)(fontSize * 2f)), "Game Over,", (int)fontSize, StringAlignment.Center, Color.MidnightBlue, 0);
+            GUI.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int) ((int)(fontSize * 2f) + fontSize * 2.5f)), "The Cats Win!", (int)fontSize, StringAlignment.Center, Color.MidnightBlue, 0);
+            GUI.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int) (((int)(fontSize * 2f)) + height * 1.5f)), "Press Space to Play again!", (int)fontSize / 2, StringAlignment.Center, Color.MidnightBlue, 0);
             
-            GUI.Render();
+            GUI.RenderLayer(0);
         }
 
         public override void Close()

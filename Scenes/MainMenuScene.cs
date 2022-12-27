@@ -20,9 +20,8 @@ namespace OpenGL_Game.Scenes
             sceneManager.entityManager = new EntityManager();
             sceneManager.systemManager = new SystemManager();
             sceneManager.inputManager = new GameInputManager(sceneManager.entityManager, base.sceneManager);
-       
             // Set the title of the window
-            sceneManager.Title = "Main Menu";
+            sceneManager.Title = "Felinephobia!";
             // Set the Render and Update delegates to the Update and Render methods of this class
             sceneManager.renderer = Render;
             sceneManager.updater = Update;
@@ -67,11 +66,11 @@ namespace OpenGL_Game.Scenes
 
             //Display the Title
             float width = sceneManager.Width, height = sceneManager.Height, fontSize = Math.Min(width, height) / 10f;
-            GUI.Image("Images/mainmenu.bmp", width, height);
-            GUI.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int)(fontSize * 2f)), "Felinephobia!", (int)fontSize, StringAlignment.Center, Color.MidnightBlue);
-            GUI.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int) (((int)(fontSize * 2f)) + height * 1.5f)), "Press Space to Play!", (int)fontSize / 2, StringAlignment.Center, Color.MidnightBlue);
-            GUI.Image("Images/droneicon.bmp", 30, 30, 900, 130);
-            GUI.Render();
+            GUI.Image("Images/mainmenu.bmp", width, height, 0);
+            GUI.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int)(fontSize * 2f)), "Felinephobia!", (int)fontSize, StringAlignment.Center, Color.MidnightBlue, 0);
+            GUI.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int) (((int)(fontSize * 2f)) + height * 1.5f)), "Press Space to Play!", (int)fontSize / 2, StringAlignment.Center, Color.MidnightBlue, 0);
+            GUI.Image("Images/droneicon.bmp", 30, 30, 900, 130, 0);
+            GUI.RenderLayer(0);
         }
         
         public override void Close()

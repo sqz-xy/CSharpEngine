@@ -22,6 +22,8 @@ namespace OpenGL_Game.Scenes
         public int maxLives = 3;
         public int playerHealth = 30;
         public int droneCount = 3;
+
+        private int angle = 0;
         
         // Made static because there should only be one
         public Camera camera;
@@ -126,13 +128,15 @@ namespace OpenGL_Game.Scenes
             // Render score
             float width = sceneManager.Width, height = sceneManager.Height, fontSize = Math.Min(width, height) / 10f;
             GUI.clearColour = Color.Transparent;
-            GUI.Label(new Rectangle(40, 0, (int)width, (int)(fontSize * 2f)), $"Health: {playerHealth}", 18, StringAlignment.Near, Color.White);
-            GUI.Label(new Rectangle(220, 0, (int)width, (int)(fontSize * 2f)), $"Lives: {playerLives}", 18, StringAlignment.Near, Color.White);
-            GUI.Label(new Rectangle(360, 0, (int)width, (int)(fontSize * 2f)), $"Drone Count: {droneCount}", 18, StringAlignment.Near, Color.White);
-            GUI.Image("Images/droneicon.bmp", 32, 32, 330, 0);
-            GUI.Image("Images/hearticon.bmp", 32, 32, 190, 0);
-            GUI.Image("Images/healthicon.bmp", 32, 32, 10, 0);
-            GUI.Render();
+            GUI.Label(new Rectangle(40, 0, (int)width, (int)(fontSize * 2f)), $"Health: {playerHealth}", 18, StringAlignment.Near, Color.White, 0);
+            GUI.Label(new Rectangle(220, 0, (int)width, (int)(fontSize * 2f)), $"Lives: {playerLives}", 18, StringAlignment.Near, Color.White, 0);
+            GUI.Label(new Rectangle(360, 0, (int)width, (int)(fontSize * 2f)), $"Drone Count: {droneCount}", 18, StringAlignment.Near, Color.White, 0);
+            GUI.Image("Images/droneicon.bmp", 32, 32, 330, 0, 0);
+            GUI.Image("Images/hearticon.bmp", 32, 32, 190, 0, 0);
+            GUI.Image("Images/healthicon.bmp", 32, 32, 10, 0, 0);
+            GUI.Image("Images/minimap.bmp", 256, 256, 800, 0, 0, angle);
+            angle++;
+            GUI.RenderLayer(0);
         }
 
         /// <summary>
