@@ -69,6 +69,14 @@ namespace OpenGL_Game.Systems
             
             if ((xDistance < AABBCol.Width) || (zDistance < AABBCol.Depth))
                 _collisionManager.RegisterCollision(pEntity1, pEntity2, COLLISIONTYPE.SPHERE_AABB);
+            
+            _collisionManager.RegisterCollision(pEntity1, pEntity2, COLLISIONTYPE.SPHERE_AABB);
+
+            var cornerDistance = ((xDistance - AABBCol.Width) * (xDistance - AABBCol.Width)) +
+                                 ((zDistance - AABBCol.Height) * (zDistance - AABBCol.Height));
+
+            if (cornerDistance < (sphereCol.CollisionField * sphereCol.CollisionField))
+                _collisionManager.RegisterCollision(pEntity1, pEntity2, COLLISIONTYPE.SPHERE_AABB);
         }
     }
 }

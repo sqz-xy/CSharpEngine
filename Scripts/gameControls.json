@@ -20,6 +20,9 @@
     },
     {
       "SHOOT": "MouseButton.Left"
+    },
+    {
+      "TOGGLE_COLLISION" : "C"
     }
   ]
 }

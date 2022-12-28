@@ -57,52 +57,47 @@ namespace OpenGL_Game.Scenes
 
         public static void Image(string pFileName, float pWidth, float pHeight, int pLayer)
         {
-            var img = System.Drawing.Image.FromFile(pFileName);
-            var resizedImg = new Bitmap(img, new Size((int)pWidth, (int)pHeight));
-            resizedImg.MakeTransparent();
-            _layers[pLayer].DrawImage(resizedImg, new Point(0, 0));
+            var img = new Bitmap(System.Drawing.Image.FromFile(pFileName), new Size((int)pWidth, (int)pHeight));
+            img.MakeTransparent();
+            _layers[pLayer].DrawImage(img, new Point(0, 0));
         }
 
         public static void Image(string pFileName, float pWidth, float pHeight, int pPositionX, int pPositionY, int pLayer)
         {
-            var img = System.Drawing.Image.FromFile(pFileName);
-            var resizedImg = new Bitmap(img, new Size((int)pWidth, (int)pHeight));
-            resizedImg.MakeTransparent();
-            _layers[pLayer].DrawImage(resizedImg, new Point(pPositionX, pPositionY));
+            var img = new Bitmap(System.Drawing.Image.FromFile(pFileName), new Size((int)pWidth, (int)pHeight));
+            img.MakeTransparent();
+            _layers[pLayer].DrawImage(img, new Point(pPositionX, pPositionY));
         }
         
         public static void Image(string pFileName, float pWidth, float pHeight, int pPositionX, int pPositionY, int pLayer, int pAngle)
         {
             // resize for screen bounds
-            var img = System.Drawing.Image.FromFile(pFileName);
-            var resizedImg = new Bitmap(img, new Size((int)pWidth, (int)pHeight));
-            resizedImg.MakeTransparent();
+            var img = new Bitmap(System.Drawing.Image.FromFile(pFileName), new Size((int)pWidth, (int)pHeight));
+            img.MakeTransparent();
 
             // Create a new bitmap which is larger than the image to be drawn
-            var newImg = new Bitmap((int) ((int)pWidth + (pWidth / 2)), (int)((int)pHeight + (pWidth / 2)));
-            
-            // Centre the image so it rotates around the origin of itself correctly
-            using (Graphics g = Graphics.FromImage(newImg))
-                g.DrawImageUnscaled(resizedImg, (resizedImg.Width / 4), (resizedImg.Height / 4), newImg.Width, newImg.Height);
+            var emptyImg = new Bitmap((int) ((int)pWidth + (pWidth / 2)), (int)((int)pHeight + (pWidth / 2)));
 
-            resizedImg = newImg;
+            // Centre the image so it rotates around the origin of itself correctly
+            var graphics = Graphics.FromImage(emptyImg);
+            graphics.DrawImageUnscaled(img, (img.Width / 4), (img.Height / 4), emptyImg.Width, emptyImg.Height);
             
-            // Create a new bitmap for the image 
-            Bitmap rotatedImage = new Bitmap(resizedImg.Width, resizedImg.Height);
+            // Create a new bitmap for the rotated image 
+            Bitmap rotatedImage = new Bitmap(emptyImg.Width, emptyImg.Height);
 
             // Make a graphics object from the empty bitmap
-            Graphics graphics = Graphics.FromImage(rotatedImage);
+            graphics = Graphics.FromImage(rotatedImage);
             
             // Rotate it using the dimensions from the larger bitmap (Prevents the image being cutoff from the bounds of the original image)
-            graphics.TranslateTransform((float)resizedImg.Width / 2, (float)resizedImg.Height / 2);
+            graphics.TranslateTransform((float)emptyImg.Width / 2, (float)emptyImg.Height / 2);
             graphics.RotateTransform(pAngle);
-            graphics.TranslateTransform(-(float)resizedImg.Width / 2, -(float)resizedImg.Height / 2);
-            graphics.DrawImage(resizedImg, new Point(0, 0));
+            graphics.TranslateTransform(-(float)emptyImg.Width / 2, -(float)emptyImg.Height / 2);
+            graphics.DrawImage(emptyImg, new Point(0, 0));
 
             // Draw the rotated image
             _layers[pLayer].DrawImage(rotatedImage, new Point(pPositionX, pPositionY));
         }
-
+        
         public static void Label(Rectangle rect, string text, int pLayer)
         {
             Label(rect, text, 20, StringAlignment.Near, pLayer);

@@ -18,6 +18,8 @@ namespace OpenGL_Game.Managers
         private Stopwatch _powerUpHealthCooldown;
         private Stopwatch _powerUpSpeedCooldown;
 
+        public bool _wallCollision = true;
+
         public GameCollisionManager()
         {
             _healthCooldown = new Stopwatch();
@@ -42,7 +44,8 @@ namespace OpenGL_Game.Managers
                     PowerUpDamage(collision.entity2, collision.entity1, "FishPowerUpDamage", "Player", _powerUpSpeedCooldown, 1, 20);
                 }
 
-                if (collision.collisionType == COLLISIONTYPE.SPHERE_AABB)
+                // SpereAABB is only used for walls
+                if (collision.collisionType == COLLISIONTYPE.SPHERE_AABB && _wallCollision)
                 {
                     // Destroy bullets if they hit a wall
                     if (collision.entity1.Name.Contains("Bullet"))
@@ -67,6 +70,8 @@ namespace OpenGL_Game.Managers
                     var zDistance = Math.Abs(playerPosition.Position.Z - wallPosition.Position.Z);
 
                     Vector3 newPlayerPos = playerPosition.Position;
+                    
+                    // Extra multiplier is there because the collision didn't teleport the player far enough away
                     if (xDistance < wallCollision.Width)
                     {
                         if (playerPosition.Position.Z > wallPosition.Position.Z) // Right side

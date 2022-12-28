@@ -125,13 +125,16 @@ namespace OpenGL_Game.Scenes
 
             // Action ALL renderable systems
             sceneManager.systemManager.ActionRenderableSystems(sceneManager.entityManager);
-
+            var collisionManager = (GameCollisionManager) sceneManager.collisionManager;
+            
             // Render all the labels
             float width = sceneManager.Width, height = sceneManager.Height, fontSize = Math.Min(width, height) / 10f;
             GUI.clearColour = Color.Transparent;
             GUI.Label(new Rectangle(40, 0, (int)width, (int)(fontSize * 2f)), $"Health: {playerHealth}", 18, StringAlignment.Near, Color.White, 0);
             GUI.Label(new Rectangle(220, 0, (int)width, (int)(fontSize * 2f)), $"Lives: {playerLives}", 18, StringAlignment.Near, Color.White, 0);
             GUI.Label(new Rectangle(360, 0, (int)width, (int)(fontSize * 2f)), $"Drone Count: {droneCount}", 18, StringAlignment.Near, Color.White, 0);
+            GUI.Label(new Rectangle(560, 0, (int)width, (int)(fontSize * 2f)), $"Wall Collision Active: {collisionManager._wallCollision}", 18, StringAlignment.Near, Color.White, 0);
+            GUI.Label(new Rectangle(560, 32, (int)width, (int)(fontSize * 2f)), $"AI Active: N/A", 18, StringAlignment.Near, Color.White, 0);
             GUI.Image("Images/droneicon.bmp", 32, 32, 330, 0, 0);
             GUI.Image("Images/hearticon.bmp", 32, 32, 190, 0, 0);
             GUI.Image("Images/healthicon.bmp", 32, 32, 10, 0, 0);

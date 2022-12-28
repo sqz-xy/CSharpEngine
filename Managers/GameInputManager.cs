@@ -42,26 +42,24 @@ namespace OpenGL_Game.Managers
             
             foreach (var kvp in _keyBinds)
             {
-                if (keyState.IsKeyDown(kvp.Value))
-                {
-                    if (pEntity == null)
-                        HandleSceneInput(kvp.Key);
-                    else
-                        HandleEntityInput(kvp.Key, pEntity);
-                }
+                if (!keyState.IsKeyDown(kvp.Value)) continue;
+                
+                if (pEntity == null)
+                    HandleSceneInput(kvp.Key);
+                else
+                    HandleEntityInput(kvp.Key, pEntity);
             }
 
             var mouseState = Mouse.GetState();
 
             foreach (var kvp in _mouseBinds)
             {
-                if (mouseState.IsButtonDown(kvp.Value))
-                {
-                    if (pEntity == null)
-                        HandleSceneInput(kvp.Key);
-                    else
-                        HandleEntityInput(kvp.Key, pEntity);
-                }
+                if (!mouseState.IsButtonDown(kvp.Value)) continue;
+                
+                if (pEntity == null)
+                    HandleSceneInput(kvp.Key);
+                else
+                    HandleEntityInput(kvp.Key, pEntity);
             }
         }
 
@@ -104,6 +102,10 @@ namespace OpenGL_Game.Managers
                     break;
                 case "CLOSE_GAME":
                     _sceneManager.Close();
+                    break;
+                case "TOGGLE_COLLISION":
+                    var gameCollisionManager = (GameCollisionManager) _sceneManager.collisionManager;
+                    gameCollisionManager._wallCollision = !gameCollisionManager._wallCollision;
                     break;
             }
         }
