@@ -81,6 +81,7 @@ namespace OpenGL_Game.Scenes
             // Create a new bitmap which is larger than the image to be drawn
             var newImg = new Bitmap((int) ((int)pWidth + (pWidth / 2)), (int)((int)pHeight + (pWidth / 2)));
             
+            // Centre the image so it rotates around the origin of itself correctly
             using (Graphics g = Graphics.FromImage(newImg))
                 g.DrawImageUnscaled(resizedImg, (resizedImg.Width / 4), (resizedImg.Height / 4), newImg.Width, newImg.Height);
 
@@ -90,15 +91,14 @@ namespace OpenGL_Game.Scenes
             Bitmap rotatedImage = new Bitmap(resizedImg.Width, resizedImg.Height);
 
             // Make a graphics object from the empty bitmap
-            using(Graphics g = Graphics.FromImage(rotatedImage)) 
-            {
-                // Rotate it using the dimensions from the larger bitmap (Prevents the image being cutoff from the bounds of the original image)
-                g.TranslateTransform((float)resizedImg.Width / 2, (float)resizedImg.Height / 2);
-                g.RotateTransform(pAngle);
-                g.TranslateTransform(-(float)resizedImg.Width / 2, -(float)resizedImg.Height / 2);
-                g.DrawImage(resizedImg, new Point(0, 0)); 
-            }
+            Graphics graphics = Graphics.FromImage(rotatedImage);
             
+            // Rotate it using the dimensions from the larger bitmap (Prevents the image being cutoff from the bounds of the original image)
+            graphics.TranslateTransform((float)resizedImg.Width / 2, (float)resizedImg.Height / 2);
+            graphics.RotateTransform(pAngle);
+            graphics.TranslateTransform(-(float)resizedImg.Width / 2, -(float)resizedImg.Height / 2);
+            graphics.DrawImage(resizedImg, new Point(0, 0));
+
             // Draw the rotated image
             _layers[pLayer].DrawImage(rotatedImage, new Point(pPositionX, pPositionY));
         }
