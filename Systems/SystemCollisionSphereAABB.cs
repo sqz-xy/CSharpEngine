@@ -62,20 +62,12 @@ namespace OpenGL_Game.Systems
             var AABBCol = ComponentHelper.GetComponent<ComponentCollisionAABB>(pEntity2, ComponentTypes.COMPONENT_COLLISION_AABB);
 
             var xDistance = Math.Abs(spherePos.Position.X - AABBPos.Position.X);
-            var yDistance = Math.Abs(spherePos.Position.Y - AABBPos.Position.Y);
             var zDistance = Math.Abs(spherePos.Position.Z - AABBPos.Position.Z);
             
-            if (xDistance >= (AABBCol.Width + sphereCol.CollisionField) || yDistance >= (AABBCol.Height + sphereCol.CollisionField) || zDistance >= (AABBCol.Depth + sphereCol.CollisionField))
+            if (xDistance >= (AABBCol.Width + sphereCol.CollisionField) || zDistance >= (AABBCol.Depth + sphereCol.CollisionField))
                 return;
             
-            if ((xDistance < AABBCol.Width) || (yDistance < AABBCol.Height) || (zDistance < AABBCol.Depth))
-                _collisionManager.RegisterCollision(pEntity1, pEntity2, COLLISIONTYPE.SPHERE_AABB);
-
-            var cornerDistance = ((xDistance - AABBCol.Width) * (xDistance - AABBCol.Width)) +
-                                 ((yDistance - AABBCol.Height) * (yDistance - AABBCol.Height)) +
-                                 ((yDistance - AABBCol.Depth) * (yDistance - AABBCol.Depth));
-            
-            if (cornerDistance < (sphereCol.CollisionField * sphereCol.CollisionField))
+            if ((xDistance < AABBCol.Width) || (zDistance < AABBCol.Depth))
                 _collisionManager.RegisterCollision(pEntity1, pEntity2, COLLISIONTYPE.SPHERE_AABB);
         }
     }

@@ -126,7 +126,7 @@ namespace OpenGL_Game.Scenes
             // Action ALL renderable systems
             sceneManager.systemManager.ActionRenderableSystems(sceneManager.entityManager);
 
-            // Render score
+            // Render all the labels
             float width = sceneManager.Width, height = sceneManager.Height, fontSize = Math.Min(width, height) / 10f;
             GUI.clearColour = Color.Transparent;
             GUI.Label(new Rectangle(40, 0, (int)width, (int)(fontSize * 2f)), $"Health: {playerHealth}", 18, StringAlignment.Near, Color.White, 0);
@@ -137,19 +137,16 @@ namespace OpenGL_Game.Scenes
             GUI.Image("Images/healthicon.bmp", 32, 32, 10, 0, 0);
             GUI.Image("Images/minimap.bmp", 256, 256, 900, 0, 0);
             
-            var playerPosition = ComponentHelper.GetComponent<ComponentPosition>(sceneManager.entityManager.FindRenderableEntity("Player"), ComponentTypes.COMPONENT_POSITION);
-            var pos = playerPosition.Position;
-            var sourceDir = new Vector3(0.0f, 0, -0.97f);
+            // Minimap logic
             
-            var playerDirection = ComponentHelper.GetComponent<ComponentDirection>(sceneManager.entityManager.FindRenderableEntity("Player"), ComponentTypes.COMPONENT_DIRECTION);
-
-            var angle = Vector3.CalculateAngle(sourceDir, playerDirection.Direction);
-            if (playerDirection.Direction.X < 0)
-                angle = -angle;
+            var playerEntity = sceneManager.entityManager.FindRenderableEntity("Player");
+            var pos = ComponentHelper.GetComponent<ComponentPosition>(playerEntity, ComponentTypes.COMPONENT_POSITION).Position;
+            var angle = CalculateAngle(playerEntity);
             
             // Offset for image location and player speed
             GUI.Image("Images/playericon.bmp", 32, 32, (int)(pos.X * 12.5f) + 1000, (int)(pos.Z * 12.5f) + 100, 0, (int)MathHelper.RadiansToDegrees(angle));
 
+            // Draw drones and powerups, powerups don't have a direction so no angle is needed
             foreach (var entity in sceneManager.entityManager.RenderableEntities())
             {
                 if (entity.Name.Contains("FishPowerUp"))
@@ -158,10 +155,34 @@ namespace OpenGL_Game.Scenes
                     pos = powerUpPosition.Position;
                     GUI.Image("Images/fishicon.bmp", 32, 32, (int)(pos.X * 12.5f) + 1010, (int)(pos.Z * 12.5f) + 110, 0);
                 }
+                
+                if (entity.Name.Contains("EnemyCat"))
+                {
+                    var powerUpPosition = ComponentHelper.GetComponent<ComponentPosition>(sceneManager.entityManager.FindRenderableEntity(entity.Name), ComponentTypes.COMPONENT_POSITION);
+                    pos = powerUpPosition.Position;
+                    angle = CalculateAngle(entity);
+                    GUI.Image("Images/droneicon.bmp", 32, 32, (int)(pos.X * 12.5f) + 1010, (int)(pos.Z * 12.5f) + 110, 0, (int)MathHelper.RadiansToDegrees(angle));
+                }
             }
-            
-            
             GUI.RenderLayer(0);
+        }
+
+        /// <summary>
+        /// Calculates the angle of the player relative to north on the minimap
+        /// </summary>
+        /// <param name="pEntity"></param>
+        /// <returns></returns>
+        private float CalculateAngle(Entity pEntity)
+        {
+            var sourceDir = new Vector3(0.0f, 0, -1f); // North
+            var entityDir = ComponentHelper.GetComponent<ComponentDirection>(pEntity, ComponentTypes.COMPONENT_DIRECTION);
+            var angle = Vector3.CalculateAngle(sourceDir, entityDir.Direction);
+            
+            // If the player is looking left, flip the angle value
+            if (entityDir.Direction.X < 0)
+                angle = -angle;
+
+            return angle;
         }
 
         /// <summary>

@@ -15,11 +15,7 @@ namespace OpenGL_Game.Components
         /// <returns>A component of the specified type</returns>
         public static T GetComponent<T>(Entity pEntity, ComponentTypes pComponentType)
         {
-            var componentToGet = pEntity.Components.Find(delegate(IComponent component)
-            {
-                return component.ComponentType == pComponentType;
-            });
-            return (T) componentToGet;
+            return (T) pEntity.Components.Find(component => component.ComponentType == pComponentType);
         }
 
         /// <summary>
@@ -30,8 +26,7 @@ namespace OpenGL_Game.Components
         /// <returns>A list of components of the specified type</returns>
         public static List<T> GetComponents<T>(Entity pEntity)
         {
-            var components = pEntity.Components.OfType<T>();
-            return components.ToList();
+            return pEntity.Components.OfType<T>().ToList();
         }
     }
 }

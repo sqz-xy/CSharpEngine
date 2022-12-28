@@ -24,7 +24,7 @@
       "COMPONENT_CONTROLLABLE" : "True"
     },
     {
-      "COMPONENT_DIRECTION" : "0 0 -0.97"
+      "COMPONENT_DIRECTION" : "0 0 -1"
     },
     {
       "COMPONENT_SPEED" : "1"
@@ -174,7 +174,7 @@
       "COMPONENT_CONTROLLABLE" : "False"
     },
     {
-      "COMPONENT_DIRECTION" : "0.8 0 -0.5"
+      "COMPONENT_DIRECTION" : "0 0 -1"
     },
     {
       "COMPONENT_AUDIO": "Audio/catscream.wav false"
@@ -211,6 +211,9 @@
     },
     {
       "COMPONENT_AUDIO": "Audio/catscream.wav false"
+    },
+    {
+      "COMPONENT_DIRECTION" : "0 0 0"
     }
   ]
 }
@@ -244,6 +247,9 @@
     },
     {
       "COMPONENT_AUDIO": "Audio/catscream.wav false"
+    },
+    {
+      "COMPONENT_DIRECTION" : "0 0 1"
     }
   ]
 }
