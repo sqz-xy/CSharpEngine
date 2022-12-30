@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using OpenGL_Game.Managers;
 using OpenTK;
 using OpenTK.Audio.OpenAL;
@@ -27,9 +28,9 @@ namespace OpenGL_Game.Components
         {
             if (_isLooping && _isPlaying)
                 return;
-            
-            AL.SourcePlay(_audioSource); // play the audio source 
 
+            AL.SourcePlay(_audioSource); // play the audio source 
+            
             if (_isLooping)
                 _isPlaying = true;
         }

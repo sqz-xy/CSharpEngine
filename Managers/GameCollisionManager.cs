@@ -39,9 +39,9 @@ namespace OpenGL_Game.Managers
                     DamageCollision(collision.entity1, collision.entity2, "Player", "EnemyCat", _healthCooldown, 10);
                     DamageCollision(collision.entity1, collision.entity2, "EnemyCat", "Bullet", _enemyHealthCooldown, 10);
                 
-                    PowerUpHealth(collision.entity2, collision.entity1, "FishPowerUpHealth", "Player", _powerUpHealthCooldown, 1, 15);
-                    PowerUpSpeed(collision.entity2, collision.entity1, "FishPowerUpSpeed", "Player", _powerUpSpeedCooldown, 1, 1.25f);
-                    PowerUpDamage(collision.entity2, collision.entity1, "FishPowerUpDamage", "Player", _powerUpSpeedCooldown, 1, 20);
+                    PowerUpHealth(collision.entity2, collision.entity1, "FishPowerUp Health", "Player", _powerUpHealthCooldown, 1, 15);
+                    PowerUpSpeed(collision.entity2, collision.entity1, "FishPowerUp Speed", "Player", _powerUpSpeedCooldown, 1, 1.25f);
+                    PowerUpDamage(collision.entity2, collision.entity1, "FishPowerUp Damage", "Player", _powerUpSpeedCooldown, 1, 20);
                 }
                 
                 if (collision.collisionType == COLLISIONTYPE.SPHERE_AABB)

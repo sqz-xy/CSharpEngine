@@ -59,7 +59,7 @@
   ]
 }
 {
-  "Name": "FishPowerUpHealth",
+  "Name": "FishPowerUp Health",
   "IsRenderable": "True",
   "Components": [
     {
@@ -86,7 +86,7 @@
   ]
 }
 {
-  "Name": "FishPowerUpSpeed",
+  "Name": "FishPowerUp Speed",
   "IsRenderable": "True",
   "Components": [
     {
@@ -113,7 +113,7 @@
   ]
 }
 {
-  "Name": "FishPowerUpDamage",
+  "Name": "FishPowerUp Damage",
   "IsRenderable": "True",
   "Components": [
     {
@@ -140,7 +140,7 @@
   ]
 }
 {
-  "Name": "EnemyCat1",
+  "Name": "EnemyCat 1",
   "IsRenderable": "True",
   "Components": [
     {
@@ -182,7 +182,7 @@
   ]
 }
 {
-  "Name": "EnemyCat2",
+  "Name": "EnemyCat 2",
   "IsRenderable": "True",
   "Components": [
     {
@@ -218,7 +218,7 @@
   ]
 }
 {
-  "Name": "EnemyCat3",
+  "Name": "EnemyCat 3",
   "IsRenderable": "True",
   "Components": [
     {

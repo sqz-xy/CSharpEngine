@@ -69,7 +69,7 @@ namespace OpenGL_Game.Scenes
             GUI.Image("Images/mainmenu.bmp", width, height, 0);
             GUI.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int)(fontSize * 2f)), "Felinephobia!", (int)fontSize, StringAlignment.Center, Color.MidnightBlue, 0);
             GUI.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int) (((int)(fontSize * 2f)) + height * 1.5f)), "Press Space to Play!", (int)fontSize / 2, StringAlignment.Center, Color.MidnightBlue, 0);
-            GUI.Image("Images/droneicon.bmp", 30, 30, 900, 130, 0);
+            GUI.Image("Images/droneicon2.bmp", 30, 30, 900, 130, 0);
             GUI.RenderLayer(0);
         }
         
