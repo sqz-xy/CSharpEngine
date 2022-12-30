@@ -75,7 +75,6 @@ namespace OpenGL_Game.Scenes
         
         public override void Close()
         {
-            sceneManager.systemManager.CleanupSystems(sceneManager.entityManager);
             sceneManager.inputManager.ClearBinds();
 
             foreach (var entity in sceneManager.entityManager.RenderableEntities().Concat(sceneManager.entityManager.NonRenderableEntities()))

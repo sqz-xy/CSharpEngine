@@ -51,7 +51,6 @@ namespace OpenGL_Game.Scenes
         
         public override void Close()
         {
-            sceneManager.systemManager.CleanupSystems(sceneManager.entityManager);
             sceneManager.inputManager.ClearBinds();
             
             ResourceManager.RemoveAllAssets();

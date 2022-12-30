@@ -40,57 +40,69 @@ namespace OpenGL_Game.Managers
                     DamageCollision(collision.entity1, collision.entity2, "EnemyCat", "Bullet", _enemyHealthCooldown, 10);
                 
                     PowerUpHealth(collision.entity2, collision.entity1, "FishPowerUpHealth", "Player", _powerUpHealthCooldown, 1, 15);
-                    PowerUpSpeed(collision.entity2, collision.entity1, "FishPowerUpSpeed", "Player", _powerUpSpeedCooldown, 1, 1.2f);
+                    PowerUpSpeed(collision.entity2, collision.entity1, "FishPowerUpSpeed", "Player", _powerUpSpeedCooldown, 1, 1.25f);
                     PowerUpDamage(collision.entity2, collision.entity1, "FishPowerUpDamage", "Player", _powerUpSpeedCooldown, 1, 20);
                 }
-
-                // SpereAABB is only used for walls
-                if (collision.collisionType == COLLISIONTYPE.SPHERE_AABB && _wallCollision)
+                
+                if (collision.collisionType == COLLISIONTYPE.SPHERE_AABB)
                 {
-                    // Destroy bullets if they hit a wall
-                    if (collision.entity1.Name.Contains("Bullet"))
-                    {
-                        var health = ComponentHelper.GetComponent<ComponentHealth>(collision.entity1, ComponentTypes.COMPONENT_HEALTH);
-                        health.Health -= 1000;
-                        continue;
-                    }
-                    
-                    // Walls only collide with player after bullet check
-                    if (!collision.entity1.Name.Contains("Player"))
-                        continue;
-
-                    // Collision response for player and wall
-                    var playerPosition = ComponentHelper.GetComponent<ComponentPosition>(collision.entity1, ComponentTypes.COMPONENT_POSITION);
-                    var playerCollision = ComponentHelper.GetComponent<ComponentCollisionSphere>(collision.entity1, ComponentTypes.COMPONENT_COLLISION_SPHERE);
-                    
-                    var wallPosition = ComponentHelper.GetComponent<ComponentPosition>(collision.entity2, ComponentTypes.COMPONENT_POSITION);
-                    var wallCollision = ComponentHelper.GetComponent<ComponentCollisionAABB>(collision.entity2, ComponentTypes.COMPONENT_COLLISION_AABB);
-                    
-                    var xDistance = Math.Abs(playerPosition.Position.X - wallPosition.Position.X);
-                    var zDistance = Math.Abs(playerPosition.Position.Z - wallPosition.Position.Z);
-
-                    Vector3 newPlayerPos = playerPosition.Position;
-                    
-                    // Extra multiplier is there because the collision didn't teleport the player far enough away
-                    if (xDistance < wallCollision.Width)
-                    {
-                        if (playerPosition.Position.Z > wallPosition.Position.Z) // Right side
-                            newPlayerPos.Z = wallPosition.Position.Z + wallCollision.Depth + (playerCollision.CollisionField * 1.25f);
-                        else if (playerPosition.Position.Z < wallPosition.Position.Z) // Left side
-                            newPlayerPos.Z = wallPosition.Position.Z - wallCollision.Depth - (playerCollision.CollisionField * 1.25f);
-                    }
-
-                    if (zDistance < wallCollision.Depth)
-                    {
-                        if (playerPosition.Position.X > wallPosition.Position.X) // Front
-                            newPlayerPos.X = wallPosition.Position.X + wallCollision.Width + (playerCollision.CollisionField * 1.25f);
-                        else if (playerPosition.Position.X < wallPosition.Position.X) // Back
-                            newPlayerPos.X = wallPosition.Position.X - wallCollision.Width - (playerCollision.CollisionField * 1.25f);
-                    }
-                    playerPosition.Position = newPlayerPos;
+                    if (collision.entity2.Name.Contains("Wall") && _wallCollision )
+                        WallCollision(collision);
                 }
             }        
             ClearManifold();
+        }
+
+        private void WallCollision(Collision collision)
+        {
+            // Destroy bullets if they hit a wall
+            if (collision.entity1.Name.Contains("Bullet"))
+            {
+                var health = ComponentHelper.GetComponent<ComponentHealth>(collision.entity1, ComponentTypes.COMPONENT_HEALTH);
+                health.Health -= 1000;
+                return;
+            }
+
+            // Walls only collide with player after bullet check
+            if (!collision.entity1.Name.Contains("Player"))
+                return;
+
+            // Collision response for player and wall
+            var playerPosition =
+                ComponentHelper.GetComponent<ComponentPosition>(collision.entity1, ComponentTypes.COMPONENT_POSITION);
+            var playerCollision =
+                ComponentHelper.GetComponent<ComponentCollisionSphere>(collision.entity1,
+                    ComponentTypes.COMPONENT_COLLISION_SPHERE);
+
+            var wallPosition =
+                ComponentHelper.GetComponent<ComponentPosition>(collision.entity2, ComponentTypes.COMPONENT_POSITION);
+            var wallCollision =
+                ComponentHelper.GetComponent<ComponentCollisionAABB>(collision.entity2,
+                    ComponentTypes.COMPONENT_COLLISION_AABB);
+
+            var xDistance = Math.Abs(playerPosition.Position.X - wallPosition.Position.X);
+            var zDistance = Math.Abs(playerPosition.Position.Z - wallPosition.Position.Z);
+
+            Vector3 newPlayerPos = playerPosition.Position;
+
+            // Extra multiplier is there because the collision didn't teleport the player far enough away
+            if (xDistance < wallCollision.Width)
+            {
+                if (playerPosition.Position.Z > wallPosition.Position.Z) // Right side
+                    newPlayerPos.Z = wallPosition.Position.Z + wallCollision.Depth + (playerCollision.CollisionField * 1.25f);
+                else if (playerPosition.Position.Z < wallPosition.Position.Z) // Left side
+                    newPlayerPos.Z = wallPosition.Position.Z - wallCollision.Depth - (playerCollision.CollisionField * 1.25f);
+            }
+
+            if (zDistance < wallCollision.Depth)
+            {
+                if (playerPosition.Position.X > wallPosition.Position.X) // Front
+                    newPlayerPos.X = wallPosition.Position.X + wallCollision.Width + (playerCollision.CollisionField * 1.25f);
+                else if (playerPosition.Position.X < wallPosition.Position.X) // Back
+                    newPlayerPos.X = wallPosition.Position.X - wallCollision.Width - (playerCollision.CollisionField * 1.25f);
+            }
+
+            playerPosition.Position = newPlayerPos;
         }
 
         private void PowerUpHealth(Entity pEntityToAct, Entity pEntityToHit, string pEntity1Name, string pEntity2Name, Stopwatch pStopwatch, int pDamage, int pHealth)

@@ -27,7 +27,7 @@
       "COMPONENT_DIRECTION" : "0 0 -1"
     },
     {
-      "COMPONENT_SPEED" : "1"
+      "COMPONENT_SPEED" : "0.75"
     },
     {
       "COMPONENT_DAMAGE" : "10"
