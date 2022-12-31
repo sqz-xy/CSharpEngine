@@ -19,8 +19,6 @@ namespace OpenGL_Game.Components
         COMPONENT_CONTROLLABLE = 1 << 11,
         COMPONENT_DIRECTION = 1 << 12,
         COMPONENT_SPEED = 1 << 13,
-        COMPONENT_ENTITY_FLAG = 1 << 14
-
     }
 
     public interface IComponent

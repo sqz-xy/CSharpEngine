@@ -6,6 +6,7 @@ using OpenGL_Game.Scenes;
 using System.Collections.Generic;
 using System.Drawing;
 using OpenTK.Audio;
+using OpenTK.Audio.OpenAL;
 
 namespace OpenGL_Game.Managers
 {

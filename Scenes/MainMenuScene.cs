@@ -68,6 +68,7 @@ namespace OpenGL_Game.Scenes
             float width = sceneManager.Width, height = sceneManager.Height, fontSize = Math.Min(width, height) / 10f;
             GUI.Image("Images/mainmenu.bmp", width, height, 0);
             GUI.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int)(fontSize * 2f)), "Felinephobia!", (int)fontSize, StringAlignment.Center, Color.MidnightBlue, 0);
+            GUI.Label(new Rectangle(0, 0, (int)width, (int)(fontSize * 2f)), $"FPS: {Math.Round(1 / e.Time)}", 18, StringAlignment.Near, Color.White, 0);
             GUI.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int) (((int)(fontSize * 2f)) + height * 1.5f)), "Press Space to Play!", (int)fontSize / 2, StringAlignment.Center, Color.MidnightBlue, 0);
             GUI.Image("Images/droneicon2.bmp", 30, 30, 900, 130, 0);
             GUI.RenderLayer(0);

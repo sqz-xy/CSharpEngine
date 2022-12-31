@@ -140,7 +140,10 @@ namespace OpenGL_Game.Managers
                 var health = ComponentHelper.GetComponent<ComponentHealth>(pEntity, ComponentTypes.COMPONENT_HEALTH);
                 
                 // Spawn bullet in front of player with camera direction as velocity
-                newBullet.AddComponent(new ComponentPosition(playerPos + playerDir));
+                var bulletPos = playerPos + playerDir;
+                bulletPos.Y += 0.5f;
+                
+                newBullet.AddComponent(new ComponentPosition(bulletPos));
                 newBullet.AddComponent(new ComponentVelocity(playerDir * pSpeed));
                 newBullet.AddComponent(new ComponentHealth(health.Health));
                 newBullet.AddComponent(new ComponentDamage(playerDamage));

@@ -30,3 +30,7 @@
   "Name" : "SystemAmbient",
   "Renderable" : "false"
 }
+{
+  "Name" : "SystemAI",
+  "Renderable" : "false"
+}

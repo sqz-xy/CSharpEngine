@@ -148,6 +148,8 @@ namespace OpenGL_Game.Managers
                    return new SystemCollisionSphereAABB(pCollisionManager);
                case "SystemInput":
                    return new SystemInput(pInputManager, pCamera);
+               case "SystemAI":
+                   return new SystemAI();
                default:
                    return null;
            }
@@ -197,9 +199,8 @@ namespace OpenGL_Game.Managers
                 case "COMPONENT_DAMAGE":
                     return new ComponentDamage(int.Parse(pComponentValue));
                 case "COMPONENT_AI":
-                    AICostTypes costType;
                     var aiValues = pComponentValue.Split(' ');
-                    Enum.TryParse(aiValues[0], out costType);
+                    Enum.TryParse(aiValues[0], out AINodeType costType);
                     return new ComponentAI(costType, bool.Parse(aiValues[1]));
                 case "COMPONENT_SPEED":
                     return new ComponentSpeed(float.Parse(pComponentValue));

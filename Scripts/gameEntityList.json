@@ -1,4 +1,61 @@
 {
+  "Name": "EnemyCat 4",
+  "IsRenderable": "True",
+  "Components": [
+    {
+      "COMPONENT_POSITION": "-2.0 0.0 0.0"
+    },
+    {
+      "COMPONENT_GEOMETRY": "Geometry/CatEnemy/catEnemy.obj"
+    },
+    {
+      "COMPONENT_VELOCITY": "0.0 0.0 0.0"
+    },
+    {
+      "COMPONENT_SHADER": "Billboard Shaders/vs_billboard.glsl Shaders/fs.glsl"
+    },
+    {
+      "COMPONENT_COLLISION_SPHERE": "0.5"
+    },
+    {
+      "COMPONENT_HEALTH": "30"
+    },
+    {
+      "COMPONENT_DAMAGE": "30"
+    },
+    {
+      "COMPONENT_CONTROLLABLE" : "False"
+    },
+    {
+      "COMPONENT_DIRECTION" : "0 0 -1"
+    },
+    {
+      "COMPONENT_AUDIO": "Audio/catscream.wav false"
+    },
+    {
+      "COMPONENT_AI" : "DRONE True"
+    }
+  ]
+}
+{
+  "Name": "AINode 1",
+  "IsRenderable": "True",
+  "Components": [
+    {
+      "COMPONENT_POSITION": "0.0 0.0 0.0"
+    },
+    {
+      "COMPONENT_AI": "NODE True"
+    },
+    {
+      "COMPONENT_GEOMETRY": "Geometry/Bullet/bullet.obj"
+    },
+    {
+      "COMPONENT_SHADER": "Default"
+    }
+  ]
+}
+{
   "Name": "Player",
   "IsRenderable": "True",
   "Components": [
@@ -31,6 +88,9 @@
     },
     {
       "COMPONENT_DAMAGE" : "10"
+    },
+    {
+      "COMPONENT_AI" : "DESTINATION True"
     }
   ]
 }
@@ -42,7 +102,7 @@
       "COMPONENT_COLLISION_SPHERE": "0.1"
     },
     {
-      "COMPONENT_GEOMETRY": "Geometry/Moon/moon.obj"
+      "COMPONENT_GEOMETRY": "Geometry/Bullet/bullet.obj"
     },
     {
       "COMPONENT_SHADER": "Default"
@@ -156,9 +216,6 @@
       "COMPONENT_SHADER": "Billboard Shaders/vs_billboard.glsl Shaders/fs.glsl"
     },
     {
-      "COMPONENT_RENDERABLE": "False"
-    },
-    {
       "COMPONENT_COLLISION_SPHERE": "0.5"
     },
     {
@@ -198,9 +255,6 @@
       "COMPONENT_SHADER": "Billboard Shaders/vs_billboard.glsl Shaders/fs.glsl"
     },
     {
-      "COMPONENT_RENDERABLE": "False"
-    },
-    {
       "COMPONENT_COLLISION_SPHERE": "0.5"
     },
     {
@@ -234,9 +288,6 @@
       "COMPONENT_SHADER": "Billboard Shaders/vs_billboard.glsl Shaders/fs.glsl"
     },
     {
-      "COMPONENT_RENDERABLE": "False"
-    },
-    {
       "COMPONENT_COLLISION_SPHERE": "0.5"
     },
     {
@@ -265,9 +316,6 @@
     },
     {
       "COMPONENT_SHADER": "Default"
-    },
-    {
-      "COMPONENT_RENDERABLE": "False"
     }
   ]
 }

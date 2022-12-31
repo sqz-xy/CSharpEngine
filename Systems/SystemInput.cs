@@ -39,11 +39,7 @@ namespace OpenGL_Game.Systems
             _camera.cameraDirection = pDir.Direction;
             _camera.UpdateView();
         }
-
-        public void Cleanup(Entity pEntity)
-        {
-        }
-
+        
         public string Name { get; }
     }
 }

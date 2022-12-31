@@ -23,6 +23,7 @@ namespace OpenGL_Game.Components
             get { return _isLooping; }
         }
         
+        
         public abstract ComponentTypes ComponentType { get; }
         public abstract void PlayAudio();
         public abstract void StopAudio();

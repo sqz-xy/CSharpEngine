@@ -15,7 +15,7 @@ namespace OpenGL_Game.Components
         {
             position = pos;
         }
-
+        
         public Vector3 Position
         {
             get { return position; }

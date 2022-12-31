@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Windows.Forms;
 using OpenGL_Game.Components;
+using IComponent = OpenGL_Game.Components.IComponent;
 
 namespace OpenGL_Game.Objects
 {
@@ -15,7 +18,7 @@ namespace OpenGL_Game.Objects
         {
             this.name = name;
         }
-
+        
         /// <summary>Adds a single component</summary>
         public void AddComponent(IComponent component)
         {
@@ -24,7 +27,7 @@ namespace OpenGL_Game.Objects
             componentList.Add(component);
             mask |= component.ComponentType;
         }
-
+        
         public String Name
         {
             get { return name; }
