@@ -50,8 +50,8 @@ namespace OpenGL_Game.Systems
                     }
                 }
             
-            if (!_initialized)
-                InitialiseAI(ref nodes, ref drones);
+           // if (!_initialized)
+               // InitialiseAI(ref nodes, ref drones);
         }
 
         private void InitialiseAI(ref List<Entity> pNodes, ref List<Entity> pDrones)

@@ -212,8 +212,6 @@ namespace OpenGL_Game.Managers
                             return new ComponentShaderDefault();
                         case "NoLights":
                             return new ComponentShaderNoLights(shaderValues[1], shaderValues[2]);
-                        case "Billboard":
-                            return new ComponentShaderBillboard(shaderValues[1], shaderValues[2]);
                         default: 
                             return new ComponentShaderDefault();
                     }

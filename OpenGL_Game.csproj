@@ -92,7 +92,6 @@
     <Compile Include="Components\ComponentCollisionSphere.cs" />
     <Compile Include="Components\ComponentControllable.cs" />
     <Compile Include="Components\ComponentShader.cs" />
-    <Compile Include="Components\ComponentShaderBillboard.cs" />
     <Compile Include="Components\ComponentShaderDefault.cs" />
     <Compile Include="Components\ComponentShaderNoLights.cs" />
     <Compile Include="Components\ComponentSpeed.cs" />

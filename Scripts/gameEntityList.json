@@ -12,7 +12,7 @@
       "COMPONENT_VELOCITY": "0.0 0.0 0.0"
     },
     {
-      "COMPONENT_SHADER": "Billboard Shaders/vs_billboard.glsl Shaders/fs.glsl"
+      "COMPONENT_SHADER": "Default"
     },
     {
       "COMPONENT_COLLISION_SPHERE": "0.5"
@@ -213,7 +213,7 @@
       "COMPONENT_VELOCITY": "0.0 0.0 0.0"
     },
     {
-      "COMPONENT_SHADER": "Billboard Shaders/vs_billboard.glsl Shaders/fs.glsl"
+      "COMPONENT_SHADER": "Default"
     },
     {
       "COMPONENT_COLLISION_SPHERE": "0.5"
@@ -252,7 +252,7 @@
       "COMPONENT_VELOCITY": "0.0 0.0 0.0"
     },
     {
-      "COMPONENT_SHADER": "Billboard Shaders/vs_billboard.glsl Shaders/fs.glsl"
+      "COMPONENT_SHADER": "Default"
     },
     {
       "COMPONENT_COLLISION_SPHERE": "0.5"
@@ -285,7 +285,7 @@
       "COMPONENT_VELOCITY": "0.0 0.0 0.0"
     },
     {
-      "COMPONENT_SHADER": "Billboard Shaders/vs_billboard.glsl Shaders/fs.glsl"
+      "COMPONENT_SHADER": "Default"
     },
     {
       "COMPONENT_COLLISION_SPHERE": "0.5"
