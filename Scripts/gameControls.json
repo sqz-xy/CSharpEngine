@@ -23,6 +23,9 @@
     },
     {
       "TOGGLE_COLLISION" : "C"
+    },
+    {
+      "TOGGLE_AI" : "M"
     }
   ]
 }

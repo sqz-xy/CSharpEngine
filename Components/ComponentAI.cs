@@ -6,13 +6,13 @@ namespace OpenGL_Game.Components
 {
     public class ComponentAI : IComponent
     {
-        
         private List<Vector3> _positions;
         private Vector3 _distanceToMove;
         private Vector3 _distanceTravelled;
         private Vector3 _startPos;
         private int _locationIndex = 0;
-        private bool _isMoving = false; 
+        private bool _isMoving = false;
+        private bool _isActive = true;
 
         public ComponentAI(List<Vector3> pPositions)
         {
@@ -29,6 +29,12 @@ namespace OpenGL_Game.Components
         {
             get { return _isMoving; }
             set { _isMoving = value; }
+        }
+        
+        public bool IsActive
+        {
+            get { return _isActive; }
+            set { _isActive = value; }
         }
         
         public int LocationIndex

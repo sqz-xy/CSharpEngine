@@ -165,7 +165,7 @@
       "COMPONENT_DAMAGE": "30"
     },
     {
-      "COMPONENT_AI" : "0 0 0 1 1 1"
+      "COMPONENT_AI" : "5 0 -2 -1 0 1 -9 0 3"
     },
     {
       "COMPONENT_CONTROLLABLE" : "False"
@@ -214,6 +214,9 @@
     },
     {
       "COMPONENT_SPEED" : "1"
+    },
+    {
+      "COMPONENT_AI" : "-9 0 -9 9 0 -9"
     }
   ]
 }
@@ -222,7 +225,7 @@
   "IsRenderable": "True",
   "Components": [
     {
-      "COMPONENT_POSITION": "0.0 0.0 -9.0"
+      "COMPONENT_POSITION": "7.0 0.0 9.0"
     },
     {
       "COMPONENT_GEOMETRY": "Geometry/CatEnemy/catEnemy.obj"
@@ -250,6 +253,9 @@
     },
     {
       "COMPONENT_SPEED" : "1"
+    },
+    {
+      "COMPONENT_AI" : "0 0 9 5 0 5 8 0 6"
     }
   ]
 }

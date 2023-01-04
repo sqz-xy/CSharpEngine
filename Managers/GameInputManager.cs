@@ -21,16 +21,21 @@ namespace OpenGL_Game.Managers
         private int bulletIndex = 0;
 
         private Stopwatch _shootCooldown;
+        private Stopwatch _toggleAICooldown;
+        private Stopwatch _toggleCollisionCooldown;
         
         public Dictionary<string, Key> _keyBinds;
         public Dictionary<string, MouseButton> _mouseBinds;
-        
-        private Vector3 _previousPos;
-        
+
+        public bool _isAiActive = true;
+
         public GameInputManager(EntityManager pEntityManager, SceneManager pSceneManager) : base(pEntityManager, pSceneManager)
         {
             _keyBinds = new Dictionary<string, Key>();
             _mouseBinds = new Dictionary<string, MouseButton>(); ;
+
+            _toggleAICooldown = new Stopwatch();
+            _toggleCollisionCooldown = new Stopwatch();
             
             _shootCooldown = new Stopwatch();
         }
@@ -73,11 +78,9 @@ namespace OpenGL_Game.Managers
             switch (pAction)
             {
                 case "MOVE_FORWARD":
-                    _previousPos = playerPosComponent.Position;
                     playerPosComponent.Position += ((playerDirComponent.Direction * 4) * GameScene.dt) * playerSpeedComponent.Speed;
                     break;
                 case "MOVE_BACKWARD":
-                    _previousPos = playerPosComponent.Position;
                     playerPosComponent.Position += -((playerDirComponent.Direction * 4) * GameScene.dt) * playerSpeedComponent.Speed;
                     break;
                 case "MOVE_LEFT":
@@ -104,9 +107,44 @@ namespace OpenGL_Game.Managers
                     _sceneManager.Close();
                     break;
                 case "TOGGLE_COLLISION":
-                    var gameCollisionManager = (GameCollisionManager) _sceneManager.collisionManager;
-                    gameCollisionManager._wallCollision = !gameCollisionManager._wallCollision;
+                    ToggleCollision(_sceneManager.collisionManager);
                     break;
+                case "TOGGLE_AI":
+                    ToggleAI(_entityManager);
+                    break;
+            }
+        }
+
+        private void ToggleCollision(CollisionManager pCollisionManager)
+        {
+            if (_toggleCollisionCooldown.ElapsedMilliseconds == 0)
+            {
+                var gameCollisionManager = (GameCollisionManager) pCollisionManager;
+                gameCollisionManager._wallCollision = !gameCollisionManager._wallCollision;
+                _toggleCollisionCooldown.Start();
+            }
+        }
+        
+        private void ToggleAI(EntityManager pEntityManager)
+        {
+            if (_toggleAICooldown.ElapsedMilliseconds == 0)
+            {
+                _isAiActive = !_isAiActive;
+                foreach (var entity in pEntityManager.RenderableEntities().Concat(pEntityManager.NonRenderableEntities()))
+                {
+                    var ai = ComponentHelper.GetComponent<ComponentAI>(entity, ComponentTypes.COMPONENT_AI);
+                    if (ai != null)
+                    {
+                        ai.IsActive = !ai.IsActive;
+                        
+                        if (ai.LocationIndex == 0)
+                            continue;
+                        
+                        ai.LocationIndex--;
+                    }
+                    
+                }
+                _toggleAICooldown.Start();
             }
         }
 
@@ -180,7 +218,13 @@ namespace OpenGL_Game.Managers
         {
             if (_shootCooldown.ElapsedMilliseconds >= 1000)
                 _shootCooldown.Reset();
+            if (_toggleAICooldown.ElapsedMilliseconds >= 500)
+                _toggleAICooldown.Reset();
+            if (_toggleCollisionCooldown.ElapsedMilliseconds >= 500)
+                _toggleCollisionCooldown.Reset();
         }
+        
+
         
     }
 }
