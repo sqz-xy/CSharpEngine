@@ -47,9 +47,9 @@ namespace OpenGL_Game.Components
         {
             get { return _distanceToMove; }
             set {                 
-                float x = Math.Abs(value.X);
-                float y = Math.Abs(value.Y);
-                float z = Math.Abs(value.Z);
+                float x = (float)Math.Sqrt(value.X * value.X);
+                float y = (float)Math.Sqrt(value.Y * value.Y);
+                float z = (float)Math.Sqrt(value.Z * value.Z);
                 _distanceToMove = new Vector3(x, y, z);  
             }
         }
@@ -58,9 +58,9 @@ namespace OpenGL_Game.Components
         {
             get { return _distanceTravelled; }
             set { 
-                float x = Math.Abs(value.X);
-                float y = Math.Abs(value.Y);
-                float z = Math.Abs(value.Z);
+                float x = (float)Math.Sqrt(value.X * value.X);
+                float y = (float)Math.Sqrt(value.Y * value.Y);
+                float z = (float)Math.Sqrt(value.Z * value.Z);
                 _distanceTravelled = new Vector3(x, y, z); 
             }
         }

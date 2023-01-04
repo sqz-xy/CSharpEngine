@@ -216,7 +216,7 @@
       "COMPONENT_SPEED" : "1"
     },
     {
-      "COMPONENT_AI" : "-9 0 -9 9 0 -9"
+      "COMPONENT_AI" : "-9 0 -9 9 0 -9.5"
     }
   ]
 }

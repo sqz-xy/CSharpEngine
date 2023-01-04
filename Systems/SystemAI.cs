@@ -14,7 +14,7 @@ namespace OpenGL_Game.Systems
 {
     public class SystemAI : ISystem
     {
-        const ComponentTypes MASK = (ComponentTypes.COMPONENT_POSITION | ComponentTypes.COMPONENT_AI);
+        const ComponentTypes MASK = (ComponentTypes.COMPONENT_POSITION | ComponentTypes.COMPONENT_AI) | ComponentTypes.COMPONENT_DIRECTION | ComponentTypes.COMPONENT_VELOCITY;
         private bool _initialized = false;
         
         public string Name

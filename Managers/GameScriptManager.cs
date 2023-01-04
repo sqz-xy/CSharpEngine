@@ -225,7 +225,7 @@ namespace OpenGL_Game.Managers
            List<Vector3> vectors = new List<Vector3>();
 
            for (int i = 0; i < vectorValues.Length; i += 3)
-               vectors.Add(new Vector3(int.Parse(vectorValues[i]), int.Parse(vectorValues[i + 1]), int.Parse(vectorValues[i + 2])));
+               vectors.Add(new Vector3(float.Parse(vectorValues[i]), float.Parse(vectorValues[i + 1]), float.Parse(vectorValues[i + 2])));
            
            return vectors;
        }
