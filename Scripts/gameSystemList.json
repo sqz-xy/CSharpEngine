@@ -3,6 +3,10 @@
   "Renderable" : "True"
 }
 {
+  "Name" : "SystemAI",
+  "Renderable" : "false"
+}
+{
   "Name" : "SystemPhysics",
   "Renderable" : "false"
 }
@@ -28,9 +32,5 @@
 }
 {
   "Name" : "SystemAmbient",
-  "Renderable" : "false"
-}
-{
-  "Name" : "SystemAI",
   "Renderable" : "false"
 }

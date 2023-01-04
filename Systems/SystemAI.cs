@@ -27,59 +27,42 @@ namespace OpenGL_Game.Systems
         
         public void OnAction(List<Entity> pEntity)
         {
-            List<Entity> nodes = new List<Entity>();
-            List<Entity> drones = new List<Entity>();
-            Entity destination;
-
             foreach (var entity in pEntity)
                 if ((entity.Mask & MASK) == MASK)
                 {
                     var ai = ComponentHelper.GetComponent<ComponentAI>(entity, ComponentTypes.COMPONENT_AI);
-
-                    switch (ai.NodeType)
-                    {
-                        case AINodeType.DESTINATION:
-                            destination = entity;
-                            break;
-                        case AINodeType.DRONE:
-                            drones.Add(entity);
-                            break;
-                        case  AINodeType.NODE:
-                            nodes.Add(entity);
-                            break;
-                    }
+                    var velocity = ComponentHelper.GetComponent<ComponentVelocity>(entity, ComponentTypes.COMPONENT_VELOCITY);
+                    var position = ComponentHelper.GetComponent<ComponentPosition>(entity, ComponentTypes.COMPONENT_POSITION);
+                    var direction = ComponentHelper.GetComponent<ComponentDirection>(entity, ComponentTypes.COMPONENT_DIRECTION);
+                    Move(ref ai, ref velocity, ref position, ref direction);
                 }
-            
-           // if (!_initialized)
-               // InitialiseAI(ref nodes, ref drones);
-        }
-
-        private void InitialiseAI(ref List<Entity> pNodes, ref List<Entity> pDrones)
-        {
-            foreach (var drone in pDrones)
-            {
-                var dronePos = ComponentHelper.GetComponent<ComponentPosition>(drone, ComponentTypes.COMPONENT_POSITION);
-                
-                foreach (var node in pNodes)
-                {
-                    var closestNode = node;
-                    var nodePos = ComponentHelper.GetComponent<ComponentPosition>(closestNode, ComponentTypes.COMPONENT_POSITION);
-                    foreach (var nodeToCompare in pNodes)
-                    {
-                        var compareNodePos = ComponentHelper.GetComponent<ComponentPosition>(nodeToCompare, ComponentTypes.COMPONENT_POSITION);
-
-                        if ((compareNodePos.Position - dronePos.Position).Length < (nodePos.Position - dronePos.Position).Length)
-                            closestNode = nodeToCompare;
-                    }
-
-                    dronePos.Position = nodePos.Position;
-                }
-            }
         }
         
-        private void CalculateCosts(ref List<Entity> pNodes)
+        
+        private void Move(ref ComponentAI pAI, ref ComponentVelocity pVelocity, ref ComponentPosition pPosition, ref ComponentDirection pDirection)
         {
-
+            // Fix moving on to next node
+            if (pAI.IsMoving)
+            {
+                pAI.DistanceTravelled = pPosition.Position - pAI.StartPos;
+                
+                if (pAI.DistanceTravelled.X >= pAI.DistanceToMove.X && pAI.DistanceTravelled.Y >= pAI.DistanceToMove.Y && pAI.DistanceTravelled.Z >= pAI.DistanceToMove.Z)
+                    pAI.IsMoving = false;
+            }
+            
+            if (!pAI.IsMoving)
+            {
+                pAI.StartPos = pPosition.Position;
+                pAI.DistanceToMove = pAI.Positions[pAI.LocationIndex] - pPosition.Position;
+                pDirection.Direction = (pAI.Positions[pAI.LocationIndex] - pPosition.Position).Normalized();
+                pVelocity.Velocity = pDirection.Direction;
+                
+                if (pAI.LocationIndex == pAI.Positions.Count - 1)
+                    pAI.LocationIndex = 0;
+                else
+                    pAI.LocationIndex++;
+                pAI.IsMoving = true;
+            }
         }
     }
 }

@@ -170,7 +170,10 @@ namespace OpenGL_Game.Scenes
             var angle = CalculateAngle(playerEntity);
             
             // Offset for image location and player speed
-            GUI.Image("Images/playericon.bmp", 32, 32, (int)(pos.X * 12.5f) + 1000, (int)(pos.Z * 12.5f) + 100, 0, (int)MathHelper.RadiansToDegrees(angle));
+            GUI.Image("Images/playericon.bmp", 32, 32, 
+                (int)(pos.X * 12.5f) + 1000, 
+                (int)(pos.Z * 12.5f) + 100, 0, 
+                (int)MathHelper.RadiansToDegrees(angle));
 
             // Draw drones and powerups, powerups don't have a direction so no angle is needed
             int enemyIconOffset = 0, powerUpIconOffset = 0;

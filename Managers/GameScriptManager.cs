@@ -199,9 +199,8 @@ namespace OpenGL_Game.Managers
                 case "COMPONENT_DAMAGE":
                     return new ComponentDamage(int.Parse(pComponentValue));
                 case "COMPONENT_AI":
-                    var aiValues = pComponentValue.Split(' ');
-                    Enum.TryParse(aiValues[0], out AINodeType costType);
-                    return new ComponentAI(costType, bool.Parse(aiValues[1]));
+                    var aiValues = ExtractVectors(pComponentValue);
+                    return new ComponentAI(aiValues);
                 case "COMPONENT_SPEED":
                     return new ComponentSpeed(float.Parse(pComponentValue));
                 case "COMPONENT_SHADER":
@@ -219,6 +218,17 @@ namespace OpenGL_Game.Managers
                     return null;
             }
         }
+
+       private List<Vector3> ExtractVectors(string pVectors)
+       {
+           var vectorValues = pVectors.Split(' ');
+           List<Vector3> vectors = new List<Vector3>();
+
+           for (int i = 0; i < vectorValues.Length; i += 3)
+               vectors.Add(new Vector3(int.Parse(vectorValues[i]), int.Parse(vectorValues[i + 1]), int.Parse(vectorValues[i + 2])));
+           
+           return vectors;
+       }
 
         public override void LoadControls(string pScriptName, ref InputManager pInputManager)
         {
