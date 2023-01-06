@@ -21,12 +21,7 @@ namespace OpenGL_Game.Systems
         {
             _entityManager = pEntityManager;
         }
-
-        public void Cleanup(Entity pEntity)
-        {
-
-        }
-
+        
         public string Name
         {
             get { return "SystemHealth"; }

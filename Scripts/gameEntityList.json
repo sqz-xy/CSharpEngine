@@ -39,7 +39,7 @@
   "IsRenderable": "True",
   "Components": [
     {
-      "COMPONENT_COLLISION_SPHERE": "0.1"
+      "COMPONENT_COLLISION_SPHERE": "0.25"
     },
     {
       "COMPONENT_GEOMETRY": "Geometry/Bullet/bullet.obj"

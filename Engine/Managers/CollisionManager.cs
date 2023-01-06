@@ -11,8 +11,7 @@ namespace OpenGL_Game.Managers
         SPHERE_SPHERE,
         SPHERE_AABB
     }
-
-    // Add second entity later
+    
     public struct Collision
     {
         public Entity entity1;

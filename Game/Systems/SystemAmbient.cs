@@ -26,11 +26,6 @@ namespace OpenGL_Game.Systems
             pComponentAudio.PlayAudio();
         }
         
-        public void Cleanup(Entity pEntity)
-        {
-            
-        }
-        
         public string Name { get; }
     }
 }

@@ -37,8 +37,7 @@ namespace OpenGL_Game.Managers
         public MouseDelegate mouseDelegate;
 
         AudioContext audioContext;
-
-
+        
         public SceneManager() : base(width, height, new OpenTK.Graphics.GraphicsMode(new OpenTK.Graphics.ColorFormat(8, 8, 8, 8), 16))
         {
             this.X = windowXPos;
@@ -110,7 +109,6 @@ namespace OpenGL_Game.Managers
 
         public void ChangeScene(SceneTypes pSceneType)
         {
-            // I PUT THIS HERE GUHHHH
             if (scene != null)
                 scene.Close();
 
@@ -140,7 +138,6 @@ namespace OpenGL_Game.Managers
                 Console.WriteLine(e.Message);
                 scene = new MainMenuScene(this);
             }
-            
         }
 
         public static void ChangeScene(SceneTypes pSceneType, SceneManager pSceneManager)
