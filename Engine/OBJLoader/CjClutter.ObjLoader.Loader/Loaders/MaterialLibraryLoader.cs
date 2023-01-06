@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using ObjLoader.Loader.Common;
-using ObjLoader.Loader.Data;
-using ObjLoader.Loader.Data.DataStore;
+using OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.Common;
+using OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.Data;
+using OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.Data.DataStore;
 
-namespace ObjLoader.Loader.Loaders
+namespace OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.Loaders
 {
     public class MaterialLibraryLoader : LoaderBase, IMaterialLibraryLoader
     {

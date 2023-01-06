@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using OpenGL_Game.Components;
-using OpenGL_Game.Objects;
-using OpenGL_Game.OBJLoader;
+using OpenGL_Game.Engine.Components;
+using OpenGL_Game.Engine.Objects;
 using OpenTK;
-using OpenTK.Audio.OpenAL;
 
-namespace OpenGL_Game.Systems
+namespace OpenGL_Game.Engine.Systems
 {
     public class SystemAudio : ISystem
     {
@@ -28,11 +26,6 @@ namespace OpenGL_Game.Systems
             {
                 audioComponent.UpdateAudioPosition(pPosition);
             }
-        }
-        
-        public void Cleanup(Entity pEntity)
-        {
-            
         }
         
         public string Name { get; }

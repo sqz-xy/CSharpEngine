@@ -1,14 +1,13 @@
 ﻿using System;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
-using OpenTK.Input;
-using OpenGL_Game.Scenes;
-using System.Collections.Generic;
 using System.Drawing;
+using OpenGL_Game.Engine.Scenes;
+using OpenGL_Game.Game.Managers;
+using OpenGL_Game.Game.Scenes;
+using OpenTK;
 using OpenTK.Audio;
-using OpenTK.Audio.OpenAL;
+using OpenTK.Graphics.OpenGL;
 
-namespace OpenGL_Game.Managers
+namespace OpenGL_Game.Engine.Managers
 {
     public class SceneManager : GameWindow
     {
@@ -121,7 +120,7 @@ namespace OpenGL_Game.Managers
                     scene = new MainMenuScene(this);
                     break;
             }
-            }
+        }
 
         public static void ChangeScene(SceneTypes pSceneType, SceneManager pSceneManager)
         {

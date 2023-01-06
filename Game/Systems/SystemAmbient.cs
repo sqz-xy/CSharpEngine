@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
-using OpenGL_Game.Components;
-using OpenGL_Game.Objects;
+using OpenGL_Game.Engine.Components;
+using OpenGL_Game.Engine.Objects;
+using OpenGL_Game.Engine.Systems;
 
-namespace OpenGL_Game.Systems
+namespace OpenGL_Game.Game.Systems
 {
     public class SystemAmbient : ISystem
     {

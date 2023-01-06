@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using OpenGL_Game.Engine.Components;
+using OpenGL_Game.Engine.Managers;
+using OpenGL_Game.Engine.Objects;
 
-using OpenGL_Game.Components;
-using OpenGL_Game.Managers;
-using OpenGL_Game.Objects;
-
-namespace OpenGL_Game.Systems
+namespace OpenGL_Game.Engine.Systems
 {
     public class SystemCollisionSphereSphere : ISystem
     {

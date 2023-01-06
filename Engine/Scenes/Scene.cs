@@ -1,7 +1,7 @@
-﻿using OpenTK;
-using OpenGL_Game.Managers;
+﻿using OpenGL_Game.Engine.Managers;
+using OpenTK;
 
-namespace OpenGL_Game.Scenes
+namespace OpenGL_Game.Engine.Scenes
 {
     public abstract class Scene : IScene
     {

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using OpenGL_Game.Objects;
+using OpenGL_Game.Engine.Objects;
 
-namespace OpenGL_Game.Components
+namespace OpenGL_Game.Engine.Components
 {
     public static class ComponentHelper
     {

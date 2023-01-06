@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using ObjLoader.Loader.Data.DataStore;
-using ObjLoader.Loader.TypeParsers.Interfaces;
+using OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.Data.DataStore;
+using OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.TypeParsers.Interfaces;
 
-namespace ObjLoader.Loader.Loaders
+namespace OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.Loaders
 {
     public class ObjLoader : LoaderBase, IObjLoader
     {

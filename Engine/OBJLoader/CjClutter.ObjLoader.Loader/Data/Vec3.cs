@@ -1,4 +1,4 @@
-namespace ObjLoader.Loader.Data
+namespace OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.Data
 {
     public struct Vec3
     {

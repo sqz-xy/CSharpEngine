@@ -1,10 +1,10 @@
 ﻿using System;
-using OpenGL_Game.OBJLoader;
+using OpenGL_Game.Engine.OBJLoader;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using ResourceManager = OpenGL_Game.Managers.ResourceManager; // Temp Fix
+using ResourceManager = OpenGL_Game.Engine.Managers.ResourceManager; // Temp Fix
 
-namespace OpenGL_Game.Components
+namespace OpenGL_Game.Engine.Components
 {
     public abstract class ComponentShader : IComponent
     {

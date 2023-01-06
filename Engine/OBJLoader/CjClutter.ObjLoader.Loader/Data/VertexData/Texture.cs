@@ -1,4 +1,4 @@
-namespace ObjLoader.Loader.Data.VertexData
+namespace OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.Data.VertexData
 {
     public struct Texture
     {

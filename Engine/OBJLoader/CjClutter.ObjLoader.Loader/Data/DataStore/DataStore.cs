@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ObjLoader.Loader.Common;
-using ObjLoader.Loader.Data.Elements;
-using ObjLoader.Loader.Data.VertexData;
+using OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.Common;
+using OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.Data.Elements;
+using OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.Data.VertexData;
 
-namespace ObjLoader.Loader.Data.DataStore
+namespace OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.Data.DataStore
 {
     public class DataStore : IDataStore, IGroupDataStore, IVertexDataStore, ITextureDataStore, INormalDataStore,
                              IFaceGroup, IMaterialLibrary, IElementGroup
     {
-        private Group _currentGroup;
+        private Elements.Group _currentGroup;
 
-        private readonly List<Group> _groups = new List<Group>();
+        private readonly List<Elements.Group> _groups = new List<Elements.Group>();
         private readonly List<Material> _materials = new List<Material>();
 
         private readonly List<Vertex> _vertices = new List<Vertex>();
@@ -38,7 +38,7 @@ namespace ObjLoader.Loader.Data.DataStore
             get { return _materials; }
         }
 
-        public IList<Group> Groups
+        public IList<Elements.Group> Groups
         {
             get { return _groups; }
         }
@@ -52,7 +52,7 @@ namespace ObjLoader.Loader.Data.DataStore
 
         public void PushGroup(string groupName)
         {
-            _currentGroup = new Group(groupName);
+            _currentGroup = new Elements.Group(groupName);
             _groups.Add(_currentGroup);
         }
 

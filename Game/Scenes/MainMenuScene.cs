@@ -1,14 +1,15 @@
 ﻿using System;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
 using System.Drawing;
 using System.Linq;
-using OpenGL_Game.Components;
-using OpenTK.Input;
-using OpenGL_Game.Managers;
-using OpenGL_Game.Objects;
+using OpenGL_Game.Engine;
+using OpenGL_Game.Engine.Components;
+using OpenGL_Game.Engine.Managers;
+using OpenGL_Game.Engine.Scenes;
+using OpenGL_Game.Game.Managers;
+using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
-namespace OpenGL_Game.Scenes
+namespace OpenGL_Game.Game.Scenes
 {
     class MainMenuScene : Scene
     {

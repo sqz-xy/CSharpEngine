@@ -1,8 +1,7 @@
-﻿using OpenGL_Game.Objects;
+﻿using System.Collections.Generic;
+using OpenGL_Game.Engine.Objects;
 
-using System.Collections.Generic;
-
-namespace OpenGL_Game.Systems
+namespace OpenGL_Game.Engine.Systems
 {
     public interface ISystem
     {

@@ -1,8 +1,6 @@
-﻿using System.Windows.Forms;
-using OpenGL_Game.Managers;
-using OpenGL_Game.OBJLoader;
+﻿using OpenGL_Game.Engine.Components;
 
-namespace OpenGL_Game.Components
+namespace OpenGL_Game.Game.Components
 {
     class ComponentDamage : IComponent
     {

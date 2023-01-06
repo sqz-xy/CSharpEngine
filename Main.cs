@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Drawing;
-using OpenGL_Game.Managers;
+using OpenGL_Game.Engine.Managers;
 
 namespace OpenGL_Game
 {

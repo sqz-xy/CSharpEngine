@@ -1,7 +1,7 @@
-﻿using ObjLoader.Loader.Common;
-using ObjLoader.Loader.TypeParsers.Interfaces;
+﻿using OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.Common;
+using OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.TypeParsers.Interfaces;
 
-namespace ObjLoader.Loader.TypeParsers
+namespace OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.TypeParsers
 {
     public abstract class TypeParserBase : ITypeParser
     {

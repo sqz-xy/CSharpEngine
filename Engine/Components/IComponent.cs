@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace OpenGL_Game.Components
+namespace OpenGL_Game.Engine.Components
 {
-    [FlagsAttribute]
+    [Flags]
     public enum ComponentTypes {
         COMPONENT_NONE     = 0,
 	    COMPONENT_POSITION = 1 << 0,

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using OpenTK.Graphics.OpenGL;
-using OpenGL_Game.OBJLoader;
+using OpenGL_Game.Engine.OBJLoader;
 using OpenTK.Audio.OpenAL;
+using OpenTK.Graphics.OpenGL;
 
-namespace OpenGL_Game.Managers
+namespace OpenGL_Game.Engine.Managers
 {
     public static class ResourceManager
     {

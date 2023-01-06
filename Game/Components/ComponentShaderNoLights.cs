@@ -1,9 +1,10 @@
-﻿using OpenGL_Game.OBJLoader;
-using OpenGL_Game.Scenes;
+﻿using OpenGL_Game.Engine.Components;
+using OpenGL_Game.Engine.OBJLoader;
+using OpenGL_Game.Game.Scenes;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace OpenGL_Game.Components
+namespace OpenGL_Game.Game.Components
 {
     // Pass in light data
     public class ComponentShaderNoLights : ComponentShader

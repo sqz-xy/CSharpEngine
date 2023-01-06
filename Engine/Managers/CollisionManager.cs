@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using OpenGL_Game.Components;
-using OpenGL_Game.Objects;
+using OpenGL_Game.Engine.Objects;
 
-namespace OpenGL_Game.Managers
+namespace OpenGL_Game.Engine.Managers
 {
     public enum COLLISIONTYPE
     {
@@ -22,10 +20,12 @@ namespace OpenGL_Game.Managers
     public abstract class CollisionManager
     {
         protected List<Collision> _collisionManifold = new List<Collision>();
-
+        
+        public bool IsActive { get; set; }
+        
         protected CollisionManager()
         {
-
+            IsActive = true;
         }
 
         public void ClearManifold() {_collisionManifold.Clear();}

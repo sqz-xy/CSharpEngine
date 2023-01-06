@@ -1,8 +1,10 @@
-﻿using OpenGL_Game.Components;
-using OpenGL_Game.Objects;
+﻿using OpenGL_Game.Engine.Components;
+using OpenGL_Game.Engine.Managers;
+using OpenGL_Game.Engine.Objects;
+using OpenGL_Game.Game.Components;
 using OpenTK;
 
-namespace OpenGL_Game.Managers
+namespace OpenGL_Game.Game.Managers
 {
     public class GameAIManager : AIManager
     {
@@ -14,7 +16,7 @@ namespace OpenGL_Game.Managers
             var direction = ComponentHelper.GetComponent<ComponentDirection>(pEntity, ComponentTypes.COMPONENT_DIRECTION);
             
             // If the ai isn't active, don't move
-            if (!ai.IsActive)
+            if (!IsActive)
             {
                 velocity.Velocity = Vector3.Zero;
                 ai.IsMoving = false;

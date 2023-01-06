@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Security.Policy;
-using System.Threading;
-using OpenGL_Game.Components;
-using OpenGL_Game.Objects;
-using OpenGL_Game.Scenes;
+using OpenGL_Game.Engine.Components;
+using OpenGL_Game.Engine.Managers;
+using OpenGL_Game.Engine.Objects;
+using OpenGL_Game.Game.Components;
 using OpenTK;
-using OpenTK.Graphics.OpenGL;
 
-namespace OpenGL_Game.Managers
+namespace OpenGL_Game.Game.Managers
 {
     public class GameCollisionManager : CollisionManager
     {
@@ -17,9 +14,6 @@ namespace OpenGL_Game.Managers
         private Stopwatch _enemyHealthCooldown;
         private Stopwatch _powerUpHealthCooldown;
         private Stopwatch _powerUpSpeedCooldown;
-
-        public bool _wallCollision = true;
-
         public GameCollisionManager()
         {
             _healthCooldown = new Stopwatch();
@@ -46,7 +40,7 @@ namespace OpenGL_Game.Managers
                 
                 if (collision.collisionType == COLLISIONTYPE.SPHERE_AABB)
                 {
-                    if (collision.entity2.Name.Contains("Wall") && _wallCollision )
+                    if (collision.entity2.Name.Contains("Wall") && IsActive)
                         WallCollision(collision);
                 }
             }        

@@ -1,8 +1,8 @@
 using System.IO;
-using ObjLoader.Loader.Data.DataStore;
-using ObjLoader.Loader.TypeParsers;
+using OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.Data.DataStore;
+using OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.TypeParsers;
 
-namespace ObjLoader.Loader.Loaders
+namespace OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.Loaders
 {
     public interface IMaterialStreamProvider
     {

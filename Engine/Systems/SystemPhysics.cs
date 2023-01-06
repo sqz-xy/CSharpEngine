@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
-using OpenGL_Game.Components;
-using OpenGL_Game.OBJLoader;
-using OpenGL_Game.Objects;
-using OpenGL_Game.Scenes;
+﻿using System.Collections.Generic;
+using OpenGL_Game.Engine.Components;
+using OpenGL_Game.Engine.Objects;
+using OpenGL_Game.Game.Scenes;
 
-namespace OpenGL_Game.Systems
+namespace OpenGL_Game.Engine.Systems
 {
     class SystemPhysics : ISystem
     {

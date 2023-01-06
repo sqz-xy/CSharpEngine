@@ -1,6 +1,6 @@
 ﻿using OpenTK;
 
-namespace OpenGL_Game.Components
+namespace OpenGL_Game.Engine.Components
 {
     public class ComponentDirection : IComponent
     {

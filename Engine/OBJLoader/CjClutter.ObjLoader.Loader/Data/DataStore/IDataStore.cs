@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using ObjLoader.Loader.Data.Elements;
-using ObjLoader.Loader.Data.VertexData;
+using OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.Data.VertexData;
 
-namespace ObjLoader.Loader.Data.DataStore
+namespace OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.Data.DataStore
 {
     public interface IDataStore 
     {
@@ -10,6 +9,6 @@ namespace ObjLoader.Loader.Data.DataStore
         IList<Texture> Textures { get; }
         IList<Normal> Normals { get; }
         IList<Material> Materials { get; }
-        IList<Group> Groups { get; }
+        IList<Elements.Group> Groups { get; }
     }
 }

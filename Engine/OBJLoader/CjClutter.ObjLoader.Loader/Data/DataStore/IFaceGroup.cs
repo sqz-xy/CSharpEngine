@@ -1,6 +1,6 @@
-using ObjLoader.Loader.Data.Elements;
+using OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.Data.Elements;
 
-namespace ObjLoader.Loader.Data.DataStore
+namespace OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.Data.DataStore
 {
     public interface IFaceGroup
     {

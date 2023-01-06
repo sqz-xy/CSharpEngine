@@ -1,19 +1,19 @@
-﻿using OpenTK;
-using OpenTK.Graphics.OpenGL;
-using OpenTK.Input;
-using OpenGL_Game.Components;
-using OpenGL_Game.Systems;
-using OpenGL_Game.Managers;
-using OpenGL_Game.Objects;
+﻿using System;
 using System.Drawing;
-using System;
 using System.Linq;
-using System.Numerics;
+using OpenGL_Game.Engine;
+using OpenGL_Game.Engine.Components;
+using OpenGL_Game.Engine.Managers;
+using OpenGL_Game.Engine.Objects;
+using OpenGL_Game.Engine.Scenes;
+using OpenGL_Game.Game.Components;
+using OpenGL_Game.Game.Managers;
+using OpenTK;
 using OpenTK.Audio.OpenAL;
-using Vector2 = OpenTK.Vector2;
+using OpenTK.Graphics.OpenGL;
 using Vector3 = OpenTK.Vector3;
 
-namespace OpenGL_Game.Scenes
+namespace OpenGL_Game.Game.Scenes
 {
 /// <summary>
 /// This is the main type for your game
@@ -131,9 +131,8 @@ namespace OpenGL_Game.Scenes
 
             // Action ALL renderable systems
             sceneManager.systemManager.ActionRenderableSystems(sceneManager.entityManager);
-            var collisionManager = (GameCollisionManager) sceneManager.collisionManager;
-            var inputManager = (GameInputManager) sceneManager.inputManager;
-            
+
+            // GUI
             float width = sceneManager.Width, height = sceneManager.Height, fontSize = Math.Min(width, height) / 10f;
             GUI.clearColour = Color.Transparent;
             
@@ -160,8 +159,8 @@ namespace OpenGL_Game.Scenes
             GUI.Label(new Rectangle(20, 160, (int)width, (int)(fontSize * 2f)), $"Damage: {playerDamage.Damage}", 18, StringAlignment.Near, Color.White, 0);
             
             // Debugging labels
-            GUI.Label(new Rectangle(560, 0, (int)width, (int)(fontSize * 2f)), $"Wall Collision Active: {collisionManager._wallCollision}", 18, StringAlignment.Near, Color.White, 0);
-            GUI.Label(new Rectangle(560, 32, (int)width, (int)(fontSize * 2f)), $"AI Active: {inputManager._isAiActive}", 18, StringAlignment.Near, Color.White, 0);
+            GUI.Label(new Rectangle(560, 0, (int)width, (int)(fontSize * 2f)), $"Wall Collision Active: {sceneManager.collisionManager.IsActive}", 18, StringAlignment.Near, Color.White, 0);
+            GUI.Label(new Rectangle(560, 32, (int)width, (int)(fontSize * 2f)), $"AI Active: {sceneManager.aiManager.IsActive}", 18, StringAlignment.Near, Color.White, 0);
             GUI.Label(new Rectangle(560, 64, (int)width, (int)(fontSize * 2f)), $"FPS: {Math.Round(1 / e.Time)}", 18, StringAlignment.Near, Color.White, 0);
             GUI.Label(new Rectangle(20, 750, (int)width, (int)(fontSize * 2f)), $"Position: {playerPosition.Position}", 18, StringAlignment.Near, Color.White, 0);
             
@@ -173,7 +172,7 @@ namespace OpenGL_Game.Scenes
             GUI.Image("Images/playericon.bmp", 32, 32, (int)(playerPosition.Position.X * 12.5f) + 1000, (int)(playerPosition.Position.Z * 12.5f) + 100, 0, (int)MathHelper.RadiansToDegrees(angle));
 
             // Draw drones and powerups, powerups don't have a direction so no angle is needed
-            int enemyIconOffset = 0, powerUpIconOffset = 0;
+            int enemyIconOffset = 0;
             foreach (var entity in sceneManager.entityManager.RenderableEntities())
             {
                 if (entity.Name.Contains("FishPowerUp"))

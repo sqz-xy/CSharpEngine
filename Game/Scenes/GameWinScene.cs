@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Drawing;
+using OpenGL_Game.Engine.Managers;
+using OpenGL_Game.Engine.Scenes;
+using OpenGL_Game.Game.Managers;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
-using System.Drawing;
-using OpenTK.Input;
-using OpenGL_Game.Managers;
 
-namespace OpenGL_Game.Scenes
+namespace OpenGL_Game.Game.Scenes
 {
     class GameWinScene : Scene
     {

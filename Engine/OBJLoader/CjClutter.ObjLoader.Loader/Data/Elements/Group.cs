@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using ObjLoader.Loader.Data.DataStore;
+using OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.Data.DataStore;
 
-namespace ObjLoader.Loader.Data.Elements
+namespace OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.Data.Elements
 {
     public class Group : IFaceGroup
     {

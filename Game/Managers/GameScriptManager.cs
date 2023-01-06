@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using OpenGL_Game.Components;
-using OpenGL_Game.Objects;
-using OpenGL_Game.OBJLoader;
-using OpenGL_Game.Scenes;
-using OpenGL_Game.Systems;
+using OpenGL_Game.Engine;
+using OpenGL_Game.Engine.Components;
+using OpenGL_Game.Engine.Managers;
+using OpenGL_Game.Engine.Objects;
+using OpenGL_Game.Engine.Systems;
+using OpenGL_Game.Game.Components;
+using OpenGL_Game.Game.Systems;
 using OpenTK;
-using OpenTK.Audio.OpenAL;
 using OpenTK.Input;
 
-namespace OpenGL_Game.Managers
+namespace OpenGL_Game.Game.Managers
 {
     public class GameScriptManager : ScriptManager
     {

@@ -1,16 +1,11 @@
-﻿using OpenGL_Game.Components;
-using OpenGL_Game.Objects;
-using OpenGL_Game.Scenes;
+﻿using System.Collections.Generic;
+using OpenGL_Game.Engine.Components;
+using OpenGL_Game.Engine.Managers;
+using OpenGL_Game.Engine.Objects;
+using OpenGL_Game.Engine.Systems;
+using OpenGL_Game.Game.Components;
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using OpenGL_Game.Managers;
-
-namespace OpenGL_Game.Systems
+namespace OpenGL_Game.Game.Systems
 {
     public class SystemHealth : ISystem
     {

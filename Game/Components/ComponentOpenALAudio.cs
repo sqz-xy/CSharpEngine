@@ -1,10 +1,9 @@
-﻿using System;
-using System.Threading;
-using OpenGL_Game.Managers;
+﻿using OpenGL_Game.Engine.Components;
+using OpenGL_Game.Engine.Managers;
 using OpenTK;
 using OpenTK.Audio.OpenAL;
 
-namespace OpenGL_Game.Components
+namespace OpenGL_Game.Game.Components
 {
     public class ComponentOpenALAudio : ComponentAudio
     {
@@ -46,9 +45,5 @@ namespace OpenGL_Game.Components
             AL.Source(_audioSource, ALSource3f.Position, ref pPosition);
         }
         
-        public override ComponentTypes ComponentType
-        {
-            get { return ComponentTypes.COMPONENT_AUDIO; }
-        }
     }
 }

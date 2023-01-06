@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
 using System.Drawing;
 using System.Drawing.Imaging;
+using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
-namespace OpenGL_Game.Scenes
+namespace OpenGL_Game.Engine.Scenes
 {
     static class GUI
     {

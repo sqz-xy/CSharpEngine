@@ -1,8 +1,6 @@
-﻿using System.Diagnostics.Contracts;
-using OpenTK;
-using OpenTK.Graphics.OpenGL;
+﻿using OpenTK;
 
-namespace OpenGL_Game
+namespace OpenGL_Game.Engine
 {
     public class Camera
     {

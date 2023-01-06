@@ -1,7 +1,4 @@
-﻿using OpenGL_Game.Components;
-using OpenGL_Game.Scenes;
-
-namespace OpenGL_Game.Managers
+﻿namespace OpenGL_Game.Engine.Managers
 {
     public abstract class ScriptManager
     {

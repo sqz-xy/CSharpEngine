@@ -1,7 +1,7 @@
-﻿using OpenGL_Game.Managers;
-using OpenGL_Game.OBJLoader;
+﻿using OpenGL_Game.Engine.Managers;
+using OpenGL_Game.Engine.OBJLoader;
 
-namespace OpenGL_Game.Components
+namespace OpenGL_Game.Engine.Components
 {
     class ComponentGeometry : IComponent
     {

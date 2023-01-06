@@ -1,10 +1,9 @@
-using ObjLoader.Loader.Common;
-using ObjLoader.Loader.Data;
-using ObjLoader.Loader.Data.DataStore;
-using ObjLoader.Loader.Data.VertexData;
-using ObjLoader.Loader.TypeParsers.Interfaces;
+using OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.Common;
+using OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.Data.DataStore;
+using OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.Data.VertexData;
+using OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.TypeParsers.Interfaces;
 
-namespace ObjLoader.Loader.TypeParsers
+namespace OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.TypeParsers
 {
     public class NormalParser : TypeParserBase, INormalParser
     {

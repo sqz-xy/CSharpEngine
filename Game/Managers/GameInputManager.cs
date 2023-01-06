@@ -1,18 +1,15 @@
-﻿using OpenTK.Input;
-
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenGL_Game.Scenes;
+using OpenGL_Game.Engine.Components;
+using OpenGL_Game.Engine.Managers;
+using OpenGL_Game.Engine.Objects;
+using OpenGL_Game.Engine.Scenes;
+using OpenGL_Game.Game.Components;
+using OpenGL_Game.Game.Scenes;
 using OpenTK;
-using OpenGL_Game.Objects;
-using OpenGL_Game.Components;
-using System.Security.AccessControl;
+using OpenTK.Input;
 
-namespace OpenGL_Game.Managers
+namespace OpenGL_Game.Game.Managers
 {
     // Reset binds when changing scene
     public class GameInputManager : InputManager
@@ -26,9 +23,7 @@ namespace OpenGL_Game.Managers
         
         public Dictionary<string, Key> _keyBinds;
         public Dictionary<string, MouseButton> _mouseBinds;
-
-        public bool _isAiActive = true;
-
+        
         public GameInputManager(EntityManager pEntityManager, SceneManager pSceneManager) : base(pEntityManager, pSceneManager)
         {
             _keyBinds = new Dictionary<string, Key>();
@@ -110,7 +105,7 @@ namespace OpenGL_Game.Managers
                     ToggleCollision(_sceneManager.collisionManager);
                     break;
                 case "TOGGLE_AI":
-                    ToggleAI(_entityManager);
+                    ToggleAI(_sceneManager.aiManager);
                     break;
             }
         }
@@ -119,31 +114,17 @@ namespace OpenGL_Game.Managers
         {
             if (_toggleCollisionCooldown.ElapsedMilliseconds == 0)
             {
-                var gameCollisionManager = (GameCollisionManager) pCollisionManager;
-                gameCollisionManager._wallCollision = !gameCollisionManager._wallCollision;
+
+                pCollisionManager.IsActive = !pCollisionManager.IsActive;
                 _toggleCollisionCooldown.Start();
             }
         }
-        
-        private void ToggleAI(EntityManager pEntityManager)
+
+        private void ToggleAI(AIManager pAiManager)
         {
             if (_toggleAICooldown.ElapsedMilliseconds == 0)
             {
-                _isAiActive = !_isAiActive;
-                foreach (var entity in pEntityManager.RenderableEntities().Concat(pEntityManager.NonRenderableEntities()))
-                {
-                    var ai = ComponentHelper.GetComponent<ComponentPathFollowAI>(entity, ComponentTypes.COMPONENT_AI);
-                    if (ai != null)
-                    {
-                        ai.IsActive = !ai.IsActive;
-                        
-                        if (ai.LocationIndex == 0)
-                            continue;
-                        
-                        ai.LocationIndex--;
-                    }
-                    
-                }
+                pAiManager.IsActive = !pAiManager.IsActive;
                 _toggleAICooldown.Start();
             }
         }
@@ -214,13 +195,13 @@ namespace OpenGL_Game.Managers
             _mouseBinds = new Dictionary<string, MouseButton>();
         }
         
-        public void ResetCooldowns()
+        private void ResetCooldowns()
         {
             if (_shootCooldown.ElapsedMilliseconds >= 1000)
                 _shootCooldown.Reset();
-            if (_toggleAICooldown.ElapsedMilliseconds >= 500)
+            if (_toggleAICooldown.ElapsedMilliseconds >= 1000)
                 _toggleAICooldown.Reset();
-            if (_toggleCollisionCooldown.ElapsedMilliseconds >= 500)
+            if (_toggleCollisionCooldown.ElapsedMilliseconds >= 1000)
                 _toggleCollisionCooldown.Reset();
         }
         

@@ -1,6 +1,6 @@
-﻿using OpenGL_Game.Objects;
+﻿using OpenGL_Game.Engine.Objects;
 
-namespace OpenGL_Game.Managers
+namespace OpenGL_Game.Engine.Managers
 {
     public abstract class InputManager
     {

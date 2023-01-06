@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
-using OpenTK.Graphics.OpenGL;
-using OpenGL_Game.Managers;
+using OpenGL_Game.Engine.Managers;
+using OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.Loaders;
 using OpenTK;
+using OpenTK.Graphics.OpenGL;
 
-namespace OpenGL_Game.OBJLoader
+namespace OpenGL_Game.Engine.OBJLoader
 {
     public class Group
     {
@@ -185,9 +186,9 @@ namespace OpenGL_Game.OBJLoader
             }
         }
 
-        public ObjLoader.Loader.Loaders.LoadResult LoadOBJObject(string filename)
+        public LoadResult LoadOBJObject(string filename)
         {
-            var objLoaderFactory = new ObjLoader.Loader.Loaders.ObjLoaderFactory();
+            var objLoaderFactory = new ObjLoaderFactory();
             var objLoader = objLoaderFactory.Create();
             var fileStream = new FileStream(filename, FileMode.Open);
             path = fileStream.Name.Substring(0, fileStream.Name.LastIndexOf('\\') + 1);

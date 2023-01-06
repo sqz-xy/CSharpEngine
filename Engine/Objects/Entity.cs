@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Windows.Forms;
-using OpenGL_Game.Components;
-using IComponent = OpenGL_Game.Components.IComponent;
+using OpenGL_Game.Engine.Components;
+using IComponent = OpenGL_Game.Engine.Components.IComponent;
 
-namespace OpenGL_Game.Objects
+namespace OpenGL_Game.Engine.Objects
 {
     public class Entity
     {

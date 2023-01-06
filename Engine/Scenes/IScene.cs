@@ -1,6 +1,6 @@
 ﻿using OpenTK;
 
-namespace OpenGL_Game.Scenes
+namespace OpenGL_Game.Engine.Scenes
 {
     public enum SceneTypes
     {

@@ -1,4 +1,4 @@
-namespace ObjLoader.Loader.Loaders
+namespace OpenGL_Game.Engine.OBJLoader.CjClutter.ObjLoader.Loader.Loaders
 {
     public interface IMaterialLibraryLoaderFacade
     {

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using OpenGL_Game.Engine.Components;
 using OpenTK;
 
-namespace OpenGL_Game.Components
+namespace OpenGL_Game.Game.Components
 {
     public class ComponentPathFollowAI : ComponentAI
     {

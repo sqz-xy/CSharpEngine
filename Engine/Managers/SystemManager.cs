@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using OpenGL_Game.Systems;
-using OpenGL_Game.Objects;
 using System.Linq;
+using OpenGL_Game.Engine.Objects;
+using OpenGL_Game.Engine.Systems;
 
-namespace OpenGL_Game.Managers
+namespace OpenGL_Game.Engine.Managers
 {
     public class SystemManager
     {
