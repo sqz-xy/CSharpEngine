@@ -92,7 +92,7 @@ namespace OpenGL_Game.Managers
            reader.Close();
        }
 
-       public override void LoadSystems(string pScriptName, ref SystemManager pSystemManager, ref CollisionManager pCollisionManager, ref EntityManager pEntityManager, ref InputManager pInputManager, ref Camera pCamera)
+       public override void LoadSystems(string pScriptName, ref SceneManager pSceneManager, ref Camera pCamera)
        {
            var serializer = new JsonSerializer();
            var reader = new JsonTextReader(new StreamReader(pScriptName));
@@ -122,13 +122,13 @@ namespace OpenGL_Game.Managers
                var isRenderable = obj.SelectToken("Renderable");
                if (token == null) { continue; }
                
-               ISystem newSystem = GetSystem(token.Value<String>(), ref pCollisionManager, ref pEntityManager, ref pInputManager, ref pCamera);
-               pSystemManager.AddSystem(newSystem, (bool) isRenderable);
+               ISystem newSystem = GetSystem(token.Value<String>(), ref pSceneManager, ref pCamera);
+               pSceneManager.systemManager.AddSystem(newSystem, (bool) isRenderable);
            }
            reader.Close();
        }
 
-       private ISystem GetSystem(string pSystemName, ref CollisionManager pCollisionManager, ref EntityManager pEntityManager, ref InputManager pInputManager, ref Camera pCamera)
+       private ISystem GetSystem(string pSystemName, ref SceneManager pSceneManager, ref Camera pCamera)
        {
            switch (pSystemName)
            {
@@ -141,15 +141,15 @@ namespace OpenGL_Game.Managers
                case "SystemAmbient":
                    return new SystemAmbient();
                case "SystemHealth":
-                   return new SystemHealth(pEntityManager);
+                   return new SystemHealth(pSceneManager.entityManager);
                case "SystemCollisionSphereSphere":
-                   return new SystemCollisionSphereSphere(pCollisionManager);
+                   return new SystemCollisionSphereSphere(pSceneManager.collisionManager);
                case "SystemCollisionSphereAABB":
-                   return new SystemCollisionSphereAABB(pCollisionManager);
+                   return new SystemCollisionSphereAABB(pSceneManager.collisionManager);
                case "SystemInput":
-                   return new SystemInput(pInputManager, pCamera);
+                   return new SystemInput(pSceneManager.inputManager, pCamera);
                case "SystemAI":
-                   return new SystemAI();
+                   return new SystemAI(pSceneManager.aiManager);
                default:
                    return null;
            }
@@ -200,7 +200,7 @@ namespace OpenGL_Game.Managers
                     return new ComponentDamage(int.Parse(pComponentValue));
                 case "COMPONENT_AI":
                     var aiValues = ExtractVectors(pComponentValue);
-                    return new ComponentAI(aiValues);
+                    return new ComponentPathFollowAI(aiValues);
                 case "COMPONENT_SPEED":
                     return new ComponentSpeed(float.Parse(pComponentValue));
                 case "COMPONENT_SHADER":

@@ -69,7 +69,7 @@ namespace OpenGL_Game.Scenes
 
         private void CreateSystems()
         {
-            sceneManager.scriptManager.LoadSystems("Scripts/gameSystemList.json", ref sceneManager.systemManager, ref sceneManager.collisionManager, ref sceneManager.entityManager, ref sceneManager.inputManager, ref camera);
+            sceneManager.scriptManager.LoadSystems("Scripts/gameSystemList.json", ref sceneManager ,ref camera);
         }
 
         /// <summary>

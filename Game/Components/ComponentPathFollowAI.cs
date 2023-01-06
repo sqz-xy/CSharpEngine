@@ -4,17 +4,15 @@ using OpenTK;
 
 namespace OpenGL_Game.Components
 {
-    public class ComponentAI : IComponent
+    public class ComponentPathFollowAI : ComponentAI
     {
         private List<Vector3> _positions;
         private Vector3 _distanceToMove;
         private Vector3 _distanceTravelled;
         private Vector3 _startPos;
         private int _locationIndex = 0;
-        private bool _isMoving = false;
-        private bool _isActive = true;
-
-        public ComponentAI(List<Vector3> pPositions)
+        
+        public ComponentPathFollowAI(List<Vector3> pPositions)
         {
             _positions = pPositions;
         }

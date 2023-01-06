@@ -132,7 +132,7 @@ namespace OpenGL_Game.Managers
                 _isAiActive = !_isAiActive;
                 foreach (var entity in pEntityManager.RenderableEntities().Concat(pEntityManager.NonRenderableEntities()))
                 {
-                    var ai = ComponentHelper.GetComponent<ComponentAI>(entity, ComponentTypes.COMPONENT_AI);
+                    var ai = ComponentHelper.GetComponent<ComponentPathFollowAI>(entity, ComponentTypes.COMPONENT_AI);
                     if (ai != null)
                     {
                         ai.IsActive = !ai.IsActive;

@@ -17,7 +17,7 @@ namespace OpenGL_Game.Managers
         /// </summary>
         /// <param name="pScriptName">Name of the script to read</param>
         /// <param name="pSystemManager">The system manager</param>
-        public abstract void LoadSystems(string pScriptName, ref SystemManager pSystemManager, ref CollisionManager pCollisionManager, ref EntityManager pEntityManager, ref InputManager pInputManager, ref Camera pCamera);
+        public abstract void LoadSystems(string pScriptName, ref SceneManager pSceneManager, ref Camera pCamera1);
         
         /// <summary>
         /// Reads a script to load controls for a scene

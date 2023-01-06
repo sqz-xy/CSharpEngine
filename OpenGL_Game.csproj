@@ -81,6 +81,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Engine\Camera.cs" />
+    <Compile Include="Engine\Components\ComponentAI.cs" />
     <Compile Include="Engine\Components\ComponentAudio.cs" />
     <Compile Include="Engine\Components\ComponentCollisionAABB.cs" />
     <Compile Include="Engine\Components\ComponentCollisionSphere.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Engine\Components\ComponentTexture.cs" />
     <Compile Include="Engine\Components\ComponentVelocity.cs" />
     <Compile Include="Engine\Components\IComponent.cs" />
+    <Compile Include="Engine\Managers\AIManager.cs" />
     <Compile Include="Engine\Managers\CollisionManager.cs" />
     <Compile Include="Engine\Managers\EntityManager.cs" />
     <Compile Include="Engine\Managers\InputManager.cs" />
@@ -151,18 +153,20 @@
     <Compile Include="Engine\Scenes\IScene.cs" />
     <Compile Include="Engine\Scenes\Scene.cs" />
     <Compile Include="Engine\Systems\ISystem.cs" />
+    <Compile Include="Engine\Systems\SystemAI.cs" />
     <Compile Include="Engine\Systems\SystemAudio.cs" />
     <Compile Include="Engine\Systems\SystemCollisionSphereAABB.cs" />
     <Compile Include="Engine\Systems\SystemCollisionSphereSphere.cs" />
     <Compile Include="Engine\Systems\SystemInput.cs" />
     <Compile Include="Engine\Systems\SystemPhysics.cs" />
     <Compile Include="Engine\Systems\SystemRender.cs" />
-    <Compile Include="Game\Components\ComponentAI.cs" />
+    <Compile Include="Game\Components\ComponentPathFollowAI.cs" />
     <Compile Include="Game\Components\ComponentDamage.cs" />
     <Compile Include="Game\Components\ComponentHealth.cs" />
     <Compile Include="Game\Components\ComponentOpenALAudio.cs" />
     <Compile Include="Game\Components\ComponentShaderDefault.cs" />
     <Compile Include="Game\Components\ComponentShaderNoLights.cs" />
+    <Compile Include="Game\Managers\GameAIManager.cs" />
     <Compile Include="Game\Managers\GameCollisionManager.cs" />
     <Compile Include="Game\Managers\GameInputManager.cs" />
     <Compile Include="Game\Managers\GameScriptManager.cs" />
@@ -170,7 +174,6 @@
     <Compile Include="Game\Scenes\GameScene.cs" />
     <Compile Include="Game\Scenes\GameWinScene.cs" />
     <Compile Include="Game\Scenes\MainMenuScene.cs" />
-    <Compile Include="Game\Systems\SystemAI.cs" />
     <Compile Include="Game\Systems\SystemAmbient.cs" />
     <Compile Include="Game\Systems\SystemHealth.cs" />
     <Compile Include="Main.cs" />

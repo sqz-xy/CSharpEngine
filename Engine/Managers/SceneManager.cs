@@ -22,20 +22,12 @@ namespace OpenGL_Game.Managers
         public InputManager inputManager;
         public SystemManager systemManager;
         public EntityManager entityManager;
+        public AIManager aiManager;
 
         public delegate void SceneDelegate(FrameEventArgs e);
         public SceneDelegate renderer;
         public SceneDelegate updater;
-
-        public delegate void KeyboardDelegate(KeyboardKeyEventArgs e);
-        public KeyboardDelegate keyboardDownDelegate;
-#pragma warning disable CS0649 // Field 'SceneManager.keyboardUpDelegate' is never assigned to, and will always have its default value null
-        public KeyboardDelegate keyboardUpDelegate;
-#pragma warning restore CS0649 // Field 'SceneManager.keyboardUpDelegate' is never assigned to, and will always have its default value null
-
-        public delegate void MouseDelegate(MouseButtonEventArgs e);
-        public MouseDelegate mouseDelegate;
-
+        
         AudioContext audioContext;
         
         public SceneManager() : base(width, height, new OpenTK.Graphics.GraphicsMode(new OpenTK.Graphics.ColorFormat(8, 8, 8, 8), 16))
@@ -46,6 +38,7 @@ namespace OpenGL_Game.Managers
             
             scriptManager = new GameScriptManager();
             collisionManager = new GameCollisionManager();
+            aiManager = new GameAIManager();
             
             audioContext = new AudioContext();
         }
@@ -56,8 +49,6 @@ namespace OpenGL_Game.Managers
 
             GL.Enable(EnableCap.DepthTest);
             GL.DepthMask(true);
-            //GL.Enable(EnableCap.CullFace);
-            //GL.CullFace(CullFaceMode.Back);
 
             //Load the GUI
             GUI.SetUpGUI(width, height, 2);
@@ -111,34 +102,26 @@ namespace OpenGL_Game.Managers
         {
             if (scene != null)
                 scene.Close();
-
-            try
+            
+            switch (pSceneType)
             {
-                switch (pSceneType)
-                {
-                    case SceneTypes.SCENE_MAIN_MENU:
-                        scene = new MainMenuScene(this);
-                        break;
-                    case SceneTypes.SCENE_GAME:
-                        scene = new GameScene(this);
-                        break;
-                    case SceneTypes.SCENE_GAME_OVER:
-                        scene = new GameOverScene(this);
-                        break;
-                    case SceneTypes.SCENE_GAME_WIN:
-                        scene = new GameWinScene(this);
-                        break;
-                    default:
-                        scene = new MainMenuScene(this);
-                        break;
-                }
+                case SceneTypes.SCENE_MAIN_MENU:
+                    scene = new MainMenuScene(this);
+                    break;
+                case SceneTypes.SCENE_GAME:
+                    scene = new GameScene(this);
+                    break;
+                case SceneTypes.SCENE_GAME_OVER:
+                    scene = new GameOverScene(this);
+                    break;
+                case SceneTypes.SCENE_GAME_WIN:
+                    scene = new GameWinScene(this);
+                    break;
+                default:
+                    scene = new MainMenuScene(this);
+                    break;
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                scene = new MainMenuScene(this);
             }
-        }
 
         public static void ChangeScene(SceneTypes pSceneType, SceneManager pSceneManager)
         {
