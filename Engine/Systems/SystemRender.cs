@@ -15,11 +15,6 @@ namespace OpenGL_Game.Engine.Systems
 
         }
         
-        public void Cleanup(Entity pEntity)
-        {
-            
-        }
-
         public string Name
         {
             get { return "SystemRender"; }

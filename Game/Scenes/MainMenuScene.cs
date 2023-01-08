@@ -13,11 +13,12 @@ namespace OpenGL_Game.Game.Scenes
 {
     class MainMenuScene : Scene
     {
-        
-        public Camera camera;
+        // Cameras
         private Image _mainMenu;
         private Image _droneIcon;
-        
+
+        public Camera camera;
+
         public MainMenuScene(SceneManager sceneManager) : base(sceneManager)
         {
             sceneManager.entityManager = new EntityManager();

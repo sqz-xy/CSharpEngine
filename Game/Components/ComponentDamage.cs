@@ -4,7 +4,7 @@ namespace OpenGL_Game.Game.Components
 {
     class ComponentDamage : IComponent
     {
-        int damage;
+        private int damage;
 
         public ComponentDamage(int pDamage)
         {

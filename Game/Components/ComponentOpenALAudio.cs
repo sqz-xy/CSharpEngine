@@ -7,7 +7,7 @@ namespace OpenGL_Game.Game.Components
 {
     public class ComponentOpenALAudio : ComponentAudio
     {
-        int _audioSource;
+        private int _audioSource;
         
         public ComponentOpenALAudio(string pAudioName, bool pIsLooping)
         {

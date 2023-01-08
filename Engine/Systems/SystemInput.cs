@@ -7,15 +7,26 @@ namespace OpenGL_Game.Engine.Systems
 {
     public class SystemInput : ISystem
     {
-        const ComponentTypes MASK = (ComponentTypes.COMPONENT_POSITION | ComponentTypes.COMPONENT_DIRECTION | ComponentTypes.COMPONENT_CONTROLLABLE);
+        // Input manager for registering input
         private InputManager _inputManager;
+        
+        // Camera for coupling with entity
         private Camera _camera;
-
+        
+        // System mask
+        const ComponentTypes MASK = (ComponentTypes.COMPONENT_POSITION | ComponentTypes.COMPONENT_DIRECTION | ComponentTypes.COMPONENT_CONTROLLABLE);
+        
         public SystemInput(InputManager pInputManager, Camera pCamera)
         {
             _inputManager = pInputManager;
             _camera = pCamera;
         }
+        
+        public string Name
+        {
+            get { return "SystemInput"; }
+        }
+        
         public void OnAction(List<Entity> pEntity)
         {
             foreach (var entity in pEntity)
@@ -42,7 +53,5 @@ namespace OpenGL_Game.Engine.Systems
             _camera.cameraDirection = pDir.Direction;
             _camera.UpdateView();
         }
-        
-        public string Name { get; }
     }
 }

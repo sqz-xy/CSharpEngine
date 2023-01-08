@@ -9,16 +9,16 @@ namespace OpenGL_Game.Engine.Scenes
 {
     static class Gui
     {
+        private static List<Bitmap> _textures;
+        private static List<Graphics> _layers;
+        
         // List of textures for GUI layers
         private static List<int> _layerIDs;
-        private static List<Graphics> _layers;
-        private static List<Bitmap> _textures;
-
-        private static int _mWidth, _mHeight;
-        public static Vector2 GuiPosition = Vector2.Zero;
 
         public static Color ClearColour = Color.CornflowerBlue;
-
+        public static Vector2 GuiPosition = Vector2.Zero;
+        private static int _mWidth, _mHeight;
+        
         //Called by SceneManager onLoad, and when screen size is changed
         public static void SetUpGui(int pWidth, int pHeight, int pLayerCount)
         {

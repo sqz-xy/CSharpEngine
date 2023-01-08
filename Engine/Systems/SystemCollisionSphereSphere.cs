@@ -7,19 +7,17 @@ namespace OpenGL_Game.Engine.Systems
 {
     public class SystemCollisionSphereSphere : ISystem
     {
-        const ComponentTypes MASK = (ComponentTypes.COMPONENT_POSITION | ComponentTypes.COMPONENT_COLLISION_SPHERE);
+        // Reference to collision manager
         private CollisionManager _collisionManager;
-
+        
+        // System mask
+        const ComponentTypes MASK = (ComponentTypes.COMPONENT_POSITION | ComponentTypes.COMPONENT_COLLISION_SPHERE);
+        
         public SystemCollisionSphereSphere(CollisionManager pCollisionManager)
         {
             _collisionManager = pCollisionManager;
         }
-
-        public void Cleanup(Entity pEntity)
-        {
-
-        }
-
+        
         public string Name
         {
             get { return "SystemCollisionSphere"; }

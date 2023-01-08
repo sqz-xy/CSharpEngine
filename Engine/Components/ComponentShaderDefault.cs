@@ -8,10 +8,10 @@ namespace OpenGL_Game.Game.Components
 {
     public class ComponentShaderDefault : ComponentShader
     {
-        public int uniform_stex;
-        public int uniform_modelviewproj;
-        public int uniform_mmodel;
-        public int uniform_diffuse;
+        private int uniform_stex;
+        private int uniform_modelviewproj;
+        private int uniform_mmodel;
+        private int uniform_diffuse;
 
         public ComponentShaderDefault() : base("Shaders/vs.glsl", "Shaders/fs.glsl")
         {

@@ -8,21 +8,18 @@ namespace OpenGL_Game.Engine.Systems
 {
     public class SystemCollisionSphereAABB : ISystem
     {
+        // Reference to collision manager for registering collision
+        private CollisionManager _collisionManager;
+        
+        // System mask for sphere and AABB
         const ComponentTypes SPHEREMASK = (ComponentTypes.COMPONENT_POSITION | ComponentTypes.COMPONENT_COLLISION_SPHERE);
         const ComponentTypes AABBMASK = (ComponentTypes.COMPONENT_POSITION | ComponentTypes.COMPONENT_COLLISION_AABB);
         
-        private CollisionManager _collisionManager;
-
         public SystemCollisionSphereAABB(CollisionManager pCollisionManager)
         {
             _collisionManager = pCollisionManager;
         }
-
-        public void Cleanup(Entity pEntity)
-        {
-
-        }
-
+        
         public string Name
         {
             get { return "SystemCollisionSphereAABB"; }

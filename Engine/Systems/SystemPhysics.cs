@@ -8,17 +8,7 @@ namespace OpenGL_Game.Engine.Systems
     class SystemPhysics : ISystem
     {
         const ComponentTypes MASK = (ComponentTypes.COMPONENT_POSITION | ComponentTypes.COMPONENT_VELOCITY | ComponentTypes.COMPONENT_SPEED);
-
-        public SystemPhysics()
-        {
-
-        }
-
-        public void Cleanup(Entity pEntity)
-        {
-            
-        }
-
+        
         public string Name
         {
             get { return "SystemPhysics"; }

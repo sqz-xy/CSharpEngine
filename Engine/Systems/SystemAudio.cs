@@ -8,6 +8,12 @@ namespace OpenGL_Game.Engine.Systems
     public class SystemAudio : ISystem
     {
         const ComponentTypes MASK = (ComponentTypes.COMPONENT_POSITION | ComponentTypes.COMPONENT_AUDIO);
+        
+        public string Name
+        {
+            get { return "SystemAudio"; }
+        }
+
         public void OnAction(List<Entity> pEntity)
         {
             foreach (var entity in pEntity)
@@ -29,6 +35,5 @@ namespace OpenGL_Game.Engine.Systems
             }
         }
         
-        public string Name { get; }
     }
 }

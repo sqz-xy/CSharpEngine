@@ -21,21 +21,23 @@ namespace OpenGL_Game.Game.Scenes
 /// </summary>
     class GameScene : Scene
     {
-        public static float dt = 0;
-        private int playerLives = 999;
-        private int playerHealth = 999;
-        private int droneCount = 999;
-        private int powerUpCount = 999;
-        
-        public Camera camera;
-        public static GameScene gameInstance;
-        
         // Images
+        private List<Image> _droneIcons;
         private Image _heartIcon;
         private Image _minimap;
         private Image _playerIcon;
         private Image _fishIcon;
-        private List<Image> _droneIcons;
+        
+        public static GameScene gameInstance;
+        
+        // Camera
+        public Camera camera;
+        
+        // Scene variables
+        public static float dt = 0;
+        private int playerLives = 999;
+        private int playerHealth = 999;
+        private int droneCount = 999;
 
         public GameScene(SceneManager sceneManager) : base(sceneManager)
         {
@@ -126,14 +128,6 @@ namespace OpenGL_Game.Game.Scenes
                     tempEntityCount++;
             }
             droneCount = tempEntityCount;
-            
-            tempEntityCount = 0;
-            foreach (var entity in SceneManager.entityManager.RenderableEntities())
-            {
-                if (entity.Name.Contains("PowerUp"))
-                    tempEntityCount++;
-            }
-            powerUpCount = tempEntityCount;
         }
 
         /// <summary>

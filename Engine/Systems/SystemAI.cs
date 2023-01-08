@@ -7,11 +7,12 @@ namespace OpenGL_Game.Engine.Systems
 {
     public class SystemAI : ISystem
     {
-        const ComponentTypes MASK = (ComponentTypes.COMPONENT_POSITION | ComponentTypes.COMPONENT_AI) | ComponentTypes.COMPONENT_DIRECTION | ComponentTypes.COMPONENT_VELOCITY;
-
         // Reference to the ai manager
         private AIManager _aiManager; 
-
+        
+        // Mask for system
+        const ComponentTypes MASK = (ComponentTypes.COMPONENT_POSITION | ComponentTypes.COMPONENT_AI) | ComponentTypes.COMPONENT_DIRECTION | ComponentTypes.COMPONENT_VELOCITY;
+        
         public SystemAI(AIManager pAIManager)
         {
             _aiManager = pAIManager;

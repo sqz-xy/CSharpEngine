@@ -7,8 +7,8 @@ namespace OpenGL_Game.Engine.Scenes
     {
         // Reference to scene manager
         protected SceneManager SceneManager;
-        
-        public Scene(SceneManager pSceneManager)
+
+        protected Scene(SceneManager pSceneManager)
         {
             this.SceneManager = pSceneManager;
         }

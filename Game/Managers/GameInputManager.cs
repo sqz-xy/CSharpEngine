@@ -11,18 +11,20 @@ using OpenTK.Input;
 
 namespace OpenGL_Game.Game.Managers
 {
-    // Reset binds when changing scene
     public class GameInputManager : InputManager
     {
-        public static string bulletName = "Bullet Source";
-        private int bulletIndex = 0;
-
+        // Dictionary binds
+        public Dictionary<string, Key> _keyBinds;
+        public Dictionary<string, MouseButton> _mouseBinds;
+        
+        // Stopwatches for cooldowns
         private Stopwatch _shootCooldown;
         private Stopwatch _toggleAICooldown;
         private Stopwatch _toggleCollisionCooldown;
         
-        public Dictionary<string, Key> _keyBinds;
-        public Dictionary<string, MouseButton> _mouseBinds;
+        // Bullet variables
+        public static string bulletName = "Bullet Source";
+        private int bulletIndex = 0;
         
         public GameInputManager(EntityManager pEntityManager, SceneManager pSceneManager) : base(pEntityManager, pSceneManager)
         {

@@ -4,7 +4,7 @@ namespace OpenGL_Game.Game.Components
 {
     class ComponentHealth : IComponent
     {
-        int health;
+        private int health;
 
         public ComponentHealth(int pHealth)
         {
