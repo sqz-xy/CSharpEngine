@@ -24,6 +24,7 @@ namespace OpenGL_Game.Engine.Systems
         {
             foreach (var audioComponent in pAudioComponents)
             {
+                // Update the positional audio
                 audioComponent.UpdateAudioPosition(pPosition);
             }
         }

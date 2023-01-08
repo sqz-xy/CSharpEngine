@@ -4,6 +4,7 @@ namespace OpenGL_Game.Engine.Components
 {
     public class ComponentPosition : IComponent
     {
+        // Position of an entity
         Vector3 position;
 
         public ComponentPosition(float x, float y, float z)

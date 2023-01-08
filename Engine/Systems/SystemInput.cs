@@ -33,7 +33,10 @@ namespace OpenGL_Game.Engine.Systems
         public void Control(Entity pEntity, ref ComponentPosition pPos, ref ComponentDirection pDir)
         {
             // had system player originally, merged them
+            // Apply input to an entity
             _inputManager.ReadInput(pEntity);
+            
+            // Map the camera to the entity
             _camera.cameraPosition = pPos.Position;
             _camera.cameraPosition.Y += 0.5f;
             _camera.cameraDirection = pDir.Direction;

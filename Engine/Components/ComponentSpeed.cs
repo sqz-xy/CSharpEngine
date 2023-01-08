@@ -2,6 +2,7 @@
 {
     public class ComponentSpeed : IComponent
     {
+        // Speed of an entity
         float speed;
 
         // Speed multiplier

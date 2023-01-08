@@ -29,6 +29,7 @@ namespace OpenGL_Game.Game.Systems
                 {
                     var health = ComponentHelper.GetComponent<ComponentHealth>(entity, ComponentTypes.COMPONENT_HEALTH);
 
+                    // If an entity has 0 or below 0 health, remove it
                     if (health.Health <= 0) 
                             KillEntity(entity);
                 }

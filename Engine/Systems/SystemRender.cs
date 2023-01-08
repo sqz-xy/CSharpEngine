@@ -40,6 +40,7 @@ namespace OpenGL_Game.Engine.Systems
 
         public void Draw(Matrix4 model, Geometry geometry, ComponentShader pShader)
         {
+            // Render the entity via shader
             pShader.ApplyShader(model, geometry);
         }
     }

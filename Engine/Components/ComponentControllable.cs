@@ -2,6 +2,7 @@
 {
     class ComponentControllable : IComponent
     {
+        // Is the entity currently controllable by the user
         private bool _isControllable;
 
         public ComponentControllable(bool pIsControllable)

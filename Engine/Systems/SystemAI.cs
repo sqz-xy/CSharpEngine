@@ -8,8 +8,9 @@ namespace OpenGL_Game.Engine.Systems
     public class SystemAI : ISystem
     {
         const ComponentTypes MASK = (ComponentTypes.COMPONENT_POSITION | ComponentTypes.COMPONENT_AI) | ComponentTypes.COMPONENT_DIRECTION | ComponentTypes.COMPONENT_VELOCITY;
-        private bool _initialized = false;
-        private AIManager _aiManager;
+
+        // Reference to the ai manager
+        private AIManager _aiManager; 
 
         public SystemAI(AIManager pAIManager)
         {
@@ -26,6 +27,7 @@ namespace OpenGL_Game.Engine.Systems
             foreach (var entity in pEntity)
                 if ((entity.Mask & MASK) == MASK)
                 {
+                    // Tell the ai manager to move an entity
                     _aiManager.Move(entity);
                 }
         }

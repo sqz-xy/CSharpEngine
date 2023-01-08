@@ -34,7 +34,7 @@ namespace OpenGL_Game.Game.Scenes
             gameInstance = this;
             sceneManager.entityManager = new EntityManager();
             sceneManager.systemManager = new SystemManager();
-            sceneManager.inputManager = new GameInputManager(sceneManager.entityManager, base.sceneManager);
+            sceneManager.inputManager = new GameInputManager(sceneManager.entityManager, base.SceneManager);
             
             // Set the title of the window
             sceneManager.Title = "Game";
@@ -64,12 +64,12 @@ namespace OpenGL_Game.Game.Scenes
 
         private void CreateEntities()
         {
-            sceneManager.scriptManager.LoadEntities("Scripts/gameEntityList.json", ref sceneManager.entityManager);
+            SceneManager.scriptManager.LoadEntities("Scripts/gameEntityList.json", ref SceneManager.entityManager);
         }
 
         private void CreateSystems()
         {
-            sceneManager.scriptManager.LoadSystems("Scripts/gameSystemList.json", ref sceneManager ,ref camera);
+            SceneManager.scriptManager.LoadSystems("Scripts/gameSystemList.json", ref SceneManager ,ref camera);
         }
 
         /// <summary>
@@ -85,26 +85,26 @@ namespace OpenGL_Game.Game.Scenes
             AL.Listener(ALListener3f.Position, ref camera.cameraPosition);
             AL.Listener(ALListenerfv.Orientation, ref camera.cameraDirection, ref camera.cameraUp);
             
-            ComponentHealth health = ComponentHelper.GetComponent<ComponentHealth>(sceneManager.entityManager.FindRenderableEntity("Player"), ComponentTypes.COMPONENT_HEALTH);
+            ComponentHealth health = ComponentHelper.GetComponent<ComponentHealth>(SceneManager.entityManager.FindRenderableEntity("Player"), ComponentTypes.COMPONENT_HEALTH);
             playerHealth = health.Health;
 
             // Action ALL Non renderable systems
-            sceneManager.systemManager.ActionNonRenderableSystems(sceneManager.entityManager);
+            SceneManager.systemManager.ActionNonRenderableSystems(SceneManager.entityManager);
             
             if (playerHealth <= 0)
             {
                 playerLives--;
-                sceneManager.ChangeScene(SceneTypes.SCENE_GAME);
+                SceneManager.ChangeScene(SceneTypes.SceneGame);
             }
             
             if (playerLives <= 0)
-                sceneManager.ChangeScene(SceneTypes.SCENE_GAME_OVER);
+                SceneManager.ChangeScene(SceneTypes.SceneGameOver);
             
             if (droneCount <= 0)
-                sceneManager.ChangeScene(SceneTypes.SCENE_GAME_WIN);
+                SceneManager.ChangeScene(SceneTypes.SceneGameWin);
 
             int tempEntityCount = 0;
-            foreach (var entity in sceneManager.entityManager.RenderableEntities())
+            foreach (var entity in SceneManager.entityManager.RenderableEntities())
             {
                 if (entity.Name.Contains("EnemyCat"))
                     tempEntityCount++;
@@ -112,7 +112,7 @@ namespace OpenGL_Game.Game.Scenes
             droneCount = tempEntityCount;
             
             tempEntityCount = 0;
-            foreach (var entity in sceneManager.entityManager.RenderableEntities())
+            foreach (var entity in SceneManager.entityManager.RenderableEntities())
             {
                 if (entity.Name.Contains("PowerUp"))
                     tempEntityCount++;
@@ -126,73 +126,73 @@ namespace OpenGL_Game.Game.Scenes
         /// <param name="e">Provides a snapshot of timing values.</param>
         public override void Render(FrameEventArgs e)
         {
-            GL.Viewport(0, 0, sceneManager.Width, sceneManager.Height);
+            GL.Viewport(0, 0, SceneManager.Width, SceneManager.Height);
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
             // Action ALL renderable systems
-            sceneManager.systemManager.ActionRenderableSystems(sceneManager.entityManager);
+            SceneManager.systemManager.ActionRenderableSystems(SceneManager.entityManager);
 
             // GUI
-            float width = sceneManager.Width, height = sceneManager.Height, fontSize = Math.Min(width, height) / 10f;
-            GUI.clearColour = Color.Transparent;
+            float width = SceneManager.Width, height = SceneManager.Height, fontSize = Math.Min(width, height) / 10f;
+            Gui.ClearColour = Color.Transparent;
             
             // Health label 
-            GUI.Label(new Rectangle(20, 0, (int)width, (int)(fontSize * 2f)), $"Health: {playerHealth}", 18, StringAlignment.Near, Color.White, 0);
+            Gui.Label(new Rectangle(20, 0, (int)width, (int)(fontSize * 2f)), $"Health: {playerHealth}", 18, StringAlignment.Near, Color.White, 0);
             
             // Lives label and icons
-            GUI.Label(new Rectangle(20, 32, (int)width, (int)(fontSize * 2f)), $"Lives: {playerLives}", 18, StringAlignment.Near, Color.White, 0);
+            Gui.Label(new Rectangle(20, 32, (int)width, (int)(fontSize * 2f)), $"Lives: {playerLives}", 18, StringAlignment.Near, Color.White, 0);
             int livesIconOffset = 0;
             for (int i = 0; i < playerLives; i++)
             {
-                GUI.Image("Images/hearticon.bmp", 32, 32, 150 + livesIconOffset, 32, 0);
+                Gui.Image("Images/hearticon.bmp", 32, 32, 150 + livesIconOffset, 32, 0);
                 livesIconOffset += 32;
             }
 
             // Drone and power up count label, icons are drawn later with the minimap icons for efficiency
-            GUI.Label(new Rectangle(20, 64, (int)width, (int)(fontSize * 2f)), $"Drones: {droneCount}", 18, StringAlignment.Near, Color.White, 0);
+            Gui.Label(new Rectangle(20, 64, (int)width, (int)(fontSize * 2f)), $"Drones: {droneCount}", 18, StringAlignment.Near, Color.White, 0);
 
             // Speed and damage labels
-            var playerSpeed = ComponentHelper.GetComponent<ComponentSpeed>(sceneManager.entityManager.FindRenderableEntity("Player"), ComponentTypes.COMPONENT_SPEED);
-            var playerDamage = ComponentHelper.GetComponent<ComponentDamage>(sceneManager.entityManager.FindRenderableEntity("Player"), ComponentTypes.COMPONENT_DAMAGE);
-            var playerPosition = ComponentHelper.GetComponent<ComponentPosition>(sceneManager.entityManager.FindRenderableEntity("Player"), ComponentTypes.COMPONENT_POSITION);
-            GUI.Label(new Rectangle(20, 128, (int)width, (int)(fontSize * 2f)), $"Speed: {playerSpeed.Speed}", 18, StringAlignment.Near, Color.White, 0);
-            GUI.Label(new Rectangle(20, 160, (int)width, (int)(fontSize * 2f)), $"Damage: {playerDamage.Damage}", 18, StringAlignment.Near, Color.White, 0);
+            var playerSpeed = ComponentHelper.GetComponent<ComponentSpeed>(SceneManager.entityManager.FindRenderableEntity("Player"), ComponentTypes.COMPONENT_SPEED);
+            var playerDamage = ComponentHelper.GetComponent<ComponentDamage>(SceneManager.entityManager.FindRenderableEntity("Player"), ComponentTypes.COMPONENT_DAMAGE);
+            var playerPosition = ComponentHelper.GetComponent<ComponentPosition>(SceneManager.entityManager.FindRenderableEntity("Player"), ComponentTypes.COMPONENT_POSITION);
+            Gui.Label(new Rectangle(20, 128, (int)width, (int)(fontSize * 2f)), $"Speed: {playerSpeed.Speed}", 18, StringAlignment.Near, Color.White, 0);
+            Gui.Label(new Rectangle(20, 160, (int)width, (int)(fontSize * 2f)), $"Damage: {playerDamage.Damage}", 18, StringAlignment.Near, Color.White, 0);
             
             // Debugging labels
-            GUI.Label(new Rectangle(560, 0, (int)width, (int)(fontSize * 2f)), $"Wall Collision Active: {sceneManager.collisionManager.IsActive}", 18, StringAlignment.Near, Color.White, 0);
-            GUI.Label(new Rectangle(560, 32, (int)width, (int)(fontSize * 2f)), $"AI Active: {sceneManager.aiManager.IsActive}", 18, StringAlignment.Near, Color.White, 0);
-            GUI.Label(new Rectangle(560, 64, (int)width, (int)(fontSize * 2f)), $"FPS: {Math.Round(1 / e.Time)}", 18, StringAlignment.Near, Color.White, 0);
-            GUI.Label(new Rectangle(20, 750, (int)width, (int)(fontSize * 2f)), $"Position: {playerPosition.Position}", 18, StringAlignment.Near, Color.White, 0);
+            Gui.Label(new Rectangle(560, 0, (int)width, (int)(fontSize * 2f)), $"Wall Collision Active: {SceneManager.collisionManager.IsActive}", 18, StringAlignment.Near, Color.White, 0);
+            Gui.Label(new Rectangle(560, 32, (int)width, (int)(fontSize * 2f)), $"AI Active: {SceneManager.aiManager.IsActive}", 18, StringAlignment.Near, Color.White, 0);
+            Gui.Label(new Rectangle(560, 64, (int)width, (int)(fontSize * 2f)), $"FPS: {Math.Round(1 / e.Time)}", 18, StringAlignment.Near, Color.White, 0);
+            Gui.Label(new Rectangle(20, 750, (int)width, (int)(fontSize * 2f)), $"Position: {playerPosition.Position}", 18, StringAlignment.Near, Color.White, 0);
             
             // Minimap logic
-            GUI.Image("Images/minimap.bmp", 256, 256, 900, 0, 0);
-            var angle = CalculateAngle(sceneManager.entityManager.FindRenderableEntity("Player"));
+            Gui.Image("Images/minimap.bmp", 256, 256, 900, 0, 0);
+            var angle = CalculateAngle(SceneManager.entityManager.FindRenderableEntity("Player"));
             
             // Offset for image location and player speed
-            GUI.Image("Images/playericon.bmp", 32, 32, (int)(playerPosition.Position.X * 12.5f) + 1000, (int)(playerPosition.Position.Z * 12.5f) + 100, 0, (int)MathHelper.RadiansToDegrees(angle));
+            Gui.Image("Images/playericon.bmp", 32, 32, (int)(playerPosition.Position.X * 12.5f) + 1000, (int)(playerPosition.Position.Z * 12.5f) + 100, 0, (int)MathHelper.RadiansToDegrees(angle));
 
             // Draw drones and powerups, powerups don't have a direction so no angle is needed
             int enemyIconOffset = 0;
-            foreach (var entity in sceneManager.entityManager.RenderableEntities())
+            foreach (var entity in SceneManager.entityManager.RenderableEntities())
             {
                 if (entity.Name.Contains("FishPowerUp"))
                 {
-                    var powerUpPosition = ComponentHelper.GetComponent<ComponentPosition>(sceneManager.entityManager.FindRenderableEntity(entity.Name), ComponentTypes.COMPONENT_POSITION);
-                    GUI.Image("Images/fishicon.bmp", 32, 32, (int)(powerUpPosition.Position.X * 12.5f) + 1010, (int)(powerUpPosition.Position.Z * 12.5f) + 110, 0);
+                    var powerUpPosition = ComponentHelper.GetComponent<ComponentPosition>(SceneManager.entityManager.FindRenderableEntity(entity.Name), ComponentTypes.COMPONENT_POSITION);
+                    Gui.Image("Images/fishicon.bmp", 32, 32, (int)(powerUpPosition.Position.X * 12.5f) + 1010, (int)(powerUpPosition.Position.Z * 12.5f) + 110, 0);
                 }
                 
                 if (entity.Name.Contains("EnemyCat"))
                 {
-                    var dronePosition = ComponentHelper.GetComponent<ComponentPosition>(sceneManager.entityManager.FindRenderableEntity(entity.Name), ComponentTypes.COMPONENT_POSITION);
+                    var dronePosition = ComponentHelper.GetComponent<ComponentPosition>(SceneManager.entityManager.FindRenderableEntity(entity.Name), ComponentTypes.COMPONENT_POSITION);
                     var droneNum = entity.Name.Split(' ')[1];
                     
                     angle = CalculateAngle(entity);
-                    GUI.Image($"Images/droneicon{droneNum}.bmp", 32, 32, (int)(dronePosition.Position.X * 12.5f) + 1010, (int)(dronePosition.Position.Z * 12.5f) + 110, 0, (int)MathHelper.RadiansToDegrees(angle));
-                    GUI.Image($"Images/droneicon{droneNum}.bmp", 32, 32, 150 + enemyIconOffset, 64, 0);
+                    Gui.Image($"Images/droneicon{droneNum}.bmp", 32, 32, (int)(dronePosition.Position.X * 12.5f) + 1010, (int)(dronePosition.Position.Z * 12.5f) + 110, 0, (int)MathHelper.RadiansToDegrees(angle));
+                    Gui.Image($"Images/droneicon{droneNum}.bmp", 32, 32, 150 + enemyIconOffset, 64, 0);
                     enemyIconOffset += 32;
                 }
             }
-            GUI.RenderLayer(0);
+            Gui.RenderLayer(0);
         }
 
         /// <summary>
@@ -218,10 +218,10 @@ namespace OpenGL_Game.Game.Scenes
         /// </summary>
         public override void Close()
         {
-            sceneManager.scriptManager.SaveData("Scripts/gameData.json", "Lives", playerLives.ToString());
-            sceneManager.inputManager.ClearBinds();
+            SceneManager.scriptManager.SaveData("Scripts/gameData.json", "Lives", playerLives.ToString());
+            SceneManager.inputManager.ClearBinds();
 
-            foreach (var entity in sceneManager.entityManager.RenderableEntities().Concat(sceneManager.entityManager.NonRenderableEntities()))
+            foreach (var entity in SceneManager.entityManager.RenderableEntities().Concat(SceneManager.entityManager.NonRenderableEntities()))
             {
                 var audioComponents = ComponentHelper.GetComponents<ComponentAudio>(entity);
                 foreach (var audioComponent in audioComponents)

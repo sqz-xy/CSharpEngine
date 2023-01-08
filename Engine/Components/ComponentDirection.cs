@@ -4,6 +4,7 @@ namespace OpenGL_Game.Engine.Components
 {
     public class ComponentDirection : IComponent
     {
+        // Direction an entity is facing
         Vector3 _direction;
 
         public ComponentDirection(float x, float y, float z)

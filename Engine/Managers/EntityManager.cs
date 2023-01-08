@@ -7,80 +7,105 @@ namespace OpenGL_Game.Engine.Managers
 {
     public class EntityManager
     {
-        List<Entity> renderableEntityList;
-        List<Entity> nonRenderableEntityList;
+        List<Entity> _renderableEntityList;
+        List<Entity> _nonRenderableEntityList;
 
         public EntityManager()
         {
-            renderableEntityList = new List<Entity>();
-            nonRenderableEntityList = new List<Entity>();
+            _renderableEntityList = new List<Entity>();
+            _nonRenderableEntityList = new List<Entity>();
         }
 
-        public void AddEntity(Entity entity, bool pIsRenderable)
+        /// <summary>
+        /// Adds an entity to the entity manager list
+        /// </summary>
+        /// <param name="pEntity">The entity to add</param>
+        /// <param name="pIsRenderable">Is the entity renderable</param>
+        public void AddEntity(Entity pEntity, bool pIsRenderable)
         {
             Entity result;
             if (pIsRenderable)
             {
-                result = FindRenderableEntity(entity.Name);
-                Debug.Assert(result == null, "Entity '" + entity.Name + "' already exists");
-                renderableEntityList.Add(entity);
+                result = FindRenderableEntity(pEntity.Name);
+                Debug.Assert(result == null, "Entity '" + pEntity.Name + "' already exists");
+                _renderableEntityList.Add(pEntity);
                 return;
             }
-            result = FindNonRenderableEntity(entity.Name);
-            Debug.Assert(result == null, "Entity '" + entity.Name + "' already exists");
-            nonRenderableEntityList.Add(entity);
+            result = FindNonRenderableEntity(pEntity.Name);
+            Debug.Assert(result == null, "Entity '" + pEntity.Name + "' already exists");
+            _nonRenderableEntityList.Add(pEntity);
 
         }
 
-        public Entity FindRenderableEntity(string name)
+        /// <summary>
+        /// Finds a renderable entity
+        /// </summary>
+        /// <param name="pName">Name of the entity</param>
+        /// <returns>The entity with the passed in name or null</returns>
+        public Entity FindRenderableEntity(string pName)
         {
-            return renderableEntityList.Find(delegate(Entity e)
+            return _renderableEntityList.Find(delegate(Entity pE)
             {
-                return e.Name == name;
+                return pE.Name == pName;
             }
             );
         }
 
-        public Entity FindNonRenderableEntity(string name)
+        /// <summary>
+        /// Finds a non renderable entity
+        /// </summary>
+        /// <param name="pName">Name of the entity</param>
+        /// <returns>The entity with the passed in name or null</returns>
+        public Entity FindNonRenderableEntity(string pName)
         {
-            return nonRenderableEntityList.Find(delegate (Entity e)
+            return _nonRenderableEntityList.Find(delegate (Entity pE)
             {
-                return e.Name == name;
+                return pE.Name == pName;
             }
             );
         }
 
-        public bool DeleteRenderableEntity(string name)
+        /// <summary>
+        /// Deletes a renderable entity
+        /// </summary>
+        /// <param name="pName">Name of the entity</param>
+        /// <returns>A boolean value to signify if the entity has been deleted</returns>
+        public bool DeleteRenderableEntity(string pName)
         {
-            var entityToDelete = renderableEntityList.FirstOrDefault(i => i.Name == name);
-            renderableEntityList.Remove(entityToDelete);
+            var entityToDelete = _renderableEntityList.FirstOrDefault(pI => pI.Name == pName);
+            _renderableEntityList.Remove(entityToDelete);
             
             if (entityToDelete == null)
                 return false;
             
-            renderableEntityList.Remove(entityToDelete);
+            _renderableEntityList.Remove(entityToDelete);
             return true;
         }
 
-        public bool DeleteNonRenderableEntity(string name)
+        /// <summary>
+        /// Deletes a non renderable entity
+        /// </summary>
+        /// <param name="pName">Name of the entity</param>
+        /// <returns>A boolean value to signify if the entity has been deleted</returns>
+        public bool DeleteNonRenderableEntity(string pName)
         {
-            var entityToDelete = nonRenderableEntityList.FirstOrDefault(i => i.Name == name);
+            var entityToDelete = _nonRenderableEntityList.FirstOrDefault(pI => pI.Name == pName);
 
             if (entityToDelete == null)
                 return false;
             
-            renderableEntityList.Remove(entityToDelete);
+            _renderableEntityList.Remove(entityToDelete);
             return true;
         }
-
+        
         public List<Entity> RenderableEntities()
         {
-            return renderableEntityList;
+            return _renderableEntityList;
         }
 
         public List<Entity> NonRenderableEntities()
         {
-            return nonRenderableEntityList;
+            return _nonRenderableEntityList;
         }
     }
 }

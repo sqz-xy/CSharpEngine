@@ -8,7 +8,10 @@ namespace OpenGL_Game.Engine.Components
 {
     public abstract class ComponentShader : IComponent
     {
+        // Program ID
         public int pgmID;
+        
+        // Filepath names
         public string vertexPath, fragmentPath;
 
         public ComponentShader(string pVertexPath, string pFragmentPath)

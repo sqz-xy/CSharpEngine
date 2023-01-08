@@ -38,7 +38,6 @@ namespace OpenGL_Game.Engine.Systems
                     {
                         if ((secondEntity.Mask & AABBMASK) == AABBMASK)
                         {
-                            // Check if an inverse collision is also added
                             CheckCollision(firstEntity, secondEntity);
                         }
                     }
@@ -46,8 +45,11 @@ namespace OpenGL_Game.Engine.Systems
             }
         }
         
-
-        // Pass by ref so the values within the entity change
+        /// <summary>
+        /// Checks if a sphere and AABB has collided
+        /// </summary>
+        /// <param name="pEntity1">The first entity</param>
+        /// <param name="pEntity2">The second entity</param>
         private void CheckCollision(Entity pEntity1, Entity pEntity2)
         {
             if (pEntity1 == pEntity2)
@@ -64,11 +66,15 @@ namespace OpenGL_Game.Engine.Systems
             if (xDistance >= (AABBCol.Width + sphereCol.CollisionField) || zDistance >= (AABBCol.Depth + sphereCol.CollisionField))
                 return;
             
+            // Don't need to test the Y axis because we aren't going vertical
+            
+            // Check sides collision
             if ((xDistance < AABBCol.Width) || (zDistance < AABBCol.Depth))
                 _collisionManager.RegisterCollision(pEntity1, pEntity2, COLLISIONTYPE.SPHERE_AABB);
             
             _collisionManager.RegisterCollision(pEntity1, pEntity2, COLLISIONTYPE.SPHERE_AABB);
-
+            
+            // Check corner collision
             var cornerDistance = ((xDistance - AABBCol.Width) * (xDistance - AABBCol.Width)) +
                                  ((zDistance - AABBCol.Height) * (zDistance - AABBCol.Height));
 

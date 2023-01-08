@@ -36,7 +36,6 @@ namespace OpenGL_Game.Engine.Systems
                     {
                         if ((secondEntity.Mask & MASK) == MASK)
                         {
-                            // Check if an inverse collision is also added
                             CheckCollision(firstEntity, secondEntity);
                         }
                     }
@@ -55,6 +54,7 @@ namespace OpenGL_Game.Engine.Systems
             var entity2Pos = ComponentHelper.GetComponent<ComponentPosition>(pEntity2, ComponentTypes.COMPONENT_POSITION);
             var entity2Coll = ComponentHelper.GetComponent<ComponentCollisionSphere>(pEntity2, ComponentTypes.COMPONENT_COLLISION_SPHERE);
 
+            // Check for sphere intersection
             if ((entity1Pos.Position - entity2Pos.Position).Length < entity1Coll.CollisionField + entity2Coll.CollisionField)
             {
                 _collisionManager.RegisterCollision(pEntity1, pEntity2, COLLISIONTYPE.SPHERE_SPHERE);

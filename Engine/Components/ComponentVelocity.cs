@@ -4,6 +4,7 @@ namespace OpenGL_Game.Engine.Components
 {
     class ComponentVelocity : IComponent
     {
+        // Velocity of an entity
         Vector3 _velocity;
 
         public ComponentVelocity(float x, float y, float z)

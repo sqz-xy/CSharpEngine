@@ -50,9 +50,9 @@ namespace OpenGL_Game.Engine.Managers
             GL.DepthMask(true);
 
             //Load the GUI
-            GUI.SetUpGUI(width, height, 2);
+            Gui.SetUpGui(width, height, 2);
 
-            ChangeScene(SceneTypes.SCENE_MAIN_MENU);
+            ChangeScene(SceneTypes.SceneMainMenu);
         }
 
         protected override void OnUpdateFrame(FrameEventArgs e)
@@ -94,7 +94,7 @@ namespace OpenGL_Game.Engine.Managers
             SceneManager.height = Height;
 
             //Load the GUI
-            GUI.SetUpGUI(Width, Height, 2);
+            Gui.SetUpGui(Width, Height, 2);
         }
 
         public void ChangeScene(SceneTypes pSceneType)
@@ -104,16 +104,16 @@ namespace OpenGL_Game.Engine.Managers
             
             switch (pSceneType)
             {
-                case SceneTypes.SCENE_MAIN_MENU:
+                case SceneTypes.SceneMainMenu:
                     scene = new MainMenuScene(this);
                     break;
-                case SceneTypes.SCENE_GAME:
+                case SceneTypes.SceneGame:
                     scene = new GameScene(this);
                     break;
-                case SceneTypes.SCENE_GAME_OVER:
+                case SceneTypes.SceneGameOver:
                     scene = new GameOverScene(this);
                     break;
-                case SceneTypes.SCENE_GAME_WIN:
+                case SceneTypes.SceneGameWin:
                     scene = new GameWinScene(this);
                     break;
                 default:
@@ -129,16 +129,16 @@ namespace OpenGL_Game.Engine.Managers
 
             switch (pSceneType)
             {
-                case SceneTypes.SCENE_MAIN_MENU:
+                case SceneTypes.SceneMainMenu:
                     pSceneManager.scene = new MainMenuScene(pSceneManager);
                     break;
-                case SceneTypes.SCENE_GAME:
+                case SceneTypes.SceneGame:
                     pSceneManager.scene = new GameScene(pSceneManager);
                     break;
-                case SceneTypes.SCENE_GAME_OVER:
+                case SceneTypes.SceneGameOver:
                     pSceneManager.scene = new GameOverScene(pSceneManager);
                     break;
-                case SceneTypes.SCENE_GAME_WIN:
+                case SceneTypes.SceneGameWin:
                     pSceneManager.scene = new GameWinScene(pSceneManager);
                     break;
                 default:

@@ -40,6 +40,7 @@ namespace OpenGL_Game.Engine.Systems
         // Pass by ref so the values within the entity change
         private void Motion(ref ComponentPosition pPos, ref ComponentVelocity pVel, ref ComponentSpeed pSpeed)
         {
+            // Move an entity based on velocity and speed
             pPos.Position += (pVel.Velocity * GameScene.dt) * pSpeed.Speed;
         }
     }

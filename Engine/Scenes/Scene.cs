@@ -5,17 +5,29 @@ namespace OpenGL_Game.Engine.Scenes
 {
     public abstract class Scene : IScene
     {
-        protected SceneManager sceneManager;
+        // Reference to scene manager
+        protected SceneManager SceneManager;
         
-        public Scene(SceneManager sceneManager)
+        public Scene(SceneManager pSceneManager)
         {
-            this.sceneManager = sceneManager;
+            this.SceneManager = pSceneManager;
         }
 
-        public abstract void Render(FrameEventArgs e);
+        /// <summary>
+        /// Scene render method
+        /// </summary>
+        /// <param name="pE"></param>
+        public abstract void Render(FrameEventArgs pE);
 
-        public abstract void Update(FrameEventArgs e);
+        /// <summary>
+        /// Scene update method
+        /// </summary>
+        /// <param name="pE"></param>
+        public abstract void Update(FrameEventArgs pE);
 
+        /// <summary>
+        /// Scene close method
+        /// </summary>
         public abstract void Close();
     }
 }

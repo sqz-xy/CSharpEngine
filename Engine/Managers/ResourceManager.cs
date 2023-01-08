@@ -11,54 +11,65 @@ namespace OpenGL_Game.Engine.Managers
 {
     public static class ResourceManager
     {
-        static Dictionary<string, Geometry> geometryDictionary = new Dictionary<string, Geometry>();
-        static Dictionary<string, int> textureDictionary = new Dictionary<string, int>();
-        private static Dictionary<string, int> shaderDictionary = new Dictionary<string, int>();
+        static Dictionary<string, Geometry> _geometryDictionary = new Dictionary<string, Geometry>();
+        static Dictionary<string, int> _textureDictionary = new Dictionary<string, int>();
+        private static Dictionary<string, int> _shaderDictionary = new Dictionary<string, int>();
         
-        static Dictionary<string, int> audioDictionary = new Dictionary<string, int>();
+        static Dictionary<string, int> _audioDictionary = new Dictionary<string, int>();
         
         // I added this
         //static List<int> audioSources = new List<int>();
 
         public static void RemoveAllAssets()
         {
-            foreach (var geometry in geometryDictionary)
+            foreach (var geometry in _geometryDictionary)
             {
                 geometry.Value.RemoveGeometry();
             }
-            geometryDictionary.Clear();
+            _geometryDictionary.Clear();
             
-            foreach (var texture in textureDictionary)
+            foreach (var texture in _textureDictionary)
             {
                 GL.DeleteTexture(texture.Value);
             }
-            textureDictionary.Clear();
+            _textureDictionary.Clear();
             
-            foreach (var shader in shaderDictionary)
+            foreach (var shader in _shaderDictionary)
             {
                 GL.DeleteShader(shader.Value);
             }
-            shaderDictionary.Clear();
+            _shaderDictionary.Clear();
         }
 
-        public static Geometry LoadGeometry(string filename)
+        /// <summary>
+        /// Loads geometry
+        /// </summary>
+        /// <param name="pFilename">Geometry file name</param>
+        /// <returns>A geometry object</returns>
+        public static Geometry LoadGeometry(string pFilename)
         {
             Geometry geometry;
-            geometryDictionary.TryGetValue(filename, out geometry);
+            _geometryDictionary.TryGetValue(pFilename, out geometry);
             if (geometry == null)
             {
                 geometry = new Geometry();
-                geometry.LoadObject(filename);
-                geometryDictionary.Add(filename, geometry);
+                geometry.LoadObject(pFilename);
+                _geometryDictionary.Add(pFilename, geometry);
             }
 
             return geometry;
         }
 
+        /// <summary>
+        /// Loads shaders
+        /// </summary>
+        /// <param name="pFileName">Shader file name</param>
+        /// <param name="pType">Type of shader</param>
+        /// <returns>A shader program id</returns>
         public static int LoadShader(string pFileName, ShaderType pType)
         {
             int shader;
-            shaderDictionary.TryGetValue(pFileName, out shader);
+            _shaderDictionary.TryGetValue(pFileName, out shader);
 
             if (shader == 0)
             {
@@ -69,23 +80,29 @@ namespace OpenGL_Game.Engine.Managers
                 }
                 GL.CompileShader(shader);
                 Console.WriteLine(GL.GetProgramInfoLog(shader));
-                shaderDictionary.Add(pFileName, shader);
+                _shaderDictionary.Add(pFileName, shader);
             }
 
             return shader;
         }
 
-        public static int LoadTexture(string filename)
+        /// <summary>
+        /// Loads textures
+        /// </summary>
+        /// <param name="pFilename">Texture file name</param>
+        /// <returns>A texture buffer index</returns>
+        /// <exception cref="ArgumentException">Empty filename</exception>
+        public static int LoadTexture(string pFilename)
         {
-            if (String.IsNullOrEmpty(filename))
-                throw new ArgumentException(filename);
+            if (String.IsNullOrEmpty(pFilename))
+                throw new ArgumentException(pFilename);
 
             int texture;
-            textureDictionary.TryGetValue(filename, out texture);
+            _textureDictionary.TryGetValue(pFilename, out texture);
             if (texture == 0)
             {
                 texture = GL.GenTexture();
-                textureDictionary.Add(filename, texture);
+                _textureDictionary.Add(pFilename, texture);
                 GL.BindTexture(TextureTarget.Texture2D, texture);
 
                 // We will not upload mipmaps, so disable mipmapping (otherwise the texture will not appear).
@@ -94,22 +111,27 @@ namespace OpenGL_Game.Engine.Managers
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
                 GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
 
-                var bmp = new Bitmap(filename);
-                var bmp_data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+                var bmp = new Bitmap(pFilename);
+                var bmpData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
 
-                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, bmp_data.Width, bmp_data.Height, 0,
-                    OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bmp_data.Scan0);
+                GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, bmpData.Width, bmpData.Height, 0,
+                    OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bmpData.Scan0);
 
-                bmp.UnlockBits(bmp_data);
+                bmp.UnlockBits(bmpData);
             }
  
             return texture;
         }
         
-        public static int LoadAudio(string filename)
+        /// <summary>
+        /// Loads audio
+        /// </summary>
+        /// <param name="pFilename">Name of the audio file</param>
+        /// <returns>An audio buffer index</returns>
+        public static int LoadAudio(string pFilename)
         {
             // Mine
-            audioDictionary.TryGetValue(filename, out var audioBuffer);
+            _audioDictionary.TryGetValue(pFilename, out var audioBuffer);
 
             if (audioBuffer == 0)
             {
@@ -117,19 +139,19 @@ namespace OpenGL_Game.Engine.Managers
                 audioBuffer = AL.GenBuffer();
 
                 // Load a .wav file from disk.
-                int channels, bits_per_sample, sample_rate;
-                var sound_data = LoadWave(
-                    File.Open(filename, FileMode.Open),
+                int channels, bitsPerSample, sampleRate;
+                var soundData = LoadWave(
+                    File.Open(pFilename, FileMode.Open),
                     out channels,
-                    out bits_per_sample,
-                    out sample_rate);
-                var sound_format =
-                    channels == 1 && bits_per_sample == 8 ? ALFormat.Mono8 :
-                    channels == 1 && bits_per_sample == 16 ? ALFormat.Mono16 :
-                    channels == 2 && bits_per_sample == 8 ? ALFormat.Stereo8 :
-                    channels == 2 && bits_per_sample == 16 ? ALFormat.Stereo16 :
+                    out bitsPerSample,
+                    out sampleRate);
+                var soundFormat =
+                    channels == 1 && bitsPerSample == 8 ? ALFormat.Mono8 :
+                    channels == 1 && bitsPerSample == 16 ? ALFormat.Mono16 :
+                    channels == 2 && bitsPerSample == 8 ? ALFormat.Stereo8 :
+                    channels == 2 && bitsPerSample == 16 ? ALFormat.Stereo16 :
                     (ALFormat)0; // unknown
-                AL.BufferData(audioBuffer, sound_format, sound_data, sound_data.Length, sample_rate);
+                AL.BufferData(audioBuffer, soundFormat, soundData, soundData.Length, sampleRate);
                 if (AL.GetError() != ALError.NoError)
                 {
                     Console.WriteLine("Error");
@@ -141,46 +163,46 @@ namespace OpenGL_Game.Engine.Managers
         /// <summary>
         /// Load a WAV file.
         /// </summary>
-        private static byte[] LoadWave(Stream stream, out int channels, out int bits, out int rate)
+        private static byte[] LoadWave(Stream pStream, out int pChannels, out int pBits, out int pRate)
         {
-            if (stream == null)
-                throw new ArgumentNullException("stream");
+            if (pStream == null)
+                throw new ArgumentNullException("pStream");
 
-            using (var reader = new BinaryReader(stream))
+            using (var reader = new BinaryReader(pStream))
             {
                 // RIFF header
                 var signature = new string(reader.ReadChars(4));
                 if (signature != "RIFF")
                     throw new NotSupportedException("Specified stream is not a wave file.");
 
-                var riff_chunck_size = reader.ReadInt32();
+                var riffChunckSize = reader.ReadInt32();
 
                 var format = new string(reader.ReadChars(4));
                 if (format != "WAVE")
                     throw new NotSupportedException("Specified stream is not a wave file.");
 
                 // WAVE header
-                var format_signature = new string(reader.ReadChars(4));
-                if (format_signature != "fmt ")
+                var formatSignature = new string(reader.ReadChars(4));
+                if (formatSignature != "fmt ")
                     throw new NotSupportedException("Specified wave file is not supported.");
 
-                var format_chunk_size = reader.ReadInt32();
-                int audio_format = reader.ReadInt16();
-                int num_channels = reader.ReadInt16();
-                var sample_rate = reader.ReadInt32();
-                var byte_rate = reader.ReadInt32();
-                int block_align = reader.ReadInt16();
-                int bits_per_sample = reader.ReadInt16();
+                var formatChunkSize = reader.ReadInt32();
+                int audioFormat = reader.ReadInt16();
+                int numChannels = reader.ReadInt16();
+                var sampleRate = reader.ReadInt32();
+                var byteRate = reader.ReadInt32();
+                int blockAlign = reader.ReadInt16();
+                int bitsPerSample = reader.ReadInt16();
 
-                var data_signature = new string(reader.ReadChars(4));
-                if (data_signature != "data")
+                var dataSignature = new string(reader.ReadChars(4));
+                if (dataSignature != "data")
                     throw new NotSupportedException("Specified wave file is not supported.");
 
-                var data_chunk_size = reader.ReadInt32();
+                var dataChunkSize = reader.ReadInt32();
 
-                channels = num_channels;
-                bits = bits_per_sample;
-                rate = sample_rate;
+                pChannels = numChannels;
+                pBits = bitsPerSample;
+                pRate = sampleRate;
 
                 return reader.ReadBytes((int)reader.BaseStream.Length);
             }

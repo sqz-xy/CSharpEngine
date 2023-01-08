@@ -4,7 +4,10 @@ namespace OpenGL_Game.Engine.Components
 {
     class ComponentTexture : IComponent
     {
+        // Texture buffer
         int texture;
+        
+        // Texture file name
         private string textureName;
 
         public ComponentTexture(string pTextureName)

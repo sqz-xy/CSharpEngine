@@ -2,6 +2,7 @@
 {
     public class ComponentCollisionAABB : IComponent
     {
+        // Dimensions of the AABB
         private float _width;
         private float _height;
         private float _depth;

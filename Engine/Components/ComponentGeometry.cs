@@ -5,6 +5,7 @@ namespace OpenGL_Game.Engine.Components
 {
     class ComponentGeometry : IComponent
     {
+        // Geometry for an entity
         Geometry geometry;
 
         public ComponentGeometry(string geometryName)

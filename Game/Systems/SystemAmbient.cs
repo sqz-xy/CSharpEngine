@@ -16,6 +16,7 @@ namespace OpenGL_Game.Game.Systems
                     var audioComponents = ComponentHelper.GetComponents<ComponentAudio>(entity);
                     foreach (var audioComponent in audioComponents)
                     {
+                        // Play looping audio sources straight away
                         if (audioComponent.IsLooping)
                             PlayAmbientSound(audioComponent);
                     }

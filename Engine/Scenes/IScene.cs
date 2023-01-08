@@ -2,18 +2,34 @@
 
 namespace OpenGL_Game.Engine.Scenes
 {
+    /// <summary>
+    /// Enum describing the types of scene
+    /// </summary>
     public enum SceneTypes
     {
-        SCENE_NONE,
-        SCENE_MAIN_MENU,
-        SCENE_GAME,
-        SCENE_GAME_OVER,
-        SCENE_GAME_WIN
+        SceneNone,
+        SceneMainMenu,
+        SceneGame,
+        SceneGameOver,
+        SceneGameWin
     }
     interface IScene
     {
-        void Render(FrameEventArgs e);
-        void Update(FrameEventArgs e);
+        /// <summary>
+        /// Scene render method
+        /// </summary>
+        /// <param name="pE"></param>
+        void Render(FrameEventArgs pE);
+        
+        /// <summary>
+        /// Scene update method
+        /// </summary>
+        /// <param name="pE"></param>
+        void Update(FrameEventArgs pE);
+        
+        /// <summary>
+        /// Scene close method
+        /// </summary>
         void Close();
     }
 }

@@ -14,14 +14,14 @@
         /// </summary>
         /// <param name="pScriptName">Name of the script to read</param>
         /// <param name="pSystemManager">The system manager</param>
-        public abstract void LoadSystems(string pScriptName, ref SceneManager pSceneManager, ref Camera pCamera1);
+        public abstract void LoadSystems(string pScriptName, ref SceneManager pSceneManager, ref Camera pCamera);
         
         /// <summary>
         /// Reads a script to load controls for a scene
         /// </summary>
         /// <param name="pScriptName">Name of the controls script</param>
         /// <param name="pInputManager">The game input manager</param>
-        public abstract void LoadControls(string pScriptName, ref InputManager inputManager);
+        public abstract void LoadControls(string pScriptName, ref InputManager pInputManager);
 
         /// <summary>
         /// Reads a file to load any extra scene data

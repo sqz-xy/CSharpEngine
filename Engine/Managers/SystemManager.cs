@@ -7,55 +7,77 @@ namespace OpenGL_Game.Engine.Managers
 {
     public class SystemManager
     {
-        // Presrcibe entities to systems specifically 
-        List<ISystem> renderableSystemList = new List<ISystem>();
-        List<ISystem> nonRenderableSystemList = new List<ISystem>();
+        List<ISystem> _renderableSystemList = new List<ISystem>();
+        List<ISystem> _nonRenderableSystemList = new List<ISystem>();
         public SystemManager()
         {
         }
 
-        public void ActionRenderableSystems(EntityManager entityManager)
+        /// <summary>
+        /// Actions all renderable systems
+        /// </summary>
+        /// <param name="pEntityManager">The entity manager</param>
+        public void ActionRenderableSystems(EntityManager pEntityManager)
         {
-            var entityList = entityManager.RenderableEntities();
-            foreach (var system in renderableSystemList)
+            var entityList = pEntityManager.RenderableEntities();
+            foreach (var system in _renderableSystemList)
                 system.OnAction(entityList);
         }
 
-        public void ActionNonRenderableSystems(EntityManager entityManager)
+        /// <summary>
+        /// Actions all non renderable systems
+        /// </summary>
+        /// <param name="pEntityManager">The entity manager</param>
+        public void ActionNonRenderableSystems(EntityManager pEntityManager)
         {
-            var entityList = (List<Entity>)entityManager.NonRenderableEntities().Concat(entityManager.RenderableEntities()).ToList();
-            foreach (var system in nonRenderableSystemList)
+            var entityList = (List<Entity>)pEntityManager.NonRenderableEntities().Concat(pEntityManager.RenderableEntities()).ToList();
+            foreach (var system in _nonRenderableSystemList)
                 system.OnAction(entityList);
         }
 
-        public void AddSystem(ISystem system, bool pIsRenderable)
+        /// <summary>
+        /// Adds a system to either the renderable or non renderable list
+        /// </summary>
+        /// <param name="pSystem">The system to add</param>
+        /// <param name="pIsRenderable">Is the system renderable</param>
+        public void AddSystem(ISystem pSystem, bool pIsRenderable)
         {
             //ISystem result = FindSystem(system.Name);
             //Debug.Assert(result != null, "System '" + system.Name + "' already exists");
 
             if (pIsRenderable)
             {
-                renderableSystemList.Add(system);
+                _renderableSystemList.Add(pSystem);
                 return;
             }
     
-            nonRenderableSystemList.Add(system);
+            _nonRenderableSystemList.Add(pSystem);
         }
         
-        private ISystem FindRenderableSystem(string name)
+        /// <summary>
+        /// Finds a renderable system by name
+        /// </summary>
+        /// <param name="pName">Name of the system</param>
+        /// <returns>The system or null</returns>
+        private ISystem FindRenderableSystem(string pName)
         {
-            return renderableSystemList.Find(delegate(ISystem system)
+            return _renderableSystemList.Find(delegate(ISystem pSystem)
             {
-                return system.Name == name;
+                return pSystem.Name == pName;
             }
             );
         }
 
+        /// <summary>
+        /// Finds a non renderable system by name
+        /// </summary>
+        /// <param name="pName">Name of the system</param>
+        /// <returns>The system or null</returns>
         private ISystem FindNonRenderableSystem(string pName)
         {
-            return nonRenderableSystemList.Find(delegate (ISystem system)
+            return _nonRenderableSystemList.Find(delegate (ISystem pSystem)
             {
-                return system.Name == pName;
+                return pSystem.Name == pName;
             }
             );
         }

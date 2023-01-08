@@ -96,7 +96,7 @@ namespace OpenGL_Game.Game.Managers
             switch (pAction)
             {
                 case "START_GAME":
-                    _sceneManager.ChangeScene(SceneTypes.SCENE_GAME);
+                    _sceneManager.ChangeScene(SceneTypes.SceneGame);
                     break;
                 case "CLOSE_GAME":
                     _sceneManager.Close();

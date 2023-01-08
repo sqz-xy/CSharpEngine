@@ -4,8 +4,13 @@ namespace OpenGL_Game.Engine.Components
 {
     public abstract class ComponentAudio : IComponent
     {
+        // File name
         protected string _audioName;
+        
+        // Is the audio currently playing
         protected bool _isPlaying;
+        
+        // Is the audio a looping type
         protected bool _isLooping;
 
         public string AudioName

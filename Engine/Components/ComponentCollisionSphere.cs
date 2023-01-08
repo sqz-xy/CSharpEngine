@@ -2,7 +2,7 @@
 {
     public class ComponentCollisionSphere : IComponent
     {
-        
+        // Radius of the collision sphere
         float _collisionField;
 
         public ComponentCollisionSphere(float pCollisionField)
