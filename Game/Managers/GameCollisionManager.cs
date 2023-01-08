@@ -142,18 +142,19 @@ namespace OpenGL_Game.Game.Managers
             var health = ComponentHelper.GetComponent<ComponentHealth>(pEntityToAct, ComponentTypes.COMPONENT_HEALTH);
             var damage = ComponentHelper.GetComponent<ComponentDamage>(pEntityToHit, ComponentTypes.COMPONENT_DAMAGE);
             var audio = ComponentHelper.GetComponent<ComponentAudio>(pEntityToAct, ComponentTypes.COMPONENT_AUDIO);
-                    
-            int damageValue;
-            if (damage == null)
-                damageValue = pDamage;
-            else
-                damageValue = damage.Damage;
-                    
+            
             if (pStopwatch.ElapsedMilliseconds == 0)
             {
+                int damageValue;
+                if (damage == null)
+                    damageValue = pDamage;
+                else
+                    damageValue = damage.Damage;
+                
+                pStopwatch.Start();
                 audio.PlayAudio();
                 health.Health -= damageValue;
-                pStopwatch.Start();
+                Console.WriteLine("ENEMYHIT");
             }
                     
             return true;
@@ -164,7 +165,7 @@ namespace OpenGL_Game.Game.Managers
             if (_healthCooldown.ElapsedMilliseconds >= 3000)
                 _healthCooldown.Reset();
             
-            if (_enemyHealthCooldown.ElapsedMilliseconds >= 1000)
+            if (_enemyHealthCooldown.ElapsedMilliseconds >= 500)
                 _enemyHealthCooldown.Reset();
             
             if (_powerUpHealthCooldown.ElapsedMilliseconds >= 1000)
