@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using OpenGL_Game.Engine;
@@ -28,6 +29,13 @@ namespace OpenGL_Game.Game.Scenes
         
         public Camera camera;
         public static GameScene gameInstance;
+        
+        // Images
+        private Image _heartIcon;
+        private Image _minimap;
+        private Image _playerIcon;
+        private Image _fishIcon;
+        private List<Image> _droneIcons;
 
         public GameScene(SceneManager sceneManager) : base(sceneManager)
         {
@@ -56,10 +64,18 @@ namespace OpenGL_Game.Game.Scenes
             sceneManager.scriptManager.LoadControls("Scripts/gameControls.json", ref sceneManager.inputManager);
             sceneManager.scriptManager.LoadData("Scripts/gameData.json",  "Lives", out var livesString);
             playerLives = int.Parse(livesString);
-            
             sceneManager.inputManager.InitializeBinds();
 
-            // TODO: Add your initialization logic here
+            _droneIcons = new List<Image>();
+            
+            _heartIcon = Gui.LoadImage("Images/hearticon.bmp");
+            _minimap = Gui.LoadImage("Images/minimap.bmp");
+            _playerIcon = Gui.LoadImage("Images/playericon.bmp");
+            _fishIcon = Gui.LoadImage("Images/fishicon.bmp");
+            
+            for (int i = 1; i <= 3; i++)
+                _droneIcons.Add(Gui.LoadImage($"Images/droneicon{i}.bmp"));
+
         }
 
         private void CreateEntities()
@@ -144,7 +160,7 @@ namespace OpenGL_Game.Game.Scenes
             int livesIconOffset = 0;
             for (int i = 0; i < playerLives; i++)
             {
-                Gui.Image("Images/hearticon.bmp", 32, 32, 150 + livesIconOffset, 32, 0);
+                Gui.Image(_heartIcon, 32, 32, 150 + livesIconOffset, 32, 0);
                 livesIconOffset += 32;
             }
 
@@ -165,11 +181,13 @@ namespace OpenGL_Game.Game.Scenes
             Gui.Label(new Rectangle(20, 750, (int)width, (int)(fontSize * 2f)), $"Position: {playerPosition.Position}", 18, StringAlignment.Near, Color.White, 0);
             
             // Minimap logic
-            Gui.Image("Images/minimap.bmp", 256, 256, 900, 0, 0);
+            Gui.Image(_minimap, 256, 256, 900, 0, 0);
             var angle = CalculateAngle(SceneManager.entityManager.FindRenderableEntity("Player"));
             
             // Offset for image location and player speed
-            Gui.Image("Images/playericon.bmp", 32, 32, (int)(playerPosition.Position.X * 12.5f) + 1000, (int)(playerPosition.Position.Z * 12.5f) + 100, 0, (int)MathHelper.RadiansToDegrees(angle));
+            Gui.Image(_playerIcon, 32, 32, 
+                (int)(playerPosition.Position.X * 12.5f) + 1000, (int)(playerPosition.Position.Z * 12.5f) + 100, 
+                0, (int)MathHelper.RadiansToDegrees(angle));
 
             // Draw drones and powerups, powerups don't have a direction so no angle is needed
             int enemyIconOffset = 0;
@@ -178,7 +196,7 @@ namespace OpenGL_Game.Game.Scenes
                 if (entity.Name.Contains("FishPowerUp"))
                 {
                     var powerUpPosition = ComponentHelper.GetComponent<ComponentPosition>(SceneManager.entityManager.FindRenderableEntity(entity.Name), ComponentTypes.COMPONENT_POSITION);
-                    Gui.Image("Images/fishicon.bmp", 32, 32, (int)(powerUpPosition.Position.X * 12.5f) + 1010, (int)(powerUpPosition.Position.Z * 12.5f) + 110, 0);
+                    Gui.Image(_fishIcon, 32, 32, (int)(powerUpPosition.Position.X * 12.5f) + 1010, (int)(powerUpPosition.Position.Z * 12.5f) + 110, 0);
                 }
                 
                 if (entity.Name.Contains("EnemyCat"))
@@ -187,8 +205,8 @@ namespace OpenGL_Game.Game.Scenes
                     var droneNum = entity.Name.Split(' ')[1];
                     
                     angle = CalculateAngle(entity);
-                    Gui.Image($"Images/droneicon{droneNum}.bmp", 32, 32, (int)(dronePosition.Position.X * 12.5f) + 1010, (int)(dronePosition.Position.Z * 12.5f) + 110, 0, (int)MathHelper.RadiansToDegrees(angle));
-                    Gui.Image($"Images/droneicon{droneNum}.bmp", 32, 32, 150 + enemyIconOffset, 64, 0);
+                    Gui.Image(_droneIcons[int.Parse(droneNum) - 1], 32, 32, (int)(dronePosition.Position.X * 12.5f) + 1010, (int)(dronePosition.Position.Z * 12.5f) + 110, 0, (int)MathHelper.RadiansToDegrees(angle));
+                    Gui.Image(_droneIcons[int.Parse(droneNum) - 1], 32, 32, 150 + enemyIconOffset, 64, 0);
                     enemyIconOffset += 32;
                 }
             }

@@ -10,6 +10,7 @@ namespace OpenGL_Game.Game.Scenes
 {
     class GameOverScene : Scene
     {
+        private Image _gameLose;
         public GameOverScene(SceneManager sceneManager) : base(sceneManager)
         {
             sceneManager.inputManager = new GameInputManager(sceneManager.entityManager, base.SceneManager);
@@ -22,6 +23,8 @@ namespace OpenGL_Game.Game.Scenes
             
             sceneManager.scriptManager.LoadControls("Scripts/gameOverControls.json", ref sceneManager.inputManager);
             sceneManager.inputManager.InitializeBinds();
+
+            _gameLose = Gui.LoadImage("Images/gamelose.bmp");
         }
 
         public override void Update(FrameEventArgs e)
@@ -41,7 +44,7 @@ namespace OpenGL_Game.Game.Scenes
 
             //Display the Title
             float width = SceneManager.Width, height = SceneManager.Height, fontSize = Math.Min(width, height) / 10f;
-            Gui.Image("Images/gamelose.bmp", width, height, 0);
+            Gui.Image(_gameLose, width, height, 0);
             Gui.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int)(fontSize * 2f)), "Game Over,", (int)fontSize, StringAlignment.Center, Color.MidnightBlue, 0);
             Gui.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int) ((int)(fontSize * 2f) + fontSize * 2.5f)), "The Cats Win!", (int)fontSize, StringAlignment.Center, Color.MidnightBlue, 0);
             Gui.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int) (((int)(fontSize * 2f)) + height * 1.5f)), "Press Space to Play again!", (int)fontSize / 2, StringAlignment.Center, Color.MidnightBlue, 0);

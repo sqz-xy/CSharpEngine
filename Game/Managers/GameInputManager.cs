@@ -114,7 +114,6 @@ namespace OpenGL_Game.Game.Managers
         {
             if (_toggleCollisionCooldown.ElapsedMilliseconds == 0)
             {
-
                 pCollisionManager.IsActive = !pCollisionManager.IsActive;
                 _toggleCollisionCooldown.Start();
             }

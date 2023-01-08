@@ -10,6 +10,7 @@ namespace OpenGL_Game.Game.Scenes
 {
     class GameWinScene : Scene
     {
+        private Image _gameWin;
         public GameWinScene(SceneManager sceneManager) : base(sceneManager)
         {
             sceneManager.inputManager = new GameInputManager(sceneManager.entityManager, base.SceneManager);
@@ -22,6 +23,8 @@ namespace OpenGL_Game.Game.Scenes
             
             sceneManager.scriptManager.LoadControls("Scripts/gameWinControls.json", ref sceneManager.inputManager);
             sceneManager.inputManager.InitializeBinds();
+
+            _gameWin = Gui.LoadImage("Images/gamewin.bmp");
         }
 
         public override void Update(FrameEventArgs e)
@@ -42,7 +45,7 @@ namespace OpenGL_Game.Game.Scenes
 
             //Display the Title
             float width = SceneManager.Width, height = SceneManager.Height, fontSize = Math.Min(width, height) / 10f;
-            Gui.Image("Images/gamewin.bmp", width, height, 0);
+            Gui.Image(_gameWin, width, height, 0);
             Gui.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int)(fontSize * 2f)), "The Cats are dead,", (int)fontSize, StringAlignment.Center, Color.MidnightBlue, 0);
             Gui.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int) ((int)(fontSize * 2f) + fontSize * 2.5f)), "You Win!", (int)fontSize, StringAlignment.Center, Color.MidnightBlue, 0);
             Gui.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int) (((int)(fontSize * 2f)) + height * 1.5f)), "Press Space to Play again!", (int)fontSize / 2, StringAlignment.Center, Color.MidnightBlue, 0);

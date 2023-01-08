@@ -15,6 +15,8 @@ namespace OpenGL_Game.Game.Scenes
     {
         
         public Camera camera;
+        private Image _mainMenu;
+        private Image _droneIcon;
         
         public MainMenuScene(SceneManager sceneManager) : base(sceneManager)
         {
@@ -35,6 +37,9 @@ namespace OpenGL_Game.Game.Scenes
             
             sceneManager.scriptManager.LoadControls("Scripts/mainMenuControls.json", ref sceneManager.inputManager);
             sceneManager.inputManager.InitializeBinds();
+
+            _mainMenu = Gui.LoadImage("Images/mainmenu.bmp");
+            _droneIcon = Gui.LoadImage("Images/droneicon2.bmp");
         }
         
         private void CreateEntities()
@@ -67,11 +72,11 @@ namespace OpenGL_Game.Game.Scenes
 
             //Display the Title
             float width = SceneManager.Width, height = SceneManager.Height, fontSize = Math.Min(width, height) / 10f;
-            Gui.Image("Images/mainmenu.bmp", width, height, 0);
+            Gui.Image(_mainMenu, width, height, 0);
             Gui.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int)(fontSize * 2f)), "Felinephobia!", (int)fontSize, StringAlignment.Center, Color.MidnightBlue, 0);
             Gui.Label(new Rectangle(0, 0, (int)width, (int)(fontSize * 2f)), $"FPS: {Math.Round(1 / e.Time)}", 18, StringAlignment.Near, Color.White, 0);
             Gui.Label(new Rectangle(0, (int)(fontSize / 2f), (int)width, (int) (((int)(fontSize * 2f)) + height * 1.5f)), "Press Space to Play!", (int)fontSize / 2, StringAlignment.Center, Color.MidnightBlue, 0);
-            Gui.Image("Images/droneicon2.bmp", 30, 30, 900, 130, 0);
+            Gui.Image(_droneIcon, 30, 30, 900, 130, 0);
             Gui.RenderLayer(0);
         }
         

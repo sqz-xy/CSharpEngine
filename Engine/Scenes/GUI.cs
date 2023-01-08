@@ -56,15 +56,25 @@ namespace OpenGL_Game.Engine.Scenes
         }
 
         /// <summary>
+        /// Loads an image 
+        /// </summary>
+        /// <param name="pFileName"></param>
+        /// <returns></returns>
+        public static Image LoadImage(string pFileName)
+        {
+            return System.Drawing.Image.FromFile(pFileName);
+        }
+
+        /// <summary>
         /// Puts an image on screen at 0, 0
         /// </summary>
-        /// <param name="pFileName">name of the image file</param>
+        /// <param name="pImage">Image to be drawn</param>
         /// <param name="pWidth">screen width</param>
         /// <param name="pHeight">screen height</param>
         /// <param name="pLayer">layer to place the image on</param>
-        public static void Image(string pFileName, float pWidth, float pHeight, int pLayer)
+        public static void Image(Image pImage, float pWidth, float pHeight, int pLayer)
         {
-            var img = new Bitmap(System.Drawing.Image.FromFile(pFileName), new Size((int)pWidth, (int)pHeight));
+            var img = new Bitmap(pImage, new Size((int)pWidth, (int)pHeight));
             img.MakeTransparent();
             _layers[pLayer].DrawImage(img, new Point(0, 0));
         }
@@ -72,15 +82,15 @@ namespace OpenGL_Game.Engine.Scenes
         /// <summary>
         /// Puts an image on screen at desired coordinates
         /// </summary>
-        /// <param name="pFileName">name of the image file</param>
+        /// <param name="pImage">Image to be drawn</param>
         /// <param name="pWidth">screen width</param>
         /// <param name="pHeight">screen height</param>
         /// <param name="pPositionY">Y position to place the image</param>
         /// <param name="pPositionX">X position to place the image</param>
         /// <param name="pLayer">layer to place the image on</param>
-        public static void Image(string pFileName, float pWidth, float pHeight, int pPositionX, int pPositionY, int pLayer)
+        public static void Image(Image pImage, float pWidth, float pHeight, int pPositionX, int pPositionY, int pLayer)
         {
-            var img = new Bitmap(System.Drawing.Image.FromFile(pFileName), new Size((int)pWidth, (int)pHeight));
+            var img = new Bitmap(pImage, new Size((int)pWidth, (int)pHeight));
             img.MakeTransparent();
             _layers[pLayer].DrawImage(img, new Point(pPositionX, pPositionY));
         }
@@ -88,17 +98,17 @@ namespace OpenGL_Game.Engine.Scenes
         /// <summary>
         /// Puts an image on screen at desired coordinates
         /// </summary>
-        /// <param name="pFileName">name of the image file</param>
+        /// <param name="pImage">Image to be drawn</param>
         /// <param name="pWidth">screen width</param>
         /// <param name="pHeight">screen height</param>
         /// <param name="pPositionY">Y position to place the image</param>
         /// <param name="pPositionX">X position to place the image</param>
         /// <param name="pLayer">layer to place the image on</param>
         /// <param name="pAngle">Angle of the image</param>
-        public static void Image(string pFileName, float pWidth, float pHeight, int pPositionX, int pPositionY, int pLayer, int pAngle)
+        public static void Image(Image pImage, float pWidth, float pHeight, int pPositionX, int pPositionY, int pLayer, int pAngle)
         {
             // resize for screen bounds
-            var img = new Bitmap(System.Drawing.Image.FromFile(pFileName), new Size((int)pWidth, (int)pHeight));
+            var img = new Bitmap(pImage, new Size((int)pWidth, (int)pHeight));
             img.MakeTransparent();
 
             // Create a new bitmap which is larger than the image to be drawn
@@ -113,6 +123,11 @@ namespace OpenGL_Game.Engine.Scenes
 
             // Make a graphics object from the empty bitmap
             graphics = Graphics.FromImage(rotatedImage);
+            
+            /*
+             * Omar (2012) Answer to ‘How can I rotate an image by any degree?’ Stack Overflow.
+             * Available online: https://stackoverflow.com/a/12025915 [Accessed 27/12/2022].
+             */
             
             // Rotate it using the dimensions from the larger bitmap (Prevents the image being cutoff from the bounds of the original image)
             graphics.TranslateTransform((float)emptyImg.Width / 2, (float)emptyImg.Height / 2);
