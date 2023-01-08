@@ -110,6 +110,10 @@ namespace OpenGL_Game.Game.Managers
             }
         }
 
+        /// <summary>
+        /// Toggles the collision
+        /// </summary>
+        /// <param name="pCollisionManager">The collision manager</param>
         private void ToggleCollision(CollisionManager pCollisionManager)
         {
             if (_toggleCollisionCooldown.ElapsedMilliseconds == 0)
@@ -119,6 +123,10 @@ namespace OpenGL_Game.Game.Managers
             }
         }
 
+        /// <summary>
+        /// Toggles the AI
+        /// </summary>
+        /// <param name="pAiManager">The AI manager</param>
         private void ToggleAI(AIManager pAiManager)
         {
             if (_toggleAICooldown.ElapsedMilliseconds == 0)
@@ -128,6 +136,11 @@ namespace OpenGL_Game.Game.Managers
             }
         }
 
+        /// <summary>
+        /// Creates a bullet at player position with velocity based on player direction
+        /// </summary>
+        /// <param name="pEntity">entity to shoot from</param>
+        /// <param name="pSpeed">speed of the bullet</param>
         public void Shoot(Entity pEntity, float pSpeed)
         {
             if (_shootCooldown.ElapsedMilliseconds == 0)

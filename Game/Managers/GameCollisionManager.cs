@@ -47,31 +47,35 @@ namespace OpenGL_Game.Game.Managers
             ClearManifold();
         }
 
-        private void WallCollision(Collision collision)
+        /// <summary>
+        /// Collision between walls
+        /// </summary>
+        /// <param name="pCollision">The collision event</param>
+        private void WallCollision(Collision pCollision)
         {
             // Destroy bullets if they hit a wall
-            if (collision.entity1.Name.Contains("Bullet"))
+            if (pCollision.entity1.Name.Contains("Bullet"))
             {
-                var health = ComponentHelper.GetComponent<ComponentHealth>(collision.entity1, ComponentTypes.COMPONENT_HEALTH);
+                var health = ComponentHelper.GetComponent<ComponentHealth>(pCollision.entity1, ComponentTypes.COMPONENT_HEALTH);
                 health.Health -= 1000;
                 return;
             }
 
             // Walls only collide with player after bullet check
-            if (!collision.entity1.Name.Contains("Player"))
+            if (!pCollision.entity1.Name.Contains("Player"))
                 return;
 
             // Collision response for player and wall
             var playerPosition =
-                ComponentHelper.GetComponent<ComponentPosition>(collision.entity1, ComponentTypes.COMPONENT_POSITION);
+                ComponentHelper.GetComponent<ComponentPosition>(pCollision.entity1, ComponentTypes.COMPONENT_POSITION);
             var playerCollision =
-                ComponentHelper.GetComponent<ComponentCollisionSphere>(collision.entity1,
+                ComponentHelper.GetComponent<ComponentCollisionSphere>(pCollision.entity1,
                     ComponentTypes.COMPONENT_COLLISION_SPHERE);
 
             var wallPosition =
-                ComponentHelper.GetComponent<ComponentPosition>(collision.entity2, ComponentTypes.COMPONENT_POSITION);
+                ComponentHelper.GetComponent<ComponentPosition>(pCollision.entity2, ComponentTypes.COMPONENT_POSITION);
             var wallCollision =
-                ComponentHelper.GetComponent<ComponentCollisionAABB>(collision.entity2,
+                ComponentHelper.GetComponent<ComponentCollisionAABB>(pCollision.entity2,
                     ComponentTypes.COMPONENT_COLLISION_AABB);
 
             var xDistance = Math.Abs(playerPosition.Position.X - wallPosition.Position.X);
@@ -99,6 +103,16 @@ namespace OpenGL_Game.Game.Managers
             playerPosition.Position = newPlayerPos;
         }
 
+        /// <summary>
+        /// Health power up logic
+        /// </summary>
+        /// <param name="pEntityToAct">Entity to act on</param>
+        /// <param name="pEntityToHit">Entity being collided with</param>
+        /// <param name="pEntity1Name">Entity 1 name</param>
+        /// <param name="pEntity2Name">Entity 2 name</param>
+        /// <param name="pStopwatch">stopwatch for interaction</param>
+        /// <param name="pDamage">Damage to deal to enemy to hit</param>
+        /// <param name="pHealth">Health to gain</param>
         private void PowerUpHealth(Entity pEntityToAct, Entity pEntityToHit, string pEntity1Name, string pEntity2Name, Stopwatch pStopwatch, int pDamage, int pHealth)
         {
             if (!DamageCollision(pEntityToAct, pEntityToHit, pEntity1Name, pEntity2Name, pStopwatch, pDamage)) return;
@@ -110,6 +124,16 @@ namespace OpenGL_Game.Game.Managers
             pStopwatch.Start();
         }
         
+        /// <summary>
+        /// Speed power up logic
+        /// </summary>
+        /// <param name="pEntityToAct">Entity to act on</param>
+        /// <param name="pEntityToHit">Entity being collided with</param>
+        /// <param name="pEntity1Name">Entity 1 name</param>
+        /// <param name="pEntity2Name">Entity 2 name</param>
+        /// <param name="pStopwatch">stopwatch for interaction</param>
+        /// <param name="pDamage">Damage to deal to enemy to hit</param>
+        /// <param name="pSpeed">Speed to gain</param>
         private void PowerUpSpeed(Entity pEntityToAct, Entity pEntityToHit, string pEntity1Name, string pEntity2Name, Stopwatch pStopwatch, int pDamage, float pSpeed)
         {
             if (!DamageCollision(pEntityToAct, pEntityToHit, pEntity1Name, pEntity2Name, pStopwatch, pDamage)) return;
@@ -121,6 +145,16 @@ namespace OpenGL_Game.Game.Managers
             pStopwatch.Start();
         }
 
+        /// <summary>
+        /// Damage power up logic
+        /// </summary>
+        /// <param name="pEntityToAct">Entity to act on</param>
+        /// <param name="pEntityToHit">Entity being collided with</param>
+        /// <param name="pEntity1Name">Entity 1 name</param>
+        /// <param name="pEntity2Name">Entity 2 name</param>
+        /// <param name="pStopwatch">stopwatch for interaction</param>
+        /// <param name="pDamage">Damage to deal to enemy to hit</param>
+        /// <param name="pDamageIncrease">Damage to gain</param>
         private void PowerUpDamage(Entity pEntityToAct, Entity pEntityToHit, string pEntity1Name, string pEntity2Name, Stopwatch pStopwatch, int pDamage, int pDamageIncrease)
         {
             if (!DamageCollision(pEntityToAct, pEntityToHit, pEntity1Name, pEntity2Name, pStopwatch, pDamage)) return;
@@ -132,7 +166,15 @@ namespace OpenGL_Game.Game.Managers
             pStopwatch.Start();
         }
         
-        
+        /// <summary>
+        /// Deals damage to an entity on collision
+        /// </summary>
+        /// <param name="pEntityToAct">Entity to act on (Taking damage)</param>
+        /// <param name="pEntityToHit">Entity being collided with (Dealing damage)</param>
+        /// <param name="pEntity1Name">Entity 1 name</param>
+        /// <param name="pEntity2Name">Entity 2 name</param>
+        /// <param name="pStopwatch">stopwatch for interaction</param>
+        /// <param name="pDamage">Damage to deal to enemy to hit</param>
         private bool DamageCollision(Entity pEntityToAct, Entity pEntityToHit, string pEntity1Name, string pEntity2Name, Stopwatch pStopwatch, int pDamage)
         {
             if (!pEntityToAct.Name.Contains(pEntity1Name)) return false;
@@ -154,7 +196,6 @@ namespace OpenGL_Game.Game.Managers
                 pStopwatch.Start();
                 audio.PlayAudio();
                 health.Health -= damageValue;
-                Console.WriteLine("ENEMYHIT");
             }
                     
             return true;

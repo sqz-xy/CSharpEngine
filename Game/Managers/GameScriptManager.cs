@@ -163,11 +163,6 @@ namespace OpenGL_Game.Game.Managers
         /// <returns>An IComponent object</returns>
         private IComponent GetComponent(string pComponentType, string pComponentValue)
         {
-            // May need to be changed in the future depending on the values of future component types
-            // For each component type, return the component object, for components requiring vectors, split and format the string
-            // Are components part of the game or part of the engine because if they are game then I cant hard code them like this
-            // If they cant be hard coded then change the script to use the object names and then use Activator.CreateInstance (Requires empty constructor)
-            // Then modify components to accept data through a separate method, outlined in IComponent "public void AddData(String Data)"
             switch (pComponentType)
             {
                 case "COMPONENT_POSITION":
@@ -218,6 +213,11 @@ namespace OpenGL_Game.Game.Managers
             }
         }
 
+       /// <summary>
+       /// Turns string into vectors
+       /// </summary>
+       /// <param name="pVectors">String to be parsed</param>
+       /// <returns>List of vectors</returns>
        private List<Vector3> ExtractVectors(string pVectors)
        {
            var vectorValues = pVectors.Split(' ');
@@ -311,9 +311,8 @@ namespace OpenGL_Game.Game.Managers
 
         private void GetControls(string pAction, string pBind, ref InputManager pInputManager)
         {
-            var gameInputManager = (GameInputManager) pInputManager; 
-           // Reset binds, error checking, look for enum mapping function
-           if (pBind.Split('.')[0] != "MouseButton")
+            var gameInputManager = (GameInputManager) pInputManager;
+            if (pBind.Split('.')[0] != "MouseButton")
            {
                Enum.TryParse(pBind, out Key keyBind);
                 gameInputManager._keyBinds.Add(pAction, keyBind);

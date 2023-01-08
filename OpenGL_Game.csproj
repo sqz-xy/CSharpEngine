@@ -91,6 +91,7 @@
     <Compile Include="Engine\Components\ComponentHelper.cs" />
     <Compile Include="Engine\Components\ComponentPosition.cs" />
     <Compile Include="Engine\Components\ComponentShader.cs" />
+    <Compile Include="Engine\Components\ComponentShaderDefault.cs" />
     <Compile Include="Engine\Components\ComponentSpeed.cs" />
     <Compile Include="Engine\Components\ComponentTexture.cs" />
     <Compile Include="Engine\Components\ComponentVelocity.cs" />
@@ -164,7 +165,6 @@
     <Compile Include="Game\Components\ComponentDamage.cs" />
     <Compile Include="Game\Components\ComponentHealth.cs" />
     <Compile Include="Game\Components\ComponentOpenALAudio.cs" />
-    <Compile Include="Game\Components\ComponentShaderDefault.cs" />
     <Compile Include="Game\Components\ComponentShaderNoLights.cs" />
     <Compile Include="Game\Managers\GameAIManager.cs" />
     <Compile Include="Game\Managers\GameCollisionManager.cs" />

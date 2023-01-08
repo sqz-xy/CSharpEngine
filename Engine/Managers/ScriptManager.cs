@@ -10,10 +10,11 @@
         public abstract void LoadEntities(string pScriptName, ref EntityManager pEntityManager);
 
         /// <summary>
-        /// Reads a script to create systems for a scene
+        /// Reads in a script of systems for a scene
         /// </summary>
-        /// <param name="pScriptName">Name of the script to read</param>
-        /// <param name="pSystemManager">The system manager</param>
+        /// <param name="pScriptName">Script file name</param>
+        /// <param name="pSceneManager">The scene manager</param>
+        /// <param name="pCamera">The camera</param>
         public abstract void LoadSystems(string pScriptName, ref SceneManager pSceneManager, ref Camera pCamera);
         
         /// <summary>
@@ -24,17 +25,19 @@
         public abstract void LoadControls(string pScriptName, ref InputManager pInputManager);
 
         /// <summary>
-        /// Reads a file to load any extra scene data
+        /// Loads in custom game data
         /// </summary>
-        /// <param name="pFileName">Name of data script</param>
-        /// <param name="pScene">Scene to add data to</param>
+        /// <param name="pFileName">name of data file</param>
+        /// <param name="pDataName">name of the data store</param>
+        /// <param name="pDataValue">the value stored at the data name</param>
         public abstract void LoadData(string pFileName, string pDataName, out string pDataValue);
 
         /// <summary>
         /// Saves data to a specific file
         /// </summary>
-        /// <param name="pFileName">Name of the data script</param>
-        /// <param name="pScene">Scene to save data from</param>
+        /// <param name="pFileName">name of the data file</param>
+        /// <param name="pDataName">name of the data store</param>
+        /// <param name="pDataValue">the value stored at the data name</param>
         public abstract void SaveData(string pFileName, string pDataName, string pDataValue);
 
     }
