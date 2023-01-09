@@ -56,7 +56,8 @@ namespace OpenGL_Game.Game.Scenes
         public override void Close()
         {
             SceneManager.inputManager.ClearBinds();
-            
+            SceneManager.scriptManager.SaveData("Scripts/gameData.json", "Lives", "3");
+
             ResourceManager.RemoveAllAssets();
         }
     }
